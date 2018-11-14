@@ -26,8 +26,8 @@
 # include <stdio.h>
 # include <math.h>
 
-#define WIDTH 608
-#define HEIGHT 480
+#define WIDTH 720
+#define HEIGHT 720
 
 typedef struct  s_sector
 {
@@ -50,6 +50,10 @@ typedef struct  s_data
     int             y0;
     int             x1;
     int             y1;
+    int             x0_line;
+    int             y0_line;
+    int             x1_line;
+    int             y1_line;
     int             deltax;
     int             deltay;
     int             x_step;
@@ -60,6 +64,19 @@ typedef struct  s_data
     int             for_realloc;
     int             current_sector;
     int             check_click;
+    
+    int             scale;
+    float             koef;
+
+    int             max_canv_x;
+    int             max_canv_y;
+    int             start_coord_x;
+    int             start_coord_y;
+
+
+    float           x_canv;
+    float           y_canv;
+
 
     t_sector        *sectors;
     t_sector        *tmp;
@@ -73,5 +90,10 @@ void                list_realloc(t_data *data);
 void                list_malloc(t_sector **list, int size);
 void                fill_next(t_data *data, int x, int y);
 void                draw_lines(t_data *data);
+/*void                draw_grid(t_data *data);*/
+void                dots_to_bres(t_data *data, int tmp);
+void                coord_canvas(t_data *data, int x, int y);
+void                coord_displ(t_data *data, int x, int y);
+void                limit_coord(t_data *data, int x, int y);
 
 #endif

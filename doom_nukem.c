@@ -31,12 +31,16 @@ void    init_all(t_data *data)
     if (!(data->screen = SDL_CreateTexture(data->ren,
         SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, WIDTH, HEIGHT)))
         ft_error("BAD INIT SDL2\n");
-
-    data->color = 0x00ee35;
     data->for_realloc = 1;
     data->current_sector = 0;
     data->sectors[0].next = NULL;
     data->check_click = 0;
+    data->scale = 25;
+    data->koef = 1;
+    data->max_canv_x = 360;
+    data->max_canv_y = 360;
+    data->start_coord_x = 0;
+    data->start_coord_y = 0;
 }
 
 void    game(t_data *data)
@@ -46,7 +50,6 @@ void    game(t_data *data)
         SDL_UpdateTexture(data->screen, NULL, data->buf, WIDTH << 2);
         SDL_RenderCopy(data->ren, data->screen, NULL, NULL);
         SDL_RenderPresent(data->ren);
-        key_event(data);
         int i = -1;
             while (++i != HEIGHT)
             {
@@ -56,13 +59,19 @@ void    game(t_data *data)
                     data->buf[i][x] = 0;
                 }
             }
+       /* draw_grid(data);*/
+        key_event(data);
         mouse_line(data);
-        //if (data->check_click != 0)
-        //{
+        if (data->check_click != 0)
+        {
+            bresenham_line(data);
+            dots_to_bres(data, 1);
+            bresenham_line(data);
+            dots_to_bres(data, 2);
             bresenham_line(data);
             draw_lines(data);
-       // }
-        //else
+        }
+        else
             draw_lines(data);
     }
 }

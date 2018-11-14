@@ -23,8 +23,7 @@ void	for_dx(t_data *data)
 	x = data->x0 + data->x_step;
 	y = data->y0;
 	q = 1;
-	//mlx_pixel_put(data->mlx, data->win, data->x0, data->y0, data->color);
-	data->buf[data->y0][data->x0] = data->color;
+	limit_coord(data, data->x0, data->y0);
 	while (q <= data->deltax)
 	{
 		if (error > 0)
@@ -34,8 +33,7 @@ void	for_dx(t_data *data)
 		}
 		else
 			error += data->deltay << 1;
-		//mlx_pixel_put(data->mlx, data->win, x, y, data->color);
-		data->buf[y][x] = data->color;
+		limit_coord(data, x, y);
 		x += data->x_step;
 		q++;
 	}
@@ -52,8 +50,7 @@ void	for_dy(t_data *data)
 	y = data->y0 + data->y_step;
 	x = data->x0;
 	q = 1;
-	//mlx_pixel_put(data->mlx, data->win, data->x0, data->y0, data->color);
-	data->buf[data->y0][data->x0] = data->color;
+	limit_coord(data, data->x0, data->y0);
 	while (q <= data->deltay)
 	{
 		if (error > 0)
@@ -63,8 +60,7 @@ void	for_dy(t_data *data)
 		}
 		else
 			error += data->deltax << 1;
-		//mlx_pixel_put(data->mlx, data->win, x, y, data->color);
-		data->buf[y][x] = data->color;
+		limit_coord(data, x, y);
 		y += data->y_step;
 		q++;
 	}

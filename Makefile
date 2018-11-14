@@ -14,7 +14,7 @@ NAME = doom_nukem
 
 SRC_DOOM_NUKEM = ./get_next_line.c doom_nukem.c\
 				key.c bresenham.c for_list.c\
-				draw.c
+				draw.c canvas.c
 
 OBJECT_DOOM_NUKEM = $(SRC_DOOM_NUKEM:.c=.o)
 
