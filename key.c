@@ -13,6 +13,40 @@
 #include "doom_nukem.h"
 # define EXIT (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
 
+void	key_helper(t_data *data, SDL_Event	event)
+{
+		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_p))
+		{
+			data->max_canv_x += 7;
+			data->max_canv_y += 7;
+		}		
+		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_o))
+		{
+			data->max_canv_x -= 7;
+			data->max_canv_y -= 7;
+		}
+		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_UP))
+		{
+			data->start_coord_y = data->start_coord_y - 7;
+			data->max_canv_y = data->max_canv_y - 7;
+		}
+		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_DOWN))
+		{
+			data->start_coord_y = data->start_coord_y + 7;
+			data->max_canv_y = data->max_canv_y + 7;
+		}
+		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_RIGHT))
+		{
+			data->start_coord_x = data->start_coord_x + 7;
+			data->max_canv_x = data->max_canv_x + 7;
+		}
+		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_LEFT))
+		{
+			data->start_coord_x = data->start_coord_x - 7;
+			data->max_canv_x = data->max_canv_x - 7;
+		}
+}
+
 void	key_event(t_data *data)
 {
 	SDL_Event	event;
@@ -24,24 +58,6 @@ void	key_event(t_data *data)
 			data->for_exit = 1;
 		if (EXIT)
 			data->for_exit = 1;
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_p))
-		{
-			data->max_canv_x += 10;
-			data->max_canv_y += 10;
-		}		
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_o))
-		{
-			data->max_canv_x -= 10;
-			data->max_canv_y -= 10;
-		}
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_UP))
-			data->start_coord_y += 10;
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_DOWN))
-			data->start_coord_y -= 10;
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_RIGHT))
-			data->start_coord_x += 10;
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_LEFT))
-			data->start_coord_x -= 10;
 		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_w))
 		{
 			data->current_sector++;
@@ -50,16 +66,29 @@ void	key_event(t_data *data)
 			data->check_click = 0;
 			data->sectors[data->current_sector].next = NULL;
 		}
+		key_helper(data, event);
 	}
 }
 
-void	dots_to_bres(t_data *data, int tmp)
+void	dots_to_bres(t_data *data)
 {
 	data->color = 0x15eb43;
 	data->x0 = data->x0_line;
-	data->y0 = data->y0_line + tmp;
+	data->y0 = data->y0_line;
 	data->x1 = data->x1_line;
-	data->y1 = data->y1_line + tmp;	
+	data->y1 = data->y1_line;	
+}
+
+int		for_round(int q)
+{
+	int r;
+
+	r = q % 10;
+	if (r < 5)
+		return (q - r);
+	else
+		return ((q - r) + 10);
+	return (q);
 }
 
 void	mouse_line(t_data *data)
@@ -90,7 +119,7 @@ void	mouse_line(t_data *data)
 		data->x0_line = x;
 		data->y0_line = y;
 	}
-	dots_to_bres(data, 0);
+	dots_to_bres(data);
 }
 
 

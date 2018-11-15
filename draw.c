@@ -58,31 +58,39 @@ void	draw_lines(t_data *data)
 	}
 	
 }
-/*
+
+int		normalize_line(int q)
+{
+	if (q % 10 == 0)
+		return (q);
+	while (q % 10 != 0)
+		q++;
+	return (q);
+}
+
 void	draw_grid(t_data *data)
 {
 	int q;
 
-	q = 0;
-	data->y0 = 0;	
+	q = normalize_line(data->start_coord_x);
 	data->color = 0x2d4d49;
-	while (q < WIDTH)
+	while (q <= data->max_canv_x)
 	{
-		data->x0 = q;
-		data->x1 = q;
-		data->y1 = HEIGHT;
-		q += data->scale;
+		coord_displ(data, q, data->max_canv_y);
+		data->x1 = data->x0;
+		data->y1 = data->y0;
+		coord_displ(data, q, data->start_coord_y);
+		q += 10;
 		bresenham_line(data);
 	}
-	q = 0;
-	data->x0 = 0;
-	while (q < HEIGHT)
+	q = normalize_line(data->start_coord_y);
+	while (q <= data->max_canv_y)
 	{
-		data->y0 = q;
-		data->x1 = WIDTH;
-		data->y1 = q;
-		q += data->scale;
+		coord_displ(data, data->max_canv_x, q);
+		data->x1 = data->x0;
+		data->y1 = data->y0;
+		coord_displ(data, data->start_coord_x, q);
+		q += 10;
 		bresenham_line(data);
 	}
 }
-*/

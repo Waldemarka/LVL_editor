@@ -59,15 +59,11 @@ void    game(t_data *data)
                     data->buf[i][x] = 0;
                 }
             }
-       /* draw_grid(data);*/
         key_event(data);
+        draw_grid(data);
         mouse_line(data);
         if (data->check_click != 0)
         {
-            bresenham_line(data);
-            dots_to_bres(data, 1);
-            bresenham_line(data);
-            dots_to_bres(data, 2);
             bresenham_line(data);
             draw_lines(data);
         }

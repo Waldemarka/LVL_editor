@@ -90,8 +90,8 @@ void                list_realloc(t_data *data);
 void                list_malloc(t_sector **list, int size);
 void                fill_next(t_data *data, int x, int y);
 void                draw_lines(t_data *data);
-/*void                draw_grid(t_data *data);*/
-void                dots_to_bres(t_data *data, int tmp);
+void                draw_grid(t_data *data);
+void                dots_to_bres(t_data *data);
 void                coord_canvas(t_data *data, int x, int y);
 void                coord_displ(t_data *data, int x, int y);
 void                limit_coord(t_data *data, int x, int y);
