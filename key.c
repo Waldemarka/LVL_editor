@@ -6,45 +6,51 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 16:44:45 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/11/07 16:44:48 by vomelchu         ###   ########.fr       */
+/*   Updated: 2018/11/18 18:32:23 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 # define EXIT (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
 
+typedef	struct s_point
+{
+	double X;
+	double Y;
+}				point;
+
 void	key_helper(t_data *data, SDL_Event	event)
 {
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_p))
-		{
-			data->max_canv_x += 7;
-			data->max_canv_y += 7;
-		}		
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_o))
-		{
-			data->max_canv_x -= 7;
-			data->max_canv_y -= 7;
-		}
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_UP))
-		{
-			data->start_coord_y = data->start_coord_y - 7;
-			data->max_canv_y = data->max_canv_y - 7;
-		}
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_DOWN))
-		{
-			data->start_coord_y = data->start_coord_y + 7;
-			data->max_canv_y = data->max_canv_y + 7;
-		}
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_RIGHT))
-		{
-			data->start_coord_x = data->start_coord_x + 7;
-			data->max_canv_x = data->max_canv_x + 7;
-		}
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_LEFT))
-		{
-			data->start_coord_x = data->start_coord_x - 7;
-			data->max_canv_x = data->max_canv_x - 7;
-		}
+	if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_p))
+	{
+		data->max_canv_x += 7;
+		data->max_canv_y += 7;
+	}		
+	if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_o))
+	{
+		data->max_canv_x -= 7;
+		data->max_canv_y -= 7;
+	}
+	if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_UP))
+	{
+		data->start_coord_y = data->start_coord_y - 7;
+		data->max_canv_y = data->max_canv_y - 7;
+	}
+	if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_DOWN))
+	{
+		data->start_coord_y = data->start_coord_y + 7;
+		data->max_canv_y = data->max_canv_y + 7;
+	}
+	if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_RIGHT))
+	{
+		data->start_coord_x = data->start_coord_x + 7;
+		data->max_canv_x = data->max_canv_x + 7;
+	}
+	if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_LEFT))
+	{
+		data->start_coord_x = data->start_coord_x - 7;
+		data->max_canv_x = data->max_canv_x - 7;
+	}
 }
 
 void	key_event(t_data *data)
@@ -55,39 +61,42 @@ void	key_event(t_data *data)
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT)
+		{
 			data->for_exit = 1;
+			writting(data);
+		}
 		if (EXIT)
+		{
 			data->for_exit = 1;
+			writting(data);
+			//system("leaks doom");
+		}
 		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_w))
 		{
-			data->current_sector++;
-			data->for_realloc++;
-			list_realloc(data);
-			data->check_click = 0;
-			data->sectors[data->current_sector].next = NULL;
+			/*coord_displ(data, data->sectors[data->current_sector].x0, data->sectors[data->current_sector].y0);
+			fill_next(data, data->x0, data->y0);*/
+			if (len_list(&data->sectors[data->current_sector]) >= 3)
+			{
+				data->current_sector++;
+				data->for_realloc++;
+				list_realloc(data);
+				data->check_click = 0;
+				data->sectors[data->current_sector].next = NULL;
+			}
 		}
 		key_helper(data, event);
 	}
 }
 
-void	dots_to_bres(t_data *data)
+int		near_round(int q)
 {
-	data->color = 0x15eb43;
-	data->x0 = data->x0_line;
-	data->y0 = data->y0_line;
-	data->x1 = data->x1_line;
-	data->y1 = data->y1_line;	
-}
+	int i;
 
-int		for_round(int q)
-{
-	int r;
-
-	r = q % 10;
-	if (r < 5)
-		return (q - r);
+	i = q % 10;
+	if (i < 5)
+		return (q - i);
 	else
-		return ((q - r) + 10);
+		return((q - i) + 10);
 	return (q);
 }
 
@@ -101,25 +110,31 @@ void	mouse_line(t_data *data)
 	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
 		if (tmp == 0)
 		{
-			data->x0_line = data->x1_line;
-			data->y0_line = data->y1_line;
-			data->x1_line = x;
-			data->y1_line = y;
-			fill_next(data, x, y);
+			if (data->check_click == 0)
+			{
+				data->x1_line = x;
+				data->y1_line = y;
+				fill_next(data, x, y);
+			}
+			else if (bef_crossing(data) == 0)
+			{
+				data->x1_line = x;
+				data->y1_line = y;
+				fill_next(data, x, y);
+			}
+			tmp++;
+			data->check_click = 1;
 		}
-		tmp++;
-		data->check_click = 1;
 	}
 	else
 	{
 		if (tmp > 0)
-		{
 			tmp = 0;
-		}
 		data->x0_line = x;
 		data->y0_line = y;
 	}
-	dots_to_bres(data);
+	/*printf("0 :%d %d\n", data->x0_line, data->y0_line);
+	printf("1 :%d %d\n", data->x1_line, data->y1_line);*/
+	bef_crossing(data);
+	near_lines(data);
 }
-
-

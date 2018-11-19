@@ -35,8 +35,6 @@ void    init_all(t_data *data)
     data->current_sector = 0;
     data->sectors[0].next = NULL;
     data->check_click = 0;
-    data->scale = 25;
-    data->koef = 1;
     data->max_canv_x = 360;
     data->max_canv_y = 360;
     data->start_coord_x = 0;
@@ -61,6 +59,7 @@ void    game(t_data *data)
             }
         key_event(data);
         draw_grid(data);
+        data->color = 0x15eb43;
         mouse_line(data);
         if (data->check_click != 0)
         {

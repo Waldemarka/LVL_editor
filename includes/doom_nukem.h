@@ -64,15 +64,16 @@ typedef struct  s_data
     int             for_realloc;
     int             current_sector;
     int             check_click;
-    
-    int             scale;
-    float             koef;
 
     int             max_canv_x;
     int             max_canv_y;
     int             start_coord_x;
     int             start_coord_y;
 
+    int             tmp_x1;
+    int             tmp_y1;
+    int             tmp_x2;
+    int             tmp_y2;
 
     float           x_canv;
     float           y_canv;
@@ -95,5 +96,10 @@ void                dots_to_bres(t_data *data);
 void                coord_canvas(t_data *data, int x, int y);
 void                coord_displ(t_data *data, int x, int y);
 void                limit_coord(t_data *data, int x, int y);
+void                writting(t_data *data);
+int                 near_round(int q);
+void                near_lines(t_data *data);
+int                 bef_crossing(t_data *data);
+int                 len_list(t_sector *sectors);
 
 #endif
