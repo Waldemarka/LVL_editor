@@ -31,6 +31,7 @@ void	wri_sectors(t_data *data, FILE *fp)
 	 size_t count;
 	char const *str = "SECTOR\n";
 	char *num;
+	int y = 0;
 
 	q = -1;
 	while (++q != data->current_sector + 1)
@@ -48,6 +49,7 @@ void	wri_sectors(t_data *data, FILE *fp)
 			count = fwrite(" \n", 1, 2, fp);
 			data->sectors[q] = *data->sectors[q].next;
 		}
+		printf("%d\n", ++y);
 	}
 
 }

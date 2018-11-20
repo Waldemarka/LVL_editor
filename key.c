@@ -75,7 +75,8 @@ void	key_event(t_data *data)
 		{
 			/*coord_displ(data, data->sectors[data->current_sector].x0, data->sectors[data->current_sector].y0);
 			fill_next(data, data->x0, data->y0);*/
-			if (len_list(&data->sectors[data->current_sector]) >= 3)
+			if (len_list(&data->sectors[data->current_sector]) >= 3
+				&& bef_crossing(data) == 0)
 			{
 				data->current_sector++;
 				data->for_realloc++;
@@ -107,7 +108,8 @@ void	mouse_line(t_data *data)
 	static int	tmp;
 
 	SDL_PumpEvents();
-	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)) {
+	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT))
+	{
 		if (tmp == 0)
 		{
 			if (data->check_click == 0)
@@ -122,6 +124,7 @@ void	mouse_line(t_data *data)
 				data->y1_line = y;
 				fill_next(data, x, y);
 			}
+			//printf("%d--%d\n", x, y);
 			tmp++;
 			data->check_click = 1;
 		}

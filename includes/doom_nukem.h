@@ -33,6 +33,8 @@ typedef struct  s_sector
 {
                 int x0;
                 int y0;
+                int dis_x;
+                int dis_y;
                 struct s_sector *next;
                // struct s_sector *previous; 
 }               t_sector;
