@@ -68,13 +68,21 @@ void    game(t_data *data)
         }
         else
             draw_lines(data);
+        i = -1;
+            while (++i != HEIGHT)
+            {
+                int x = -1;
+                while(++x != WIDTH)
+                {
+                    if (data->buf[i][x] == 0)
+                        data->buf[i][x] = 0x4f4b4b;
+                }
+            }
     }
 }
 
 int     main(int argc, char **argv)
 {
-    printf("argc : %d\n argv :%s\n", argc, argv[1]);
-
     t_data *data;
 
     if (argc == 2)
@@ -82,6 +90,9 @@ int     main(int argc, char **argv)
         if (!(data = (t_data *)malloc(sizeof(t_data))))
             ft_error("BAD MALLOC FOR STRUCT\n");
         data->name = argv[1];
+        data->fd = open(data->name, O_DIRECTORY);
+        if (data->fd >= 0)
+            ft_error("NOT DIRECTORY\n");
         list_malloc(&data->sectors, 1);
         data->sectors[0].next = NULL;
         init_all(data);

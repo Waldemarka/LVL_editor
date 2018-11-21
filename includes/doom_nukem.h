@@ -29,6 +29,12 @@
 #define WIDTH 720
 #define HEIGHT 720
 
+typedef struct  s_vector
+{
+        double x;
+        double y;
+}               vector;
+
 typedef struct  s_sector
 {
                 int x0;
@@ -47,6 +53,7 @@ typedef struct  s_data
     char            *name;
     int             buf[HEIGHT][WIDTH];
     int             for_exit;
+    int             fd;
 
     int             x0;
     int             y0;
@@ -83,10 +90,15 @@ typedef struct  s_data
 
     t_sector        *sectors;
     t_sector        *tmp;
+    vector          p1;
+    vector          p2;
+    vector          p3;
+    vector          p4;
 }                   t_data;
 
 void                ft_error(char *str);
 void                key_event(t_data *data);
+void                key_helper(t_data *data, SDL_Event  event);
 void                bresenham_line(t_data *data);
 void                mouse_line(t_data *data);
 void                list_realloc(t_data *data);
@@ -103,5 +115,11 @@ int                 near_round(int q);
 void                near_lines(t_data *data);
 int                 bef_crossing(t_data *data);
 int                 len_list(t_sector *sectors);
+int                 without_vertical(t_data *data);
+int                 one_vertical_1(t_data *data);
+int                 one_vertical_2(t_data *data);
+int                 two_vertical(t_data *data);
+int                 max(int x, int y);
+int                 min(int x, int y);
 
 #endif

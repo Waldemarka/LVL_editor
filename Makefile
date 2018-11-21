@@ -10,18 +10,19 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = doom_nukem
+NAME = lvl_editor
 
-SRC_DOOM_NUKEM = ./get_next_line.c doom_nukem.c\
+SRC_LVL_EDITOR = ./get_next_line.c doom_nukem.c\
 				key.c bresenham.c for_list.c\
 				draw.c canvas.c writting.c\
-				crossing_helper.c
+				crossing.c crossing_helper.c\
+				key_helper.c
 
-OBJECT_DOOM_NUKEM = $(SRC_DOOM_NUKEM:.c=.o)
+OBJECT_LVL_EDITOR = $(SRC_LVL_EDITOR:.c=.o)
 
 FLAGS = -Wall -Wextra
 
-INCLUDES_DOOM_NUKEM = -I ./includes/
+INCLUDES_LVL_EDITOR = -I ./includes/
 
 INCLUDES_LIBFT = -I ./source/libft/includes
 
@@ -44,23 +45,23 @@ FRAMEWORK_MLX = -lmlx -framework OpenGL -framework AppKit
 
 all: $(NAME)
 
-$(NAME) : $(OBJECT_DOOM_NUKEM)
+$(NAME) : $(OBJECT_LVL_EDITOR)
 	make -C ./source/libft
-	@echo "file: */DOOM_NUKEM"
-	@gcc -g -fsanitize=address -o $(NAME) $(FLAGS) $(LIBFT) $(INCLUDES_SDL2) $(INCLUDES_SDL2_IMAGE) -rpath @loader_path/source/sdl $(FRAMEWORK_SDL2) $(OBJECT_DOOM_NUKEM) $(INCLUDES_SDL2_TTF) $(INCLUDES_SDL2_MIXER)
+	@echo "file: */lvl_editor"
+	@gcc -g -fsanitize=address -o $(NAME) $(FLAGS) $(LIBFT) $(INCLUDES_SDL2) $(INCLUDES_SDL2_IMAGE) -rpath @loader_path/source/sdl $(FRAMEWORK_SDL2) $(OBJECT_LVL_EDITOR) $(INCLUDES_SDL2_TTF) $(INCLUDES_SDL2_MIXER)
 
 %.o: %.c includes/*.h
-	gcc -g $(FLAGS) -o $@ -c $< $(INCLUDES_DOOM_NUKEM) $(INCLUDES_SDL2) $(INCLUDES_LIBFT) \
+	gcc -g $(FLAGS) -o $@ -c $< $(INCLUDES_LVL_EDITOR) $(INCLUDES_SDL2) $(INCLUDES_LIBFT) \
 $(INCLUDES_SDL2_IMAGE) $(INCLUDES_SDL2_TTF) $(INCLUDES_SDL2_MIXER)
 
 %.o: %.c
-	gcc -g 	$(FLAGS) -o $@ -c $< $(INCLUDES_DOOM_NUKEM) $(INCLUDES_SDL2) $(INCLUDES_LIBFT) \
+	gcc -g 	$(FLAGS) -o $@ -c $< $(INCLUDES_LVL_EDITOR) $(INCLUDES_SDL2) $(INCLUDES_LIBFT) \
 $(INCLUDES_SDL2_IMAGE) $(INCLUDES_SDL2_TTF) $(INCLUDES_SDL2_MIXER)
 
-	@echo "DOOM_NUKEM compiled"
+	@echo "LVL_EDITOR compiled"
 clean:
 	make -C ./source/libft clean
-	/bin/rm -f $(OBJECT_DOOM_NUKEM)
+	/bin/rm -f $(OBJECT_LVL_EDITOR)
 	rm -f TAGS
 
 fclean: clean

@@ -104,7 +104,6 @@ int		len_list(t_sector *sectors)
 	sect = sectors; 
 	while (sect->next != NULL)
 	{
-		//printf("%d+_+_+_+_+_\n", sect->x0);
 		res++;
 		sect = sect->next;
 	}
