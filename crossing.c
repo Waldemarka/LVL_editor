@@ -14,10 +14,26 @@
 
 int		cros_dots(t_data *data)
 {
-	if ((data->p3.x == data->p1.x && data->p3.y == data->p1.y)
-		|| (data->p3.x == data->p2.x && data->p3.y == data->p2.y))
+/*	int p1_x = (int)data->p1.x;
+	int p1_y = (int)data->p1.y;
+	int p2_x = (int)data->p2.x;
+	int p2_y = (int)data->p2.y;
+	int p3_x = (int)data->p3.x;
+	int p3_y = (int)data->p3.y;
+	printf("p1_x : %d -- p1_y : %d\n", p1_x, p1_y);
+	printf("p2_x : %d -- p2_y : %d\n", p2_x, p2_y);
+	printf("p3_x : %d -- p3_y : %d\n", p3_x, p3_y);
+	if (p3_x == p1_x && p3_y == p1_y)
+	{
+		printf("+++++%d\n", p1_x);
 		return (1);
-	return (0);
+	}
+	if (p3_x == p2_x && p3_y == p2_y)
+	{
+		printf("-----%d\n", p2_y);
+		return (1);
+	}*/
+	return (1);
 }
 
 int		crossing(t_data *data)
@@ -40,9 +56,9 @@ int		crossing(t_data *data)
     data->color = 0xff0000;
     if (two_vertical(data) == 1)
     	return (1);
-    if (one_vertical_1(data) == 1 ||
-    	one_vertical_2(data) == 1)
-    	return (1);
+    //if (one_vertical_1(data) == 1 ||
+    //	one_vertical_2(data) == 1)
+    //	return (1);
     if (without_vertical(data) == 1)
     	return (1);
     data->color = 0x15eb43;
@@ -63,7 +79,27 @@ int		init_vector(t_data *data)
 	data->p4.y = (double)near_round(data->y_canv);
 	return (0);	
 }
+/*
+int		before_crossing(t_data *data)
+{
+	t_sector *sector;
+	int q;
 
+	q = 0;
+	if (init_vector(data) == 1)
+		return (0);
+	while (q != data->for_realloc)
+	{
+		sector = &data->sector[q];
+		while (sector->next != NULL)
+		{
+			if ()
+			sector = sector->next;
+		}
+		q++;
+	}
+
+}*/
 
 int		bef_crossing(t_data *data)
 {
@@ -78,20 +114,15 @@ int		bef_crossing(t_data *data)
 		sector = &data->sectors[i];
 		while (sector->next != NULL && sector->next->next != NULL)
 		{
-			if (data->current_sector == i && (sector->next == NULL
-				|| sector->next->next == NULL || sector->next->next->next == NULL))
+			if (data->current_sector == i && sector->next->next->next == NULL)
 				break;
 			data->p1.x = (double)sector->x0;
 			data->p1.y = (double)sector->y0;
 			data->p2.x = (double)sector->next->x0;
 			data->p2.y = (double)sector->next->y0;
-			/*if (cros_dots(data) == 1)
-			{
-				printf("x1 : %f -- y1 : %f\n p1_x : %f -- p1_y : %f\n", data->p3.x, data->p3.y, data->p1.x, data->p1.y);
-				return (0);
-			}*/
 			if (crossing(data) == 1)
-				return (1);
+				//if (cros_dots(data) == 0)
+					return (1);
 			sector = sector->next;
 		}
 	}

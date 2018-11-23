@@ -15,7 +15,7 @@
 void    ft_error(char *str)
 {
     ft_putstr(str);
-    exit(1);
+    exit(0);
 }
 
 void    init_all(t_data *data)

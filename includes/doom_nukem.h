@@ -79,11 +79,6 @@ typedef struct  s_data
     int             start_coord_x;
     int             start_coord_y;
 
-    int             tmp_x1;
-    int             tmp_y1;
-    int             tmp_x2;
-    int             tmp_y2;
-
     float           x_canv;
     float           y_canv;
 

@@ -106,6 +106,6 @@ int		without_vertical(t_data *data)
 	}
 	else {
     	return (1);
-    return (0);
 }
+    return (0);
 }
