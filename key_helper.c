@@ -59,10 +59,6 @@ void	key_helper(t_data *data, SDL_Event	event)
 
 	tmp[0] = data->start_coord_x;
 	tmp[1] = data->start_coord_y;
-	if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_p) && data->check_click == 0)
-		zoom(data, '+');
-	if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_o) && data->check_click == 0)
-		zoom(data, '-');
 	if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_UP)
 		&& data->start_coord_y > -1000 && data->check_click == 0)
 	{
@@ -87,5 +83,26 @@ void	key_helper(t_data *data, SDL_Event	event)
 		data->start_coord_x -= ((data->max_canv_x - data->start_coord_x) / 22);
 		data->max_canv_x -= ((data->max_canv_x - tmp[0]) / 22);
 	}
+	if(event.type == SDL_MOUSEWHEEL)
+    {
+        if(event.wheel.y > 0  && data->check_click == 0)
+        {
+            zoom(data, '+');
+        }
+        else if(event.wheel.y < 0 && data->check_click == 0)
+        {
+             zoom(data, '-');
+        }
+        if(event.wheel.x > 0 && data->start_coord_x < 1000 && data->check_click == 0)
+        {
+			data->start_coord_x += ((data->max_canv_x - data->start_coord_x) / 22);
+			data->max_canv_x += ((data->max_canv_x - tmp[0]) / 22);
+        }
+        else if(event.wheel.x < 0  && data->start_coord_x > -1000 && data->check_click == 0)
+        {
+			data->start_coord_x -= ((data->max_canv_x - data->start_coord_x) / 22);
+			data->max_canv_x -= ((data->max_canv_x - tmp[0]) / 22);
+        }
+    }
 }
 

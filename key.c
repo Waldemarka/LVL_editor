@@ -59,6 +59,34 @@ int		near_round(int q)
 	return (q);
 }
 
+int		check_first_cross(t_data *data, int x1, int y1)
+{
+	t_sector *tmp_sec;
+	int i;
+	int x;
+	int y;
+
+	if (data->current_sector == 0)
+		return (1);
+	if (data->check_click == 1)
+		return (1);
+	i = -1;
+	coord_canvas(data, x1, y1);
+	x = near_round(data->x_canv);
+	y = near_round(data->y_canv);
+	while (++i != data->current_sector)
+	{
+		tmp_sec = &data->sectors[i];
+		while (tmp_sec->next != NULL)
+		{
+			if (x == tmp_sec->x0 && y == tmp_sec->y0)
+				return (1);
+			tmp_sec = tmp_sec->next;
+		}
+	}
+	return (0);
+}
+
 void	mouse_line(t_data *data)
 {
 	int 		x;
@@ -70,20 +98,23 @@ void	mouse_line(t_data *data)
 	{
 		if (tmp == 0)
 		{
-			if (data->check_click == 0)
+			if (data->check_click == 0 &&
+				check_first_cross(data, x, y) == 1)
 			{
 				data->x1_line = x;
 				data->y1_line = y;
 				fill_next(data, x, y);
 			}
-			else if (bef_crossing(data) == 0)
+			else if (bef_crossing(data) == 0 &&
+				check_first_cross(data, x, y) == 1)
 			{
 				data->x1_line = x;
 				data->y1_line = y;
 				fill_next(data, x, y);
 			}
 			tmp++;
-			data->check_click = 1;
+			if (check_first_cross(data, x, y) == 1)
+				data->check_click = 1;
 		}
 	}
 	else

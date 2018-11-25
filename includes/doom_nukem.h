@@ -39,8 +39,6 @@ typedef struct  s_sector
 {
                 int x0;
                 int y0;
-                int dis_x;
-                int dis_y;
                 struct s_sector *next;
                // struct s_sector *previous; 
 }               t_sector;
@@ -82,6 +80,7 @@ typedef struct  s_data
     float           x_canv;
     float           y_canv;
 
+    int             iter;
 
     t_sector        *sectors;
     t_sector        *tmp;
@@ -110,11 +109,12 @@ int                 near_round(int q);
 void                near_lines(t_data *data);
 int                 bef_crossing(t_data *data);
 int                 len_list(t_sector *sectors);
-int                 without_vertical(t_data *data);
-int                 one_vertical_1(t_data *data);
-int                 one_vertical_2(t_data *data);
-int                 two_vertical(t_data *data);
 int                 max(int x, int y);
 int                 min(int x, int y);
+int                 normal_vec(t_data *data);
+int                 first_vert(t_data *data);
+int                 second_vert(t_data *data);
+
+int                 touch_dots(t_data *data);
 
 #endif
