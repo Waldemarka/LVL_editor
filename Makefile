@@ -12,11 +12,11 @@
 
 NAME = lvl_editor
 
-SRC_LVL_EDITOR = ./get_next_line.c doom_nukem.c\
-				key.c bresenham.c for_list.c\
-				draw.c canvas.c writting.c\
-				crossing.c crossing_helper.c\
-				key_helper.c
+SRC_LVL_EDITOR = ./files/doom_nukem.c\
+				./files/key.c ./files/bresenham.c ./files/for_list.c\
+				./files/draw.c ./files/canvas.c ./files/writting.c\
+				./files/crossing.c ./files/crossing_helper.c\
+				./files/key_helper.c ./files/sdl.c
 
 OBJECT_LVL_EDITOR = $(SRC_LVL_EDITOR:.c=.o)
 

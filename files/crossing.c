@@ -37,7 +37,6 @@ int		touch_dots(t_data *data)
 		else if (((int)data->p1.x == (int)data->p4.x && (int)data->p1.y == (int)data->p4.y) ||
 			((int)data->p2.x == (int)data->p4.x && (int)data->p2.y == (int)data->p4.y))
 			return (1);
-
 	}
 	return (0);
 }
@@ -79,7 +78,6 @@ int		both_not_vert(t_data *data)
 		return (0);
 	else {
 		data->color = 0xff0000;
-		//printf("%f\n", Xa);
 		return (1);
 	}
 }
@@ -110,6 +108,21 @@ int		IntersectionOfTwoLine(t_data *data)
 	return (0);
 }
 
+/*int		cros_last_line(t_data *data)
+{
+	if (data->iter != data->current_sector)
+	{
+		data->p1.x = (double)data->sectors[data->iter].x0;
+		data->p1.y = (double)data->sectors[data->iter].y0;
+		if (IntersectionOfTwoLine(data) == 1)
+		{
+			data->color = 0xff0000;
+			return (1);
+		}
+	}
+	return (0);
+}*/
+
 int		bef_crossing(t_data *data)
 {
 	t_sector *sector;
@@ -131,6 +144,15 @@ int		bef_crossing(t_data *data)
 			if (IntersectionOfTwoLine(data) == 1)
 				return (1);
 			sector = sector->next;
+		}
+		if (data->iter != data->current_sector)
+		{
+			data->p1.x = (double)sector->x0;
+			data->p1.y = (double)sector->y0;
+			data->p2.x = (double)data->sectors[data->iter].x0;
+			data->p2.y = (double)data->sectors[data->iter].y0;
+			if (IntersectionOfTwoLine(data) == 1)
+				return (1);
 		}
 	}
 	return (0);

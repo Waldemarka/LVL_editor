@@ -15,7 +15,6 @@
 
 # include <unistd.h>
 # include "../source/libft/includes/libft.h"
-# include "../includes/get_next_line.h"
 # include <SDL.h>
 # include <SDL_image.h>
 # include <SDL_ttf.h>
@@ -48,6 +47,8 @@ typedef struct  s_data
     SDL_Window      *win;
     SDL_Renderer    *ren;
     SDL_Texture     *screen;
+    SDL_Texture     *dot;
+
     char            *name;
     int             buf[HEIGHT][WIDTH];
     int             for_exit;
@@ -82,8 +83,12 @@ typedef struct  s_data
 
     int             iter;
 
+    int             change_position;
+    int             chang;
+
     t_sector        *sectors;
     t_sector        *tmp;
+    t_sector        *change_coord;
     vector          p1;
     vector          p2;
     vector          p3;
@@ -116,5 +121,8 @@ int                 first_vert(t_data *data);
 int                 second_vert(t_data *data);
 
 int                 touch_dots(t_data *data);
+
+SDL_Surface         *load_image(char *path);
+unsigned int        get_pixel_int(SDL_Surface *surface, int x, int y);
 
 #endif

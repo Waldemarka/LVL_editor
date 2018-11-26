@@ -31,7 +31,7 @@ void	key_event(t_data *data)
 			writting(data);
 			//system("leaks doom");
 		}
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_w))
+		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_SPACE))
 		{
 			if (len_list(&data->sectors[data->current_sector]) >= 3
 				&& bef_crossing(data) == 0)
@@ -85,6 +85,64 @@ int		check_first_cross(t_data *data, int x1, int y1)
 		}
 	}
 	return (0);
+}
+
+int		is_in_sectror(t_data *data, int x1, int y1)
+{
+	t_sector *sector;
+	int q;
+
+	q = -1;
+	while (++q != data->for_realloc)
+	{
+		sector = &data->sectors[q];
+		while (sector->next != NULL)
+		{
+			if (sector->x0 == x1 && sector->y0 == y1)
+			{
+				data->change_coord = sector;
+				return (1);
+			}
+			sector = sector->next;
+		}
+	}
+	return (0);
+}
+
+/*void	is_crossing_change_line(t_data *data)
+{
+	
+}
+*/
+void	change_position(t_data *data)
+{
+	int x;
+	int y;
+	int x1;
+	int y1;
+	t_sector *sector;
+
+	if (data->chang == 0)
+	{
+		SDL_GetMouseState(&x, &y);
+		coord_canvas(data, x, y);
+		x1 = near_round(data->x_canv);
+		y1 = near_round(data->y_canv);
+		if (is_in_sectror(data, x1, y1) == 1)
+			data->chang = 1;
+	}
+
+	if ((SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)) && data->chang == 1)
+	{
+		coord_canvas(data, x, y);
+		x1 = near_round(data->x_canv);
+		y1 = near_round(data->y_canv);
+		data->change_coord->x0 = x1;
+		data->change_coord->y0 = y1;
+	}
+	else
+		data->chang = 0;
+
 }
 
 void	mouse_line(t_data *data)
