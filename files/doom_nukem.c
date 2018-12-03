@@ -41,7 +41,7 @@ void    init_all(t_data *data)
 	data->start_coord_y = 0;
 	data->change_position = 0;
 	data->chang = 0;
-
+	data->tmp_count = 0;
 	data->dot = load_image("dot.png");
 }
 
@@ -85,7 +85,7 @@ void    game(t_data *data)
 					data->buf[i][x] = 0x4f4b4b;
 			}
 		}
-        draw_icon(data);
+        //draw_icon(data);
 	}
 }
 

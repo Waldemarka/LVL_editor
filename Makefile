@@ -16,7 +16,9 @@ SRC_LVL_EDITOR = ./files/doom_nukem.c\
 				./files/key.c ./files/bresenham.c ./files/for_list.c\
 				./files/draw.c ./files/canvas.c ./files/writting.c\
 				./files/crossing.c ./files/crossing_helper.c\
-				./files/key_helper.c ./files/sdl.c
+				./files/key_helper.c ./files/sdl.c\
+				./files/writting_helper.c ./files/mouse_eve.c\
+				./files/other.c
 
 OBJECT_LVL_EDITOR = $(SRC_LVL_EDITOR:.c=.o)
 

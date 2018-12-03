@@ -6,38 +6,21 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 19:43:58 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/11/25 15:57:57 by vomelchu         ###   ########.fr       */
+/*   Updated: 2018/12/03 19:11:41 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-int		init_vector(t_data *data)
-{
-	if (data->sectors[0].next == NULL ||
-			data->sectors[0].next->next == NULL
-			|| data->sectors[0].next->next->next == NULL)
-		return(1);
-	coord_canvas(data, data->x0_line, data->y0_line);
-	data->p3.x = (double)near_round(data->x_canv);
-	data->p3.y = (double)near_round(data->y_canv);
-	coord_canvas(data, data->x1_line, data->y1_line);
-	data->p4.x = (double)near_round(data->x_canv);
-	data->p4.y = (double)near_round(data->y_canv);
-	return (0);	
-}
-
 int		touch_dots(t_data *data)
 {
-	if (data->current_sector != data->iter)
-	{
-		if (((int)data->p1.x == (int)data->p3.x && (int)data->p1.y == (int)data->p3.y) ||
+
+	if (((int)data->p1.x == (int)data->p3.x && (int)data->p1.y == (int)data->p3.y) ||
 			((int)data->p2.x == (int)data->p3.x && (int)data->p2.y == (int)data->p3.y))
-			return (1);
-		else if (((int)data->p1.x == (int)data->p4.x && (int)data->p1.y == (int)data->p4.y) ||
+		return (1);
+	else if (((int)data->p1.x == (int)data->p4.x && (int)data->p1.y == (int)data->p4.y) ||
 			((int)data->p2.x == (int)data->p4.x && (int)data->p2.y == (int)data->p4.y))
-			return (1);
-	}
+		return (1);
 	return (0);
 }
 
@@ -108,27 +91,21 @@ int		IntersectionOfTwoLine(t_data *data)
 	return (0);
 }
 
-/*int		cros_last_line(t_data *data)
+int		dot_on_line(t_data *data)
 {
-	if (data->iter != data->current_sector)
-	{
-		data->p1.x = (double)data->sectors[data->iter].x0;
-		data->p1.y = (double)data->sectors[data->iter].y0;
-		if (IntersectionOfTwoLine(data) == 1)
-		{
-			data->color = 0xff0000;
-			return (1);
-		}
-	}
+	printf("+__+__+%f\n", ((data->p3.x - data->p1.x)*(data->p2.y - data->p1.y) -
+				(data->p2.x - data->p1.x)*(data->p3.y - data->p1.y)));
+	if (((data->p3.x - data->p1.x) * (data->p2.y - data->p1.y) - (data->p2.x - data->p1.x) * (data->p3.y - data->p1.y)) == 0)
+		return (1);
 	return (0);
-}*/
+}
 
-int		bef_crossing(t_data *data)
+int		bef_crossing(t_data *data, int check)
 {
 	t_sector *sector;
 
 	data->iter = -1;
-	if (init_vector(data) == 1)
+	if (check == 0 && init_vector(data) == 1)
 		return (0);
 	while (++data->iter != data->for_realloc)
 	{
@@ -143,6 +120,8 @@ int		bef_crossing(t_data *data)
 			data->p2.y = (double)sector->next->y0;
 			if (IntersectionOfTwoLine(data) == 1)
 				return (1);
+			//if (dot_on_line(data) == 1)
+			//	return (1);
 			sector = sector->next;
 		}
 		if (data->iter != data->current_sector)

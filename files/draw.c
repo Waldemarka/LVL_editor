@@ -22,6 +22,9 @@ void	fill_next(t_data *data, int x, int y)
 	coord_canvas(data, x, y);
 	tmp_sect->x0 = near_round(data->x_canv);
 	tmp_sect->y0 = near_round(data->y_canv);
+	if (tmp_sect->x0 == data->sectors[data->current_sector].x0
+		&& tmp_sect->y0 == data->sectors[data->current_sector].y0)
+		space_imitation(data);
 	if (!(tmp_sect->next = (t_sector *)malloc(sizeof(t_sector))))
 		ft_error("Bad malloc in fill_next");
 	tmp_sect->next->next = NULL;

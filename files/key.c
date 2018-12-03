@@ -6,17 +6,47 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2218/11/07 16:44:45 by vomelchu          #+#    #+#             */
-/*   Updated: 2218/11/18 18:32:23 by vomelchu         ###   ########.fr       */
+/*   Updated: 2018/12/03 19:04:58 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-# define EXIT (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
+#define EXIT (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
+
+int		is_crossing_last_line(t_data *data)
+{
+	t_sector *sector;
+
+	data->p3.x = (double)data->sectors[data->current_sector].x0;
+	data->p3.y = (double)data->sectors[data->current_sector].y0;
+	sector = &data->sectors[data->current_sector];
+	while (sector->next->next != NULL)	
+		sector = sector->next;
+	data->p4.x = (double)sector->x0;
+	data->p4.y = (double)sector->y0;
+
+	if (bef_crossing(data, 1) == 1)
+		return (1);
+	return (0);
+}
+
+void	space_imitation(t_data *data)
+{
+
+	if (len_list(&data->sectors[data->current_sector]) >= 3
+			&& is_crossing_last_line(data) == 0)
+	{
+		data->current_sector++;
+		data->for_realloc++;
+		list_realloc(data);
+		data->check_click = 0;
+		data->sectors[data->current_sector].next = NULL;
+	}
+}
 
 void	key_event(t_data *data)
 {
 	SDL_Event	event;
-	//const Uint8 *keys = SDL_GetKeyboardState(NULL);
 
 	while (SDL_PollEvent(&event))
 	{
@@ -32,156 +62,27 @@ void	key_event(t_data *data)
 			//system("leaks doom");
 		}
 		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_SPACE))
-		{
-			if (len_list(&data->sectors[data->current_sector]) >= 3
-				&& bef_crossing(data) == 0)
-			{
-				data->current_sector++;
-				data->for_realloc++;
-				list_realloc(data);
-				data->check_click = 0;
-				data->sectors[data->current_sector].next = NULL;
-			}
-		}
+			space_imitation(data);
 		key_helper(data, event);
 	}
-}
-
-int		near_round(int q)
-{
-	int i;
-
-	i = q % 10;
-	if (i < 5)
-		return (q - i);
-	else
-		return((q - i) + 10);
-	return (q);
-}
-
-int		check_first_cross(t_data *data, int x1, int y1)
-{
-	t_sector *tmp_sec;
-	int i;
-	int x;
-	int y;
-
-	if (data->current_sector == 0)
-		return (1);
-	if (data->check_click == 1)
-		return (1);
-	i = -1;
-	coord_canvas(data, x1, y1);
-	x = near_round(data->x_canv);
-	y = near_round(data->y_canv);
-	while (++i != data->current_sector)
-	{
-		tmp_sec = &data->sectors[i];
-		while (tmp_sec->next != NULL)
-		{
-			if (x == tmp_sec->x0 && y == tmp_sec->y0)
-				return (1);
-			tmp_sec = tmp_sec->next;
-		}
-	}
-	return (0);
-}
-
-int		is_in_sectror(t_data *data, int x1, int y1)
-{
-	t_sector *sector;
-	int q;
-
-	q = -1;
-	while (++q != data->for_realloc)
-	{
-		sector = &data->sectors[q];
-		while (sector->next != NULL)
-		{
-			if (sector->x0 == x1 && sector->y0 == y1)
-			{
-				data->change_coord = sector;
-				return (1);
-			}
-			sector = sector->next;
-		}
-	}
-	return (0);
-}
-
-/*void	is_crossing_change_line(t_data *data)
-{
-	
-}
-*/
-void	change_position(t_data *data)
-{
-	int x;
-	int y;
-	int x1;
-	int y1;
-	t_sector *sector;
-
-	if (data->chang == 0)
-	{
-		SDL_GetMouseState(&x, &y);
-		coord_canvas(data, x, y);
-		x1 = near_round(data->x_canv);
-		y1 = near_round(data->y_canv);
-		if (is_in_sectror(data, x1, y1) == 1)
-			data->chang = 1;
-	}
-
-	if ((SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)) && data->chang == 1)
-	{
-		coord_canvas(data, x, y);
-		x1 = near_round(data->x_canv);
-		y1 = near_round(data->y_canv);
-		data->change_coord->x0 = x1;
-		data->change_coord->y0 = y1;
-	}
-	else
-		data->chang = 0;
-
 }
 
 void	mouse_line(t_data *data)
 {
 	int 		x;
 	int			y;
-	static int	tmp;
+	//static int	tmp;
 
 	SDL_PumpEvents();
 	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT))
-	{
-		if (tmp == 0)
-		{
-			if (data->check_click == 0 &&
-				check_first_cross(data, x, y) == 1)
-			{
-				data->x1_line = x;
-				data->y1_line = y;
-				fill_next(data, x, y);
-			}
-			else if (bef_crossing(data) == 0 &&
-				check_first_cross(data, x, y) == 1)
-			{
-				data->x1_line = x;
-				data->y1_line = y;
-				fill_next(data, x, y);
-			}
-			tmp++;
-			if (check_first_cross(data, x, y) == 1)
-				data->check_click = 1;
-		}
-	}
+		mouse_help(data, x, y);
 	else
 	{
-		if (tmp > 0)
-			tmp = 0;
+		if (data->tmp_count > 0)
+			data->tmp_count = 0;
 		data->x0_line = x;
 		data->y0_line = y;
 	}
-	bef_crossing(data);
+	bef_crossing(data, 0);
 	near_lines(data);
 }

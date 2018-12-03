@@ -12,79 +12,47 @@
 
 #include "doom_nukem.h"
 
-/*int		len_list(t_data *data, int q)
-{
-	int len;
-	t_sectors *sectors;
-
-	len = 0;
-	sectors = *data->sectors[q];
-	while (sectors.next != NULL)
-	{
-
-	}
-}*/
-
-void	wri_sectors(t_data *data, FILE *fp)
+void	wri_vert(t_data *data, FILE *fp)
 {
 	int q;
-	 size_t count;
-	char const *str = "SECTOR\n";
+	size_t count;
+	char const *vertex = "vertex    ";
 	char *num;
-	int y = 0;
+	t_sector *sector;
 
 	q = -1;
 	while (++q != data->current_sector + 1)
 	{
-		count = fwrite(str, ft_strlen(str), 1, fp);
-		if (data->sectors[q].next == NULL)
-			exit(1);
-		while (data->sectors[q].next != NULL)
+		sector = &data->sectors[q];
+		if (sector->next == NULL)
+			break;
+		while (sector->next != NULL)
 		{
-			num = ft_itoa(data->sectors[q].x0);
+			count = fwrite(vertex, ft_strlen(vertex), 1, fp);
+			num = ft_itoa(sector->x0);
 			count = fwrite(num, ft_strlen(num), 1, fp);
 			count = fwrite(" ", 1, 1, fp);
-			num = ft_itoa(data->sectors[q].y0);
+			num = ft_itoa(sector->y0);
 			count = fwrite(num, ft_strlen(num), 1, fp);
 			count = fwrite(" \n", 1, 2, fp);
-			data->sectors[q] = *data->sectors[q].next;
+			sector = sector->next;
 		}
-		printf("%d\n", ++y);
 	}
-
 }
 
 void	writting(t_data *data)
 {
 	FILE *fp;
-    //char const *str = "привет\n";
 
     fp = fopen(data->name, "wb");
     if(fp == NULL) {
         ft_error("Not FILE");
     }
-    wri_sectors(data, fp);
-    //count = fwrite(str, ft_strlen(str), 1, fp);
-   // count = fwrite(str, ft_strlen(str), 1, fp);
+    wri_vert(data, fp);
+    fwrite(" \n", 1, 2, fp);
+    fwrite(" \n", 1, 2, fp);
+    wri_sect(data, fp);
     if (fclose(fp) != 0)
     	ft_error("bad writting");
     fclose(fp);
 }
-
-/*int main(void)
-{
-    FILE *fp;
-    size_t count;
-    char const *str = "привет\n";
-
-    fp = fopen("пример.txt", "wb");
-    if(fp == NULL) {
-        perror("ошибка открытия пример.txt");
-        return EXIT_FAILURE;
-    }
-    count = fwrite(str, strlen(str), 1, fp);
-    printf("Записано %lu байт. fclose(fp) %s.\n", (unsigned long)count, fclose(fp) == 0 ? "успешно" : "с ошибкой");
-
-    fclose(fp);
-    return 0;
-}*/

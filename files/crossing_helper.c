@@ -12,24 +12,20 @@
 
 #include "doom_nukem.h"
 
-int		min(int	x, int y)
+int		init_vector(t_data *data)
 {
-	if (x < y)
-		return (x);
-	else
-		return (y);
-	return (x);
+	if (data->sectors[0].next == NULL ||
+			data->sectors[0].next->next == NULL
+			|| data->sectors[0].next->next->next == NULL)
+		return(1);
+	coord_canvas(data, data->x0_line, data->y0_line);
+	data->p3.x = (double)near_round(data->x_canv);
+	data->p3.y = (double)near_round(data->y_canv);
+	coord_canvas(data, data->x1_line, data->y1_line);
+	data->p4.x = (double)near_round(data->x_canv);
+	data->p4.y = (double)near_round(data->y_canv);
+	return (0);	
 }
-
-int		max(int	x, int y)
-{
-	if (x > y)
-		return (x);
-	else
-		return (y);
-	return (x);
-}
-
 
 int		normal_vec(t_data *data)
 {
@@ -65,8 +61,6 @@ int		first_vert(t_data *data)
 				max(data->p1.y, data->p2.y) >= Ya)
 		{
 			data->color = 0xff0000;
-		//printf("%f\n", Xa);
-		//printf("%f\n", Ya);
 			return (1);
 		}
 		return (0);
@@ -91,8 +85,6 @@ int		second_vert(t_data *data)
 				min(data->p3.y, data->p4.y) <= Ya && max(data->p3.y, data->p4.y) >= Ya)
 		{
 			data->color = 0xff0000;
-		//	printf("x--%f\n", Xa);
-		//	printf("y--%f\n", Ya);
 			return (1);
 		}
 		return (0);

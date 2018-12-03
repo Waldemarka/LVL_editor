@@ -39,7 +39,6 @@ typedef struct  s_sector
                 int x0;
                 int y0;
                 struct s_sector *next;
-               // struct s_sector *previous; 
 }               t_sector;
 
 typedef struct  s_data
@@ -47,13 +46,11 @@ typedef struct  s_data
     SDL_Window      *win;
     SDL_Renderer    *ren;
     SDL_Texture     *screen;
-    SDL_Texture     *dot;
-
+    SDL_Surface     *dot;
     char            *name;
     int             buf[HEIGHT][WIDTH];
     int             for_exit;
     int             fd;
-
     int             x0;
     int             y0;
     int             x1;
@@ -71,21 +68,17 @@ typedef struct  s_data
     int             step_for_y;
     int             for_realloc;
     int             current_sector;
-    int             check_click;
-
+    int             check_click;//ƒ
     int             max_canv_x;
     int             max_canv_y;
     int             start_coord_x;
     int             start_coord_y;
-
     float           x_canv;
     float           y_canv;
-
     int             iter;
-
     int             change_position;
     int             chang;
-
+    int             tmp_count;
     t_sector        *sectors;
     t_sector        *tmp;
     t_sector        *change_coord;
@@ -112,17 +105,27 @@ void                limit_coord(t_data *data, int x, int y);
 void                writting(t_data *data);
 int                 near_round(int q);
 void                near_lines(t_data *data);
-int                 bef_crossing(t_data *data);
+int                 bef_crossing(t_data *data, int check);
 int                 len_list(t_sector *sectors);
 int                 max(int x, int y);
 int                 min(int x, int y);
 int                 normal_vec(t_data *data);
 int                 first_vert(t_data *data);
 int                 second_vert(t_data *data);
-
+void                space_imitation(t_data *data);
 int                 touch_dots(t_data *data);
-
 SDL_Surface         *load_image(char *path);
 unsigned int        get_pixel_int(SDL_Surface *surface, int x, int y);
+void                change_position(t_data *data);
+void                wri_sect(t_data *data, FILE *fp);
+void                writte_walls(t_data *data, FILE *fp, int q, size_t count);
+int                 find_wall(t_data *data, vector dot_1, vector dot_2, int check);
+void                mouse_help(t_data *data, int x, int y);
+void                change_position(t_data *data);
+int                 is_in_sectror(t_data *data, int x1, int y1);
+int                 check_first_cross(t_data *data, int x1, int y1);
+int                 min(int x, int y);
+int                 max(int x, int y);
+int                 init_vector(t_data *data);
 
 #endif
