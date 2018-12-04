@@ -79,13 +79,6 @@ void	key_helper_2(t_data *data, SDL_Event event, int tmp[2])
 		data->start_coord_x -= ((data->max_canv_x - data->start_coord_x) / 22);
 		data->max_canv_x -= ((data->max_canv_x - tmp[0]) / 22);
 	}
-	if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_p))
-	{
-		if (data->change_position == 0 && data->check_click == 0)
-			data->change_position = 1;
-		else
-			data->change_position = 0;
-	}
 }
 
 void	key_helper(t_data *data, SDL_Event	event)

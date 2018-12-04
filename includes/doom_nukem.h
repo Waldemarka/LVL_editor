@@ -6,7 +6,7 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 14:15:45 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/10/20 14:19:55 by vomelchu         ###   ########.fr       */
+/*   Updated: 2018/12/04 15:51:53 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,62 +30,70 @@
 
 typedef struct  s_vector
 {
-        double x;
-        double y;
+	double x;
+	double y;
 }               vector;
+
+typedef struct s_vertex
+{
+	int     x_vert;
+    int     y_vert;
+	struct  s_vertex *next;
+}               vertex;
 
 typedef struct  s_sector
 {
-                int x0;
-                int y0;
-                struct s_sector *next;
+	int x0;
+	int y0;
+	struct s_sector *next;
 }               t_sector;
 
 typedef struct  s_data
 {
-    SDL_Window      *win;
-    SDL_Renderer    *ren;
-    SDL_Texture     *screen;
-    SDL_Surface     *dot;
-    char            *name;
-    int             buf[HEIGHT][WIDTH];
-    int             for_exit;
-    int             fd;
-    int             x0;
-    int             y0;
-    int             x1;
-    int             y1;
-    int             x0_line;
-    int             y0_line;
-    int             x1_line;
-    int             y1_line;
-    int             deltax;
-    int             deltay;
-    int             x_step;
-    int             y_step;
-    int             color;
-    int             step_for_x;
-    int             step_for_y;
-    int             for_realloc;
-    int             current_sector;
-    int             check_click;//ƒ
-    int             max_canv_x;
-    int             max_canv_y;
-    int             start_coord_x;
-    int             start_coord_y;
-    float           x_canv;
-    float           y_canv;
-    int             iter;
-    int             change_position;
-    int             chang;
-    int             tmp_count;
-    t_sector        *sectors;
-    t_sector        *tmp;
-    t_sector        *change_coord;
-    vector          p1;
-    vector          p2;
-    vector          p3;
-    vector          p4;
+	SDL_Window      *win;
+	SDL_Renderer    *ren;
+	SDL_Texture     *screen;
+	SDL_Surface     *dot;
+	char            *name;
+	int             buf[HEIGHT][WIDTH];
+	int             for_exit;
+	int             fd;
+	int             x0;
+	int             y0;
+	int             x1;
+	int             y1;
+	int             x0_line;
+	int             y0_line;
+	int             x1_line;
+	int             y1_line;
+	int             deltax;
+	int             deltay;
+	int             x_step;
+	int             y_step;
+	int             color;
+	int             step_for_x;
+	int             step_for_y;
+	int             for_realloc;
+	int             current_sector;
+	int             check_click;
+	int             max_canv_x;
+	int             max_canv_y;
+	int             start_coord_x;
+	int             start_coord_y;
+	float           x_canv;
+	float           y_canv;
+	int             iter;
+	int             change_position;
+	int             chang;
+	int             tmp_count;
+	t_sector        *sectors;
+	t_sector        *tmp;
+	t_sector        *change_coord;
+	vertex          vertex;
+	vector          p1;
+	vector          p2;
+	vector          p3;
+	vector          p4;
 }                   t_data;
 
 void                ft_error(char *str);
@@ -107,8 +115,6 @@ int                 near_round(int q);
 void                near_lines(t_data *data);
 int                 bef_crossing(t_data *data, int check);
 int                 len_list(t_sector *sectors);
-int                 max(int x, int y);
-int                 min(int x, int y);
 int                 normal_vec(t_data *data);
 int                 first_vert(t_data *data);
 int                 second_vert(t_data *data);
@@ -124,8 +130,9 @@ void                mouse_help(t_data *data, int x, int y);
 void                change_position(t_data *data);
 int                 is_in_sectror(t_data *data, int x1, int y1);
 int                 check_first_cross(t_data *data, int x1, int y1);
-int                 min(int x, int y);
-int                 max(int x, int y);
+double              min(double x, double y);
+double              max(double x, double y);
 int                 init_vector(t_data *data);
+void                ft_swap(int *a, int *b);
 
 #endif

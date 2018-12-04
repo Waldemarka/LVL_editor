@@ -24,20 +24,16 @@ int		near_round(int q)
 	return (q);
 }
 
-int		min(int	x, int y)
+double		min(double	x, double y)
 {
 	if (x < y)
 		return (x);
-	else
-		return (y);
-	return (x);
+	return (y);
 }
 
-int		max(int	x, int y)
+double		max(double	x, double y)
 {
 	if (x > y)
 		return (x);
-	else
-		return (y);
-	return (x);
+	return (y);
 }

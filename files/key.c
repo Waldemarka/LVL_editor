@@ -61,6 +61,13 @@ void	key_event(t_data *data)
 			writting(data);
 			//system("leaks doom");
 		}
+		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_p))
+		{
+			if (data->change_position == 0 && data->check_click == 0)
+				data->change_position = 1;
+			else
+				data->change_position = 0;
+		}
 		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_SPACE))
 			space_imitation(data);
 		key_helper(data, event);
