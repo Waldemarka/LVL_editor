@@ -6,7 +6,7 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 19:23:22 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/12/03 19:23:24 by vomelchu         ###   ########.fr       */
+/*   Updated: 2018/12/09 17:45:12 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,22 +100,22 @@ void	change_position(t_data *data)
 void	mouse_help(t_data *data, int x, int y)
 {
 	if (data->tmp_count == 0)
+	{
+		if (data->check_click == 0 &&
+				check_first_cross(data, x, y) == 1)
 		{
-			if (data->check_click == 0 &&
-					check_first_cross(data, x, y) == 1)
-			{
-				data->check_click = 1;
-				data->x1_line = x;
-				data->y1_line = y;
-				fill_next(data, x, y);
-			}
-			else if (bef_crossing(data, 0) == 0 &&
-					check_first_cross(data, x, y) == 1)
-			{
-				data->x1_line = x;
-				data->y1_line = y;
-				fill_next(data, x, y);
-			}
-			data->tmp_count++;
+			data->check_click = 1;
+			data->x1_line = x;
+			data->y1_line = y;
+			fill_next(data, x, y);
 		}
+		else if (bef_crossing(data, 0) == 0 &&
+				check_first_cross(data, x, y) == 1)
+		{
+			data->x1_line = x;
+			data->y1_line = y;
+			fill_next(data, x, y);
+		}
+		data->tmp_count++;
+	}
 }

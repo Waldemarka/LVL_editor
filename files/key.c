@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-#define EXIT (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
 
 int		is_crossing_last_line(t_data *data)
 {
@@ -41,6 +40,7 @@ void	space_imitation(t_data *data)
 		list_realloc(data);
 		data->check_click = 0;
 		data->sectors[data->current_sector].next = NULL;
+		data->check_menu = 1;
 	}
 }
 

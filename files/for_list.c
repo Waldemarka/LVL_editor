@@ -34,6 +34,8 @@ void	list_copy(t_sector *new, t_sector *old)
 		//new->x0 = old->x0;
 		ft_swap(&new->x0, &old->x0);
 		ft_swap(&new->y0, &old->y0);
+		ft_swap(&new->floor, &old->floor);
+		ft_swap(&new->ceil, &old->ceil);
 		//new->y0 = old->y0;
 		if (!(new->next = (t_sector *)malloc(sizeof(t_sector))))
 			ft_error("Bad malloc in list_copy");
@@ -64,6 +66,39 @@ void	free_list(t_data *data, t_sector **list)
 	free(list[i]);
 }
 */
+
+struct s_sector* CopyList(struct s_sector* head) 
+{
+   struct s_sector* current = head; //первый элемент оригинального списка
+   struct s_sector* newList = NULL; //первый элемент нового списка
+   struct s_sector* tail = NULL; //последний элемент нового списка
+   while (current != NULL) 
+   {
+      if (newList == NULL)  //создается первый элемент нового списка
+      { 
+         newList = malloc(sizeof(struct s_sector));
+         newList->x0 = current->x0;
+         newList->y0 = current->y0;
+         newList->floor = current->floor;
+         newList->ceil = current->ceil;
+         newList->next = NULL;
+         tail = newList;
+      }
+      else 
+      {
+         tail->next = malloc(sizeof(struct s_sector));
+         tail = tail->next;
+         newList->x0 = current->x0;
+         newList->y0 = current->y0;
+         newList->floor = current->floor;
+         newList->ceil = current->ceil;
+         tail->next = NULL;
+      }
+      current = current->next;
+   }
+   return(newList);
+}
+
 void	free_list(t_sector *list)
 {
 	t_sector *tmp;
@@ -82,6 +117,8 @@ void	list_realloc(t_data *data)
 	int q;
 
 	q = -1;
+//	data->tmp = CopyList(data->sectors);
+//	printf("%d \n", data->tmp->x0);
 	list_malloc(&data->tmp, data->for_realloc - 1);
 	while (++q != data->for_realloc - 1)
 		list_copy(&data->tmp[q], &data->sectors[q]);

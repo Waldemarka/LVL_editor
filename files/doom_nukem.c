@@ -42,16 +42,18 @@ void    init_all(t_data *data)
 	data->change_position = 0;
 	data->chang = 0;
 	data->tmp_count = 0;
-	data->dot = load_image("dot.png");
+	data->check_menu = 1;
+	data->floor = 0;
+	data->ceil = 20;
+	data->flo_or_cei = 0;
+	data->dot[0] = *load_image("menu_0.jpg");
+	data->dot[1] = *load_image("menu_1.jpg");
+	data->dot[2] = *load_image("menu_2.jpeg");
+	data->picture_menu = 0;
 }
 
-void    game(t_data *data)
+void	game_render(t_data *data)
 {
-	while (data->for_exit != 1)
-	{
-		SDL_UpdateTexture(data->screen, NULL, data->buf, WIDTH << 2);
-		SDL_RenderCopy(data->ren, data->screen, NULL, NULL);
-		SDL_RenderPresent(data->ren);
 		int i = -1;
 		while (++i != HEIGHT)
 		{
@@ -85,7 +87,20 @@ void    game(t_data *data)
 					data->buf[i][x] = 0x4f4b4b;
 			}
 		}
-        //draw_icon(data);
+}
+
+void    game(t_data *data)
+{
+	while (data->for_exit != 1)
+	{
+		SDL_UpdateTexture(data->screen, NULL, data->buf, WIDTH << 2);
+		SDL_RenderCopy(data->ren, data->screen, NULL, NULL);
+		if (data->check_menu == 1)
+			menu(data);
+		else
+			game_render(data);
+
+		SDL_RenderPresent(data->ren);
 	}
 }
 

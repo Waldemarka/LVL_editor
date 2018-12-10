@@ -27,6 +27,19 @@
 
 #define WIDTH 720
 #define HEIGHT 720
+#define EXIT (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
+#define F_ARIAL 	"fonts/ARIAL.TTF"
+#define F_MORPHEUS 	"fonts/MORPHEUS.TTF"
+# define MF 	data->fonts
+
+
+typedef struct 	s_font_data
+{
+	SDL_Surface 	*font_surf;
+	SDL_Texture 	*font_textr;
+	TTF_Font		*font_ttf;
+	SDL_Rect 		font_rect;
+}				t_font_data;
 
 typedef struct  s_vector
 {
@@ -45,6 +58,8 @@ typedef struct  s_sector
 {
 	int x0;
 	int y0;
+	int floor;
+	int ceil;
 	struct s_sector *next;
 }               t_sector;
 
@@ -53,7 +68,7 @@ typedef struct  s_data
 	SDL_Window      *win;
 	SDL_Renderer    *ren;
 	SDL_Texture     *screen;
-	SDL_Surface     *dot;
+	SDL_Surface     dot[3];
 	char            *name;
 	int             buf[HEIGHT][WIDTH];
 	int             for_exit;
@@ -86,9 +101,17 @@ typedef struct  s_data
 	int             change_position;
 	int             chang;
 	int             tmp_count;
+
+	int				check_menu;
+	int				picture_menu;
+	int				floor;
+	int				ceil;
+	int				flo_or_cei;
+
 	t_sector        *sectors;
 	t_sector        *tmp;
 	t_sector        *change_coord;
+	t_font_data 	fonts;
 	vertex          vertex;
 	vector          p1;
 	vector          p2;
@@ -123,8 +146,8 @@ int                 touch_dots(t_data *data);
 SDL_Surface         *load_image(char *path);
 unsigned int        get_pixel_int(SDL_Surface *surface, int x, int y);
 void                change_position(t_data *data);
-void                wri_sect(t_data *data, FILE *fp);
-void                writte_walls(t_data *data, FILE *fp, int q, size_t count);
+//void                wri_sect(t_data *data, FILE *fp);
+//void                writte_walls(t_data *data, FILE *fp, int q);
 int                 find_wall(t_data *data, vector dot_1, vector dot_2, int check);
 void                mouse_help(t_data *data, int x, int y);
 void                change_position(t_data *data);
@@ -134,5 +157,12 @@ double              min(double x, double y);
 double              max(double x, double y);
 int                 init_vector(t_data *data);
 void                ft_swap(int *a, int *b);
+int    draw_text(t_data *data, char *text, int x, int y, SDL_Color color, char *font_path, int font_size);
+
+void	writte_walls(t_data *data, FILE *fp, int q);
+int		find_wall(t_data *data, vector dot_1, vector dot_2, int check);
+void	make_vertex_list(t_data *data);
+int 	num_ele(t_data *data, int x, int y);
+void	menu(t_data *data);
 
 #endif

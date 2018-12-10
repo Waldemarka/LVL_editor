@@ -12,40 +12,6 @@
 
 #include "doom_nukem.h"
 
-void	wri_vert(t_data *data, FILE *fp)
-{
-	int q;
-	size_t count;
-	char const *vertex = "vertex    ";
-	char *num;
-	t_sector *sector;
-
-	q = -1;
-	while (++q != data->current_sector + 1)
-	{
-		sector = &data->sectors[q];
-		if (sector->next == NULL)
-			break;
-		while (sector->next != NULL)
-		{
-			count = fwrite(vertex, ft_strlen(vertex), 1, fp);
-			num = ft_itoa(sector->y0);
-			count = fwrite(num, ft_strlen(num), 1, fp);
-			count = fwrite(" ", 1, 1, fp);
-			num = ft_itoa(sector->x0);
-			count = fwrite(num, ft_strlen(num), 1, fp);
-			count = fwrite(" \n", 1, 2, fp);
-			sector = sector->next;
-		}
-	}
-}
-
-void	malloc_vertex(vertex *new_vertex)
-{
-	if (!(new_vertex = (vertex *)malloc(sizeof(vertex) * 1)))
- 		ft_error("Bad realloc in vertex");
-}
-
 void	sort_list(t_data *data)
 {
 	vertex *orig;
@@ -64,53 +30,7 @@ void	sort_list(t_data *data)
 		else
 			orig = orig->next;
 	}
-	/*while (data->vertex.next != NULL)
- 	{
- 		printf("x : %d ----- y : %d\n", data->vertex.x_vert, data->vertex.y_vert);
- 		data->vertex = *data->vertex.next;
- 	}*/
 }
-
-void	make_vertex_list(t_data *data)
-{
-	int q;
-	t_sector *sector;
-	vertex *vert;
-
-	q = -1;
-	malloc_vertex(&data->vertex);
-	vert = &data->vertex;
-	if (data->sectors[data->current_sector].next == NULL)
-		data->current_sector -= 1;
- 	while (++q <= data->current_sector)
- 	{
- 		sector = &data->sectors[q];
- 		while (sector->next != NULL)
- 		{
- 			vert->x_vert = sector->x0;
- 			vert->y_vert = sector->y0;
- 			//malloc_vertex(&vert->next);
- 			if (sector->next != NULL)
- 			{
- 				if (!(vert->next = (vertex *)malloc(sizeof(vertex))))
-					ft_error("Bad malloc in vertex");
- 				vert = vert->next;
- 			}
- 			sector = sector->next;
- 		}
- 	}
- 	vert->next = NULL;
- /*	while (data->vertex.next != NULL)
- 	{
- 		printf("x : %d ----- y : %d\n", data->vertex.x_vert, data->vertex.y_vert);
- 		data->vertex = *data->vertex.next;
- 	}*/
-}
-
-/*num = ft_itoa(sector->y0);
-			count = fwrite(num, ft_strlen(num), 1, fp);
-			count = fwrite(" \n", 1, 2, fp);*/
-
 
 void	write_vertex(t_data *data, FILE *fp)
 {
@@ -130,30 +50,13 @@ void	write_vertex(t_data *data, FILE *fp)
 			fwrite(" ", 1, 1, fp);
 			tmp = tmp->next;
 		}
-		printf("%d\n", tmp->y_vert);
 		if (tmp->next == NULL)
 			break;
 		num = tmp->y_vert;
 		fwrite("\n", 1, 1, fp);
-		//tmp = tmp->next;
 	}
 }
 
-int 	num_ele(t_data *data, int x, int y)
-{
-	vertex *vert;
-	int q;
-
-	q = 0;
-	vert = &data->vertex;
-	while (vert->next != NULL)
-	{
-		if (vert->x_vert == x && vert->y_vert == y)
-			return (q);
-		q++;
-		vert = vert->next;
-	}
-}
 
 void	write_sector(t_data *data, FILE *fp)
 {
@@ -161,17 +64,24 @@ void	write_sector(t_data *data, FILE *fp)
 	int q;
 
 	q = -1;
-	while (++q != data->current_sector)
+	while (++q != data->current_sector + 1)
 	{
 		sector = &data->sectors[q];
-		fwrite("sector  0  20    ", 7, 1, fp);
+		fwrite("sector  ", 8, 1, fp);
+		fwrite(ft_itoa(data->sectors[q].floor), ft_strlen(ft_itoa(data->sectors[q].floor)), 1, fp);
+		fwrite("  ", 2, 1, fp);
+		fwrite(ft_itoa(data->sectors[q].ceil), ft_strlen(ft_itoa(data->sectors[q].ceil)), 1, fp);
+		fwrite("  ", 2, 1, fp);
 		while (sector->next != NULL)
 		{
 			fwrite(ft_itoa(num_ele(data, sector->x0, sector->y0)),
 				ft_strlen(ft_itoa(num_ele(data, sector->x0, sector->y0))), 1, fp);
-fwrite("  ", 2, 1, fp);
+			fwrite(" ", 1, 1, fp);
 			sector = sector->next;
 		}
+		fwrite("    ", 4, 1, fp);
+		writte_walls(data, fp, q);
+		fwrite("\n", 1, 1, fp);
 	}
 }
 
@@ -180,6 +90,7 @@ void	sorting_list(t_data *data, FILE *fp)
 	make_vertex_list(data);
  	sort_list(data);
  	write_vertex(data, fp);
+ 	fwrite("\n\n", 2, 1, fp);
  	write_sector(data, fp);
 }
 
@@ -191,10 +102,6 @@ void	writting(t_data *data)
     if(fp == NULL) {
         ft_error("Not FILE");
     }
-    //wri_vert(data, fp);
-    //fwrite(" \n", 1, 2, fp);
-    //fwrite(" \n", 1, 2, fp);
-    //wri_sect(data, fp);
     sorting_list(data, fp);
     if (fclose(fp) != 0)
     	ft_error("bad writting");
