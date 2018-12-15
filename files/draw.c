@@ -17,6 +17,7 @@ void	fill_next(t_data *data, int x, int y)
 	t_sector *tmp_sect;
 
 	tmp_sect = &data->sectors[data->current_sector];
+	//printf("%d\n", len_list(tmp_sect));
 	while (tmp_sect->next != NULL)
 		tmp_sect = tmp_sect->next;
 	coord_canvas(data, x, y);
@@ -36,15 +37,10 @@ void	draw_lines(t_data *data)
 {
 	t_sector *tmp_sect;
 	int i;
-	int len;
 
 	i = -1;
 	data->color = 0x15eb43;
-	if (data->check_click != 0)
-		len = data->for_realloc;
-	else
-		len = data->for_realloc -1;
-	while (++i < data->for_realloc)
+	while (++i < data->current_sector + 1)
 	{
 		tmp_sect = &data->sectors[i];	
 		while (tmp_sect->next != NULL)
@@ -84,11 +80,11 @@ void	draw_grid(t_data *data)
 	q = normalize_line(data->start_coord_x);
 	while (q <= data->max_canv_x)
 	{
-		data->color = 0x2d4d49;
+		data->color = 0x001b3d;
 		if (q % 50 == 0)
-			data->color = 0x021c5d;
+			data->color = 0x122b68;
 		if (q % 250 == 0)
-			data->color = 0xc1845d;
+			data->color = 0xc1a3c93;
 		coord_displ(data, q, data->max_canv_y);
 		data->x1 = data->x0;
 		data->y1 = data->y0;
@@ -99,11 +95,11 @@ void	draw_grid(t_data *data)
 	q = normalize_line(data->start_coord_y);
 	while (q <= data->max_canv_y)
 	{
-		data->color = 0x2d4d49;
+		data->color = 0x001b3d;
 		if (q % 50 == 0)
-			data->color = 0x021c5d;
+			data->color = 0x122b68;
 		if (q % 250 == 0)
-			data->color = 0xc1845d;
+			data->color = 0xc1a3c93;
 		coord_displ(data, data->max_canv_x, q);
 		data->x1 = data->x0;
 		data->y1 = data->y0;

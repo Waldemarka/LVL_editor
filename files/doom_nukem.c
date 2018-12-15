@@ -31,7 +31,6 @@ void    init_all(t_data *data)
 	if (!(data->screen = SDL_CreateTexture(data->ren,
 					SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, WIDTH, HEIGHT)))
 		ft_error("BAD INIT SDL2\n");
-	data->for_realloc = 1;
 	data->current_sector = 0;
 	data->sectors[0].next = NULL;
 	data->check_click = 0;
@@ -39,17 +38,61 @@ void    init_all(t_data *data)
 	data->max_canv_y = 360;
 	data->start_coord_x = 0;
 	data->start_coord_y = 0;
-	data->change_position = 0;
-	data->chang = 0;
-	data->tmp_count = 0;
 	data->check_menu = 1;
 	data->floor = 0;
 	data->ceil = 20;
 	data->flo_or_cei = 0;
-	data->dot[0] = *load_image("menu_0.jpg");
-	data->dot[1] = *load_image("menu_1.jpg");
-	data->dot[2] = *load_image("menu_2.jpeg");
+	data->dot[0] = load_image("menu_0.jpg");
+	data->dot[1] = load_image("menu_1.jpg");
+	data->dot[2] = load_image("menu_2.jpeg");
+	data->icon[0] = load_image("./32/3.png");
+	data->icon[1] = load_image("./32/3_bl.png");
+	data->icon[2] = load_image("./32/1.png");
+	data->icon[3] = load_image("./32/2.png");
+	data->icon[4] = load_image("./32/4.png");
+	data->icon[5] = load_image("./32/5.png");
+	data->icon[6] = load_image("./32/6.png");
+	data->icon[7] = load_image("./32/7.png");
+	data->icon[8] = load_image("./32/8.png");
+	data->icon[9] = load_image("./32/9.png");
+	data->icon64[0] = load_image("./64/3.png");
+	data->icon64[1] = load_image("./64/3_bl.png");
+	data->icon64[2] = load_image("./64/1.png");
+	data->icon64[3] = load_image("./64/2.png");
+	data->icon64[4] = load_image("./64/4.png");
+	data->icon64[5] = load_image("./64/5.png");
+	data->icon64[6] = load_image("./64/6.png");
+	data->icon64[7] = load_image("./64/7.png");
+	data->icon64[8] = load_image("./64/8.png");
+	data->icon64[9] = load_image("./64/9.png");
+
 	data->picture_menu = 0;
+	data->num_icon = -1;
+	data->object = 0;
+}
+
+void	draw_back(t_data *data)
+{
+	int i = -1;
+		while (++i != HEIGHT)
+		{
+			int x = -1;
+			while(++x != WIDTH)
+			{
+				data->buf[i][x] = 0;
+			}
+		}
+
+	i = 223;
+	while (++i != HEIGHT)
+	{
+		int x = -1;
+		while(++x != WIDTH)
+		{
+			if (data->buf[i][x] == 0)
+				data->buf[i][x] = 0x3c3c3c;
+		}
+	}
 }
 
 void	game_render(t_data *data)
@@ -66,10 +109,7 @@ void	game_render(t_data *data)
 		key_event(data);
 		draw_grid(data);
 		data->color = 0x15eb43;
-		if (data->change_position == 0)
-			mouse_line(data);
-		else if (data->change_position == 1)
-			change_position(data);
+		mouse_line(data);
 		if (data->check_click != 0)
 		{
 			bresenham_line(data);
@@ -77,16 +117,6 @@ void	game_render(t_data *data)
 		}
 		else
 			draw_lines(data);
-		i = -1;
-		while (++i != HEIGHT)
-		{
-			int x = -1;
-			while(++x != WIDTH)
-			{
-				if (data->buf[i][x] == 0)
-					data->buf[i][x] = 0x4f4b4b;
-			}
-		}
 }
 
 void    game(t_data *data)
@@ -95,11 +125,18 @@ void    game(t_data *data)
 	{
 		SDL_UpdateTexture(data->screen, NULL, data->buf, WIDTH << 2);
 		SDL_RenderCopy(data->ren, data->screen, NULL, NULL);
+		draw_back(data);
 		if (data->check_menu == 1)
-			menu(data);
+		{
+			draw_grid(data);
+			draw_lines(data);
+			menu(data, 0);
+		}
 		else
+		{
 			game_render(data);
-
+			menu(data, 1);
+		}
 		SDL_RenderPresent(data->ren);
 	}
 }
@@ -116,10 +153,15 @@ int     main(int argc, char **argv)
 		data->fd = open(data->name, O_DIRECTORY);
 		if (data->fd >= 0)
 			ft_error("NOT DIRECTORY\n");
-		list_malloc(&data->sectors, 1);
 		data->sectors[0].next = NULL;
 		init_all(data);
+		draw_grid(data);
 		game(data);
+		int q = -1;
+		while(++q != 3)
+			SDL_FreeSurface(data->dot[q]);
+		q = -1;
+
 	}
 	else
 		ft_error("BAD NUM ARGC\n");

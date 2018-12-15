@@ -36,8 +36,6 @@ void	space_imitation(t_data *data)
 			&& is_crossing_last_line(data) == 0)
 	{
 		data->current_sector++;
-		data->for_realloc++;
-		list_realloc(data);
 		data->check_click = 0;
 		data->sectors[data->current_sector].next = NULL;
 		data->check_menu = 1;
@@ -59,16 +57,10 @@ void	key_event(t_data *data)
 		{
 			data->for_exit = 1;
 			writting(data);
-			//system("leaks doom");
+			//system("leaks lvl_editor");
 		}
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_p))
-		{
-			if (data->change_position == 0 && data->check_click == 0)
-				data->change_position = 1;
-			else
-				data->change_position = 0;
-		}
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_SPACE))
+		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_SPACE)
+			&& len_list(&data->sectors[data->current_sector]) <= 4)
 			space_imitation(data);
 		key_helper(data, event);
 	}
@@ -78,10 +70,9 @@ void	mouse_line(t_data *data)
 {
 	int 		x;
 	int			y;
-	//static int	tmp;
 
 	SDL_PumpEvents();
-	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT))
+	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT) && y > 223)
 		mouse_help(data, x, y);
 	else
 	{

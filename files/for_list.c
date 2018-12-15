@@ -6,17 +6,12 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 18:03:30 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/11/07 18:03:31 by vomelchu         ###   ########.fr       */
+/*   Updated: 2018/12/11 16:48:29 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
- void	list_malloc(t_sector **list, int size)
- {
- 	if (!(*list = (t_sector *)malloc(sizeof(t_sector) * size)))
- 		ft_error("Bad realloc");
- }
 
 void	ft_swap(int *a, int *b)
 {
@@ -27,89 +22,115 @@ void	ft_swap(int *a, int *b)
 	*b = tmp;
 }
 
-void	list_copy(t_sector *new, t_sector *old)
+/*void	list_copy(t_sector *new, t_sector *old)
+  {
+  while (old->next != NULL)
+  {
+//new->x0 = old->x0;
+ft_swap(&new->x0, &old->x0);
+ft_swap(&new->y0, &old->y0);
+ft_swap(&new->floor, &old->floor);
+ft_swap(&new->ceil, &old->ceil);
+//new->y0 = old->y0;
+if (!(new->next = (t_sector *)malloc(sizeof(t_sector))))
+ft_error("Bad malloc in list_copy");
+new = new->next;
+old = old->next;
+}
+new->next = NULL;
+}*/
+
+/*void	list_copy(t_data *data, int i)
 {
-	while (old->next != NULL)
+	t_sector *new;
+	t_sector old;
+	int q;
+
+	q = -1;
+	while (++q < data->current_sector)
 	{
-		//new->x0 = old->x0;
-		ft_swap(&new->x0, &old->x0);
-		ft_swap(&new->y0, &old->y0);
-		ft_swap(&new->floor, &old->floor);
-		ft_swap(&new->ceil, &old->ceil);
-		//new->y0 = old->y0;
-		if (!(new->next = (t_sector *)malloc(sizeof(t_sector))))
-			ft_error("Bad malloc in list_copy");
-		new = new->next;
-		old = old->next;
+		if (i == 0)
+		{
+			new = &data->tmp[q];
+			old = data->sectors[q];
+		}
+		else
+		{
+			new = &data->sectors[q];
+			old =  data->tmp[q];	
+		}
+		while (old.next != NULL)
+		{
+			new->x0 = old.x0;
+			new->y0 = old.y0;
+			new->floor = old.floor;
+			new->ceil = old.ceil;
+			if (!(new->next = (t_sector *)malloc(sizeof(t_sector))))
+				ft_error("Bad malloc in list_copy");
+			new = new->next;
+			old = *old.next;
+		}
+		new->next = NULL;
 	}
-	new->next = NULL;
 }
 
-/*
-void	free_list(t_data *data, t_sector **list)
+void	free_list(t_data *data, int i)
 {
+	t_sector **sector;
 	t_sector *tmp;
-	int i = -1;
-	while (++i < data->for_realloc - 1)
+	int q;
+
+	q = -1;
+	if (i == 0)
+		sector = &data->sectors;
+	else
+		sector = &data->tmp;
+	while (++q < data->current_sector)
 	{
-		printf("------\n");
-		while (list[i]->next != NULL)
+		while (sector[q]->next != NULL)
 		{
-			tmp = list[i]->next;
-			printf("%d\n", i);
-			printf("%d\n", list[i]->x0);
-			printf("%d\n", data->tmp[0].x0);
-			free(list[i]);
-			list[i] = tmp;
+			tmp = sector[q];
+			free(sector[q]);
+			sector[q] = tmp;
+			sector[q] = sector[q]->next;
 		}
 	}
-	free(list[i]);
-}
-*/
+}*/
 
-struct s_sector* CopyList(struct s_sector* head) 
+void	del_list(t_data *data, int q, int i)
 {
-   struct s_sector* current = head; //первый элемент оригинального списка
-   struct s_sector* newList = NULL; //первый элемент нового списка
-   struct s_sector* tail = NULL; //последний элемент нового списка
-   while (current != NULL) 
-   {
-      if (newList == NULL)  //создается первый элемент нового списка
-      { 
-         newList = malloc(sizeof(struct s_sector));
-         newList->x0 = current->x0;
-         newList->y0 = current->y0;
-         newList->floor = current->floor;
-         newList->ceil = current->ceil;
-         newList->next = NULL;
-         tail = newList;
-      }
-      else 
-      {
-         tail->next = malloc(sizeof(struct s_sector));
-         tail = tail->next;
-         newList->x0 = current->x0;
-         newList->y0 = current->y0;
-         newList->floor = current->floor;
-         newList->ceil = current->ceil;
-         tail->next = NULL;
-      }
-      current = current->next;
-   }
-   return(newList);
-}
-
-void	free_list(t_sector *list)
-{
+	t_sector *sector;
 	t_sector *tmp;
 
-	while (list->next != NULL)
+	if (i == 0)
 	{
-		tmp = list->next;
-		free(list);
-		list = tmp;
+		sector = &data->sectors[q];
+		tmp = &data->sectors[q];
 	}
-	free(list);
+	else
+	{
+		sector = &data->tmp[q];
+		tmp = &data->tmp[q];
+	}
+	while (sector->next != NULL)
+	{
+		
+		if (sector->next->next == NULL)
+		{
+			free(sector->next);
+			sector->next = NULL;
+			sector = tmp;
+		}
+		else
+			sector = sector->next;
+	}
+	sector->next = NULL;
+}
+
+/*void	list_malloc(t_sector **list, int q)
+{
+	if (!(list[q] = (t_sector *)malloc(sizeof(t_sector))))
+		ft_error("Bad realloc");
 }
 
 void	list_realloc(t_data *data)
@@ -117,20 +138,22 @@ void	list_realloc(t_data *data)
 	int q;
 
 	q = -1;
-//	data->tmp = CopyList(data->sectors);
-//	printf("%d \n", data->tmp->x0);
-	list_malloc(&data->tmp, data->for_realloc - 1);
-	while (++q != data->for_realloc - 1)
-		list_copy(&data->tmp[q], &data->sectors[q]);
-	//free_list(data, &data->sectors); // leaks
-	//printf("%d\n", data->tmp[0].x0);
-	list_malloc(&data->sectors, data->for_realloc);
+	list_malloc(&data->tmp, data->current_sector - 1);
+	while (++q != data->current_sector)
+		list_copy(data, 0);
 	q = -1;
-	while (++q != data->for_realloc - 1)
-		list_copy(&data->sectors[q], &data->tmp[q]);
-	//free_list(data, &data->tmp); //leaks
+	while (++q < data->current_sector)
+		del_list(data, q, 0);
+	list_malloc(&data->sectors, data->current_sector);
+	q = -1;
+	while (++q != data->current_sector - 1)
+		list_copy(data, 1);
+	q = -1;
+	printf("%d\n", data->current_sector);
+	while (++q < data->current_sector - 1)
+		del_list(data, q, 1);
 }
-
+*/
 
 int		len_list(t_sector *sectors)
 {
@@ -146,5 +169,3 @@ int		len_list(t_sector *sectors)
 	}
 	return (res);
 }
-
-

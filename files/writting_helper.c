@@ -82,12 +82,6 @@ void	writte_walls(t_data *data, FILE *fp, int q)
 	dot_1 = last_vect(data, q);
 	dot_2.x = (double)sector->x0;
 	dot_2.y = (double)sector->y0;
-	if (q == 0)
-	{
-		printf("+++++++++++\n");
-		printf("dot_1 x %f : y : %f\n", dot_1.x, dot_1.y);
-		printf("dot_2 x %f : y : %f\n------------\n", dot_2.x, dot_2.y);
-	}
 	wall = ft_itoa(find_wall(data, dot_1, dot_2, q));
 		fwrite(wall, ft_strlen(wall), 1, fp);
 		fwrite(" ", 1, 1, fp);
@@ -250,8 +244,9 @@ void	make_vertex_list(t_data *data)
 	vertex *vert;
 
 	q = -1;
-	malloc_vertex(&data->vertex);
+	//malloc_vertex(&data->vertex);
 	vert = &data->vertex;
+	vert->next = NULL;
 	if (data->sectors[data->current_sector].next == NULL)
 		data->current_sector -= 1;
  	while (++q <= data->current_sector)

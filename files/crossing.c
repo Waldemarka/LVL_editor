@@ -91,30 +91,6 @@ int		IntersectionOfTwoLine(t_data *data)
 	return (0);
 }
 
-/*int		dot_on_line(t_data *data)
-{
-	printf("+__+__+%f\n", ((data->p3.x - data->p1.x)*(data->p2.y - data->p1.y) -
-				(data->p2.x - data->p1.x)*(data->p3.y - data->p1.y)));
-	if (((data->p3.x - data->p1.x) * (data->p2.y - data->p1.y) - (data->p2.x - data->p1.x) * (data->p3.y - data->p1.y)) == 0)
-		return (1);
-	return (0);
-}*/
-
-double 	thc(double x, double y, double z, double w, double a, double b)
-{
-    double k, c;
-
-    if (z == x) {
-        return (a == x && b >= min(y, w) && x <= max(y, w));
-    }
-
-    k = (w - y) / (z - x);
-    c = y - k * x;
-    printf("a[%f] * k[%f] + c[%f]\n", a, k, c);
-    printf("b == %f\n", b = a * k + c);
-    return b = a * k + c;
-}
-
 int		bef_crossing(t_data *data, int check)
 {
 	t_sector *sector;
@@ -122,7 +98,7 @@ int		bef_crossing(t_data *data, int check)
 	data->iter = -1;
 	if (check == 0 && init_vector(data) == 1)
 		return (0);
-	while (++data->iter != data->for_realloc)
+	while (++data->iter != data->current_sector + 1)
 	{
 		sector = &data->sectors[data->iter];
 		if (data->sectors[data->current_sector].floor != sector->floor)
@@ -137,15 +113,8 @@ int		bef_crossing(t_data *data, int check)
 			data->p2.y = (double)sector->next->y0;
 			if (IntersectionOfTwoLine(data) == 1)
 				return (1);
-			/*if (thc(10, 10, 45, 10, 35, 10) == 0)
-				printf("%f------%f\n", data->p2.x, data->p2.y);*/
 			sector = sector->next;
 		}
-			/*if (data->iter == data->current_sector && sector->next->next == NULL)
-			{
-				//printf("%f\n", thc(data->p1.x, data->p1.y, data->p2.x, data->p2.y, data->p3.x, data->p3.y));
-					return (1);
-			}*/
 		if (data->iter != data->current_sector)
 		{
 			data->p1.x = (double)sector->x0;

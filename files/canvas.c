@@ -26,7 +26,7 @@ void	coord_displ(t_data *data, int x, int y)
 
 void	limit_coord(t_data *data, int x, int y)
 {
-	if (y < HEIGHT - 1 && y >= 0 &&
+	if (y < HEIGHT - 1 && y >= 223 &&
 		x < WIDTH - 1 && x >= 0)
 		data->buf[y][x] = data->color;
 }
