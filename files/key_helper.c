@@ -88,9 +88,10 @@ void	key_helper_2(t_data *data, SDL_Event event, int tmp[2])
 		{
 
 			data->current_sector--;
-			del_list(data, data->current_sector, 0);
+			//del_list(data, data->current_sector, 0);
 		}
 		del_list(data, data->current_sector, 0);
+		modif_obj(data, 3);
 	}
 }
 
@@ -106,12 +107,15 @@ void	key_helper(t_data *data, SDL_Event	event)
             zoom(data, '+');
         else if(event.wheel.y < 0 && data->check_click == 0)
              zoom(data, '-');
-        if(event.wheel.x > 0 && data->start_coord_x < 1000 && data->check_click == 0)
+        if(event.wheel.x > 0 && data->start_coord_x < 1000
+        	&& data->check_click == 0)
         {
-			data->start_coord_x += ((data->max_canv_x - data->start_coord_x) / 22);
+			data->start_coord_x += ((data->max_canv_x -
+				data->start_coord_x) / 22);
 			data->max_canv_x += ((data->max_canv_x - tmp[0]) / 22);
         }
-        else if(event.wheel.x < 0  && data->start_coord_x > -1000 && data->check_click == 0)
+        else if(event.wheel.x < 0  && data->start_coord_x > -1000
+        	&& data->check_click == 0)
         {
 			data->start_coord_x -= ((data->max_canv_x - data->start_coord_x) / 22);
 			data->max_canv_x -= ((data->max_canv_x - tmp[0]) / 22);

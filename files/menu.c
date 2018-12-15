@@ -20,7 +20,7 @@ void	picture_icon(t_data *data, int st_x, int st_y, SDL_Surface *icon)
 	q = st_y - 1;
 	while (++q < st_y + data->pixel_pict)
 	{
-		if (q < 0 || q > HEIGHT - 1)
+		if (q < data->min_coord_icon || q > HEIGHT - 1)
 			continue;
 		i = st_x - 1;
 		while (++i < st_x + data->pixel_pict)
@@ -31,6 +31,26 @@ void	picture_icon(t_data *data, int st_x, int st_y, SDL_Surface *icon)
 				data->buf[q][i] = get_pixel_int(icon, i - st_x, q - st_y);
 		}
 	}
+}
+
+void	return_imitation(t_data *data)
+{
+	if (data->picture_menu % 3 == 0)
+		{
+			data->check_menu = 0;
+			data->sectors[data->current_sector].floor = data->floor;
+			data->sectors[data->current_sector].ceil = data->ceil;
+		}
+		if (data->picture_menu % 3 == 1)
+		{
+			data->for_exit = 1;
+			writting(data);
+		}
+		if (data->picture_menu % 3 == 1)
+		{
+			data->for_exit = 1;
+			writting(data);
+		}
 }
 
 void	numer_helper(SDL_Event	event, int *num, t_data *data)
@@ -52,24 +72,7 @@ void	numer_helper(SDL_Event	event, int *num, t_data *data)
 	if (event.key.keysym.sym == SDLK_z)
 		data->check_menu = 0;
 	if (event.key.keysym.sym == SDLK_RETURN)
-	{
-		if (data->picture_menu % 3 == 0)
-		{
-			data->check_menu = 0;
-			data->sectors[data->current_sector].floor = data->floor;
-			data->sectors[data->current_sector].ceil = data->ceil;
-		}
-		if (data->picture_menu % 3 == 1)
-		{
-			data->for_exit = 1;
-			writting(data);
-		}
-		if (data->picture_menu % 3 == 1)
-		{
-			data->for_exit = 1;
-			writting(data);
-		}
-	}
+		return_imitation(data);
 }
 
 void	numer(SDL_Event	event, int *num, t_data *data)
@@ -130,18 +133,41 @@ void	picture(t_data *data)
 	{
 		i = -1;
 		while (++i < 720)
-		{
 			data->buf[q][i] = get_pixel_int(data->dot[data->picture_menu % 3], i, q);
-		}
 	}
+}
+
+void	help_mouse_icons(t_data *data)
+{
+	int x;
+	int y;
+
+	SDL_PumpEvents();
+	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
+		&& y > 128 && y < 160 && x > 250 && x < 282 && data->num_icon == -1)
+		data->num_icon = 6;
+	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
+		&& y > 128 && y < 160 && x > 282 && x < 314 && data->num_icon == -1)
+		data->num_icon = 7;
+	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
+		&& y > 160 && y < 192 && x > 250 && x < 282 && data->num_icon == -1)
+		data->num_icon = 8;
+	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
+		&& y > 160 && y < 192 && x > 282 && x < 314 && data->num_icon == -1)
+		data->num_icon = 9;
+	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
+		&& y > 223 && y < HEIGHT - 1 && x > 0 && x < WIDTH - 1 && data->num_icon == -1)
+		return_imitation(data);
 }
 
 void	mouse_icons(t_data *data)
 {
-	int x, y;
+	int x;
+	int y;
 
 	SDL_PumpEvents();
-	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT) && y > 32 && y < 64 && x > 250 && x < 282)
+	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT) && y > 32
+		&& y < 64 && x > 250 && x < 282)
 		data->num_icon = 0;
 	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
 		&& y > 32 && y < 64 && x > 282 && x < 314 && data->num_icon == -1)
@@ -158,18 +184,30 @@ void	mouse_icons(t_data *data)
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
 		&& y > 96 && y < 128 && x > 282 && x < 314 && data->num_icon == -1)
 		data->num_icon = 5;
-	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-		&& y > 128 && y < 160 && x > 250 && x < 282 && data->num_icon == -1)
-		data->num_icon = 6;
-	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-		&& y > 128 && y < 160 && x > 282 && x < 314 && data->num_icon == -1)
-		data->num_icon = 7;
-	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-		&& y > 160 && y < 192 && x > 250 && x < 282 && data->num_icon == -1)
-		data->num_icon = 8;
-	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-		&& y > 160 && y < 192 && x > 282 && x < 314 && data->num_icon == -1)
-		data->num_icon = 9;
+	else
+		help_mouse_icons(data);
+}
+
+void	set_icon(t_data *data, int x, int y)
+{
+	int tmp;
+	
+	if (y > 223 && data->object < 150 && check_in_sector(data, x, y) == 0)
+	{
+		coord_canvas(data, x, y);
+		tmp = data->object;
+		if ((data->num_icon == 0 || data->num_icon == 1)
+			&& modif_obj(data, data->num_icon) != data->object)
+			data->object = modif_obj(data, data->num_icon);
+		data->icons[data->object].x = data->x_canv;
+		data->icons[data->object].y = data->y_canv;
+		data->icons[data->object].obj = data->num_icon;
+		data->icons[data->object].sector = data->num_sector;
+		data->icons[data->object].flag = 0;
+		data->object = tmp;
+		data->object++;
+	}
+	data->num_icon = -1;
 }
 
 void	move_icons(t_data *data)
@@ -184,17 +222,30 @@ void	move_icons(t_data *data)
 		picture_icon(data, x - 32,  y - 32, data->icon64[data->num_icon]);
 	}
 	else if (data->num_icon != -1)
+		set_icon(data, x, y);
+}
+
+void	draw_icons(t_data *data)
+{
+	int q;
+
+	data->min_coord_icon = 223;
+	if (data->object > 0)
 	{
-		if (y > 223 && data->object < 50)
+		q = -1;
+		data->pixel_pict = 32;
+		while (++q <= data->object - 1)
 		{
-			coord_canvas(data, x, y);
-			data->icons[data->object].x = data->x_canv;
-			data->icons[data->object].y = data->y_canv;
-			data->icons[data->object].obj = data->num_icon;
-			data->object++;
+			if (data->icons[q].flag == 1)
+				continue;
+			coord_displ(data, data->icons[q].x, data->icons[q].y);
+			if (data->y0 < 207)
+				continue;
+			picture_icon(data, data->x0 - 16,  data->y0 - 16,
+				data->icon[data->icons[q].obj]);
 		}
-		data->num_icon = -1;
 	}
+	data->min_coord_icon = 0;
 }
 
 void	icons(t_data *data)
@@ -203,26 +254,16 @@ void	icons(t_data *data)
 
 	q = -1;
 	data->pixel_pict = 32;
+	draw_icons(data);
 	while (++q <= 9)
 	{
-		picture_icon(data, 250 + (32 * (q % 2)),  32 + (32 * (q / 2)), data->icon[q]);
+		picture_icon(data, 250 + (32 * (q % 2)),  32 + (32 * (q / 2)),
+			data->icon[q]);
 	}
 	if (data->check_menu == 1)
 	{
 		mouse_icons(data);
 		move_icons(data);
-	}
-	if (data->object > 0)
-	{
-		q = -1;
-		data->pixel_pict = 32;
-		while (++q <= data->object - 1)
-		{
-			coord_displ(data, data->icons[q].x, data->icons[q].y);
-			if (data->y0 < 207)
-				continue;
-			picture_icon(data, data->x0 - 16,  data->y0 - 16, data->icon[data->icons[q].obj]);
-		}
 	}
 }
 

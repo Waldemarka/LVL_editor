@@ -59,6 +59,8 @@ typedef struct s_icons
 	int		x;
 	int		y;
 	int		obj;
+	int		sector;
+	int		flag;
 }			t_icons;
 
 typedef struct  s_sector
@@ -116,10 +118,12 @@ typedef struct  s_data
 
 	int				pixel_pict;
 	int 			num_icon;
+	int				num_sector;
 	int				object;
+	int				min_coord_icon;
 
 	t_sector        sectors[100];
-	t_icons			icons[50];			
+	t_icons			icons[150];			
 	t_sector        *tmp;
 	t_font_data 	fonts;
 	vertex          vertex;
@@ -149,6 +153,7 @@ void                near_lines(t_data *data);
 int                 bef_crossing(t_data *data, int check);
 int                 len_list(t_sector *sectors);
 int                 normal_vec(t_data *data);
+int					IntersectionOfTwoLine(t_data *data);
 int                 first_vert(t_data *data);
 int                 second_vert(t_data *data);
 void                space_imitation(t_data *data);
@@ -173,5 +178,7 @@ int 				num_ele(t_data *data, int x, int y);
 void				menu(t_data *data, int i);
 
 void	del_list(t_data *data, int q, int i);
+int		modif_obj(t_data *data, int x);
+int		check_in_sector(t_data *data, int x, int y);
 
 #endif

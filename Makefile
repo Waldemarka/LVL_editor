@@ -18,7 +18,7 @@ SRC_LVL_EDITOR = ./files/doom_nukem.c\
 				./files/crossing.c ./files/crossing_helper.c\
 				./files/key_helper.c ./files/sdl.c\
 				./files/writting_helper.c ./files/mouse_eve.c\
-				./files/other.c ./files/menu.c
+				./files/other.c ./files/menu.c ./files/object.c
 
 OBJECT_LVL_EDITOR = $(SRC_LVL_EDITOR:.c=.o)
 
@@ -50,7 +50,7 @@ all: $(NAME)
 $(NAME) : $(OBJECT_LVL_EDITOR)
 	make -C ./source/libft
 	@echo "file: */lvl_editor"
-	@gcc -o $(NAME) $(FLAGS) $(LIBFT) $(INCLUDES_SDL2) $(INCLUDES_SDL2_IMAGE) -rpath @loader_path/source/sdl $(FRAMEWORK_SDL2) $(OBJECT_LVL_EDITOR) $(INCLUDES_SDL2_TTF) $(INCLUDES_SDL2_MIXER)
+	@gcc -g -fsanitize=address -o $(NAME) $(FLAGS) $(LIBFT) $(INCLUDES_SDL2) $(INCLUDES_SDL2_IMAGE) -rpath @loader_path/source/sdl $(FRAMEWORK_SDL2) $(OBJECT_LVL_EDITOR) $(INCLUDES_SDL2_TTF) $(INCLUDES_SDL2_MIXER)
 
 %.o: %.c includes/*.h
 	gcc -g $(FLAGS) -o $@ -c $< $(INCLUDES_LVL_EDITOR) $(INCLUDES_SDL2) $(INCLUDES_LIBFT) \

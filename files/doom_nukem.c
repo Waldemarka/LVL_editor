@@ -69,6 +69,7 @@ void    init_all(t_data *data)
 	data->picture_menu = 0;
 	data->num_icon = -1;
 	data->object = 0;
+	data->min_coord_icon = 0;
 }
 
 void	draw_back(t_data *data)

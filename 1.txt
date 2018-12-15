@@ -1,9 +1,6 @@
-vertex 110  210 
-vertex 140  310 
-vertex 160  210 
-vertex 170  220 220 220 200 220 
-vertex 200  220 170 
+vertex 150  250 250 
+vertex 180  170 
+vertex 250  260 
+vertex 270  200 
 
-sector  0  20  0 0 0     -1 -1 -1 
-sector  0  20  0 0 0     -1 -1 -1 
-sector  0  20  0 0 0 0     -1 -1 -1 -1 
+sector  0  20  0 0 0 0 0     -1 -1 -1 -1 -1 

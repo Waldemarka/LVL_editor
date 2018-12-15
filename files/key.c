@@ -72,6 +72,9 @@ void	mouse_line(t_data *data)
 	int			y;
 
 	SDL_PumpEvents();
+	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT) && y < 223
+		&& data->check_click == 0)
+		data->check_menu = 1;
 	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT) && y > 223)
 		mouse_help(data, x, y);
 	else
