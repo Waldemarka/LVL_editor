@@ -54,8 +54,8 @@ int    draw_text(t_data *data, char *text, int x, int y, SDL_Color color, char *
         return (0);
     if (font_size < 1 || font_size > 999)
         return (0);
-    if (!init_fonts(data, font_path, font_size))
-        return (0);
+    /*if (!init_fonts(data, font_path, font_size))
+        return (0);*/
     MF.font_surf = TTF_RenderText_Solid(MF.font_ttf, text, color);
     MF.font_textr = SDL_CreateTextureFromSurface(data->ren, MF.font_surf);
     SDL_QueryTexture(MF.font_textr, NULL, NULL, &tw, &th);

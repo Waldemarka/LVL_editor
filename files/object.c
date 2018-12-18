@@ -70,17 +70,44 @@ int		check_in_sector(t_data *data, int x, int y)
 	return (1);
 }
 
-int		modif_obj(t_data *data, int x)
+int		end_start_marker(t_data *data)
 {
 	int q;
 
+	if (data->num_icon == 8)
+		return (0);
 	q = -1;
-	while (++q != data->object + 1)
+	while (++q != data->object)
 	{
-		if (x == 3 && data->icons[q].sector == data->current_sector)
-			data->icons[q].flag = 1;
-		if (x != 3 && data->icons[q].obj == x)
-			return (q);
+		if (data->num_icon == 0 && data->icons[q].obj == 1
+			&& data->icons[q].sector == data->num_sector)
+			return (1);
+		if (data->num_icon == 1 && data->icons[q].obj == 0
+			&& data->icons[q].sector == data->num_sector)
+			return (1);
 	}
-	return (q);
+	return (0);
 }
+
+void	special_icons(t_data *data)
+{
+	int q;
+
+	if (end_start_marker(data) == 0)
+	{
+		q = modif_obj(data, data->num_icon);
+		if (q == data->object)
+		{
+			writte_icons_to_struct(data, data->object);
+			data->object++;
+		}
+		else
+			writte_icons_to_struct(data, q);
+	}
+}
+
+
+
+
+
+

@@ -12,6 +12,35 @@
 
 #include "doom_nukem.h"
 
+int		clockwise(t_data *data)
+{
+	double a;
+	t_sector *tmp_sect;
+	tmp_sect = &data->sectors[data->current_sector];
+	while (tmp_sect->next != NULL)
+	{
+		a = atan2((double)tmp_sect->x0 * (double)tmp_sect->next->y0 -
+			(double)tmp_sect->next->x0 * (double)tmp_sect->y0,
+			(double)tmp_sect->x0 * (double)tmp_sect->next->x0 +
+			(double)tmp_sect->y0 * (double)tmp_sect->next->y0);
+		printf("%f\n", a);
+		//if (a < 0)
+		//	return (1);
+		tmp_sect = tmp_sect->next;
+	}
+	a = atan2((double)data->sectors[data->current_sector].x0 
+		* (double)tmp_sect->y0 - (double)tmp_sect->x0
+		* (double)data->sectors[data->current_sector].y0,
+		(double)data->sectors[data->current_sector].x0
+		* (double)tmp_sect->x0 + (double)data->sectors[data->current_sector].y0
+		* (double)tmp_sect->y0);
+	printf("%f\n", a);
+	//if (a < 0)
+	//	return (1);
+	return (0);
+	//printf("%f\n", a);
+}
+
 void	fill_next(t_data *data, int x, int y)
 {
 	t_sector *tmp_sect;
@@ -23,6 +52,7 @@ void	fill_next(t_data *data, int x, int y)
 	coord_canvas(data, x, y);
 	tmp_sect->x0 = near_round(data->x_canv);
 	tmp_sect->y0 = near_round(data->y_canv);
+	//clockwise(data);
 	if (tmp_sect->x0 == data->sectors[data->current_sector].x0
 		&& tmp_sect->y0 == data->sectors[data->current_sector].y0)
 		space_imitation(data);

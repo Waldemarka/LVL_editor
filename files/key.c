@@ -35,6 +35,7 @@ void	space_imitation(t_data *data)
 	if (len_list(&data->sectors[data->current_sector]) >= 3
 			&& is_crossing_last_line(data) == 0)
 	{
+		clockwise(data);
 		data->current_sector++;
 		data->check_click = 0;
 		data->sectors[data->current_sector].next = NULL;
@@ -51,12 +52,12 @@ void	key_event(t_data *data)
 		if (event.type == SDL_QUIT)
 		{
 			data->for_exit = 1;
-			writting(data);
+			//writting(data);
 		}
 		if (EXIT)
 		{
 			data->for_exit = 1;
-			writting(data);
+			//writting(data);
 			//system("leaks lvl_editor");
 		}
 		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_SPACE)

@@ -131,6 +131,7 @@ typedef struct  s_data
 	vector          p2;
 	vector          p3;
 	vector          p4;
+	vector			vect[4];
 }                   t_data;
 
 void                ft_error(char *str);
@@ -177,8 +178,14 @@ void				make_vertex_list(t_data *data);
 int 				num_ele(t_data *data, int x, int y);
 void				menu(t_data *data, int i);
 
-void	del_list(t_data *data, int q, int i);
-int		modif_obj(t_data *data, int x);
-int		check_in_sector(t_data *data, int x, int y);
+void				del_list(t_data *data, int q, int i);
+int					modif_obj(t_data *data, int x);
+int					check_in_sector(t_data *data, int x, int y);
+void				special_icons(t_data *data);
+void				writte_icons_to_struct(t_data *data, int q);
+void				event_menu(t_data *data);
+void				help_mouse_icons(t_data *data);
+void				sort_dots(t_data *data);
+int					clockwise(t_data *data);
 
 #endif

@@ -118,6 +118,7 @@ void	game_render(t_data *data)
 		}
 		else
 			draw_lines(data);
+		//system("leaks lvl_editor");
 }
 
 void    game(t_data *data)
@@ -159,6 +160,7 @@ int     main(int argc, char **argv)
 		draw_grid(data);
 		game(data);
 		int q = -1;
+		//writting(data);
 		while(++q != 3)
 			SDL_FreeSurface(data->dot[q]);
 		q = -1;
