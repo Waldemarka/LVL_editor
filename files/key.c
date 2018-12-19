@@ -35,11 +35,15 @@ void	space_imitation(t_data *data)
 	if (len_list(&data->sectors[data->current_sector]) >= 3
 			&& is_crossing_last_line(data) == 0)
 	{
-		clockwise(data);
-		data->current_sector++;
-		data->check_click = 0;
-		data->sectors[data->current_sector].next = NULL;
-		data->check_menu = 1;
+		/*if (clockwise(data) == 0)
+		{*/
+			data->current_sector++;
+			data->check_click = 0;
+			data->sectors[data->current_sector].next = NULL;
+			data->check_menu = 1;
+		/*}
+		else
+			backspace_imitation(data);*/
 	}
 }
 

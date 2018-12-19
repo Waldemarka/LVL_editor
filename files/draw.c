@@ -12,35 +12,6 @@
 
 #include "doom_nukem.h"
 
-int		clockwise(t_data *data)
-{
-	double a;
-	t_sector *tmp_sect;
-	tmp_sect = &data->sectors[data->current_sector];
-	while (tmp_sect->next != NULL)
-	{
-		a = atan2((double)tmp_sect->x0 * (double)tmp_sect->next->y0 -
-			(double)tmp_sect->next->x0 * (double)tmp_sect->y0,
-			(double)tmp_sect->x0 * (double)tmp_sect->next->x0 +
-			(double)tmp_sect->y0 * (double)tmp_sect->next->y0);
-		printf("%f\n", a);
-		//if (a < 0)
-		//	return (1);
-		tmp_sect = tmp_sect->next;
-	}
-	a = atan2((double)data->sectors[data->current_sector].x0 
-		* (double)tmp_sect->y0 - (double)tmp_sect->x0
-		* (double)data->sectors[data->current_sector].y0,
-		(double)data->sectors[data->current_sector].x0
-		* (double)tmp_sect->x0 + (double)data->sectors[data->current_sector].y0
-		* (double)tmp_sect->y0);
-	printf("%f\n", a);
-	//if (a < 0)
-	//	return (1);
-	return (0);
-	//printf("%f\n", a);
-}
-
 void	fill_next(t_data *data, int x, int y)
 {
 	t_sector *tmp_sect;

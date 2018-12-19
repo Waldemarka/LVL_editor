@@ -186,6 +186,7 @@ void				writte_icons_to_struct(t_data *data, int q);
 void				event_menu(t_data *data);
 void				help_mouse_icons(t_data *data);
 void				sort_dots(t_data *data);
-int					clockwise(t_data *data);
+int					clockwise(t_data *data, int q);
+void				backspace_imitation(t_data *data);
 
 #endif

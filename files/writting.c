@@ -50,7 +50,7 @@ void	write_sector(t_data *data, FILE *fp)
 		str = ft_itoa(data->sectors[q].ceil);
 		fwrite(str, ft_strlen(str), 1, fp);
 		free(str);
-		fwrite("  ", 2, 1, fp);
+		fwrite("    ", 4, 1, fp);
 		while (sector->next != NULL)
 		{
 			str = ft_itoa(num_ele(data, sector->x0, sector->y0));
@@ -94,14 +94,14 @@ void	write_vertex(t_data *data, FILE *fp)
 	char *str;
 
 	tmp = &data->vertex;
-	num = tmp->y_vert;
 	while (tmp->next != NULL)
 	{
 		fwrite("vertex ", 7, 1, fp);
+		num = tmp->y_vert;
 		str = ft_itoa(num);
-		fwrite(str, ft_strlen(str), 0, fp);
+		fwrite(str, ft_strlen(str), 1, fp);
 		free(str);
-		fwrite("  ", 2, 1, fp);
+		fwrite("    ", 4, 1, fp);
 		while (tmp->y_vert == num && tmp->next != NULL)
 		{
 			str = ft_itoa(tmp->x_vert);
@@ -120,7 +120,7 @@ void	write_vertex(t_data *data, FILE *fp)
 char	*name_icons(int x)
 {
 	if (x == 0)
-		return ("Player");
+		return ("player");
 	if (x == 1)
 		return ("End");
 	if (x == 2)
@@ -160,13 +160,14 @@ void	fwrite_icons(t_data *data, FILE *fp)
 			continue;
 		str = name_icons(data->icons[q].obj);
 		fwri(fp, str);
-//		free(str);
 		str = ft_itoa(data->icons[q].x);
 		fwri(fp, str);
 		free(str);
 		str = ft_itoa(data->icons[q].y);
 		fwri(fp, str);
 		free(str);
+		if (data->icons[q].obj == 0)
+			fwrite("2  ", 3, 1, fp);		
 		str = ft_itoa(data->icons[q].sector);
 		fwri(fp, str);
 		free(str);
@@ -176,14 +177,14 @@ void	fwrite_icons(t_data *data, FILE *fp)
 
 void	sorting_list(t_data *data, FILE *fp)
 {
-	//sort_dots(data);
+	sort_dots(data);
 	make_vertex_list(data);
  	sort_list(data);
  	write_vertex(data, fp);
-	free_vertex(data);
  	fwrite("\n\n", 2, 1, fp);
  	write_sector(data, fp);
  	fwrite("\n\n", 2, 1, fp);
+	free_vertex(data);
  	fwrite_icons(data, fp);
 }
 
