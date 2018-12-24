@@ -32,9 +32,9 @@ int		modif_obj(t_data *data, int x)
 	{
 		if (x == 3 && data->icons[q].sector == data->current_sector)
 			data->icons[q].flag = 0;
-		if (x != 3 && data->num_icon != 8 && data->icons[q].obj == data->num_icon)
+		if (x != 3 && (data->num_icon != 6 && data->num_icon != 4 && data->num_icon != 2) && data->icons[q].obj == data->num_icon)
 			return (q);
-		if (data->num_icon == 8 && data->icons[q].obj == data->num_icon
+		if ((data->num_icon == 6 || data->num_icon == 4 || data->num_icon == 2) && data->icons[q].obj == data->num_icon
 			&& data->icons[q].sector == data->num_sector)
 			return (q);
 	}

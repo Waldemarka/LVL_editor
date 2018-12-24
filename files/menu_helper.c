@@ -41,14 +41,16 @@ void	help_mouse_icons(t_data *data)
 		&& y > 128 && y < 160 && x > 282 && x < 314 && data->num_icon == -1)
 		data->num_icon = 7;
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-		&& y > 160 && y < 192 && x > 250 && x < 282 && data->num_icon == -1)
-		data->num_icon = 8;
+		&& y > 155 && y < 219 && x > 515 && x < 579 && data->num_icon == -1
+		&& data->show_text == 0)
+		data->show_text = 1;
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-		&& y > 160 && y < 192 && x > 282 && x < 314 && data->num_icon == -1)
-		data->num_icon = 9;
-	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-		&& y > 223 && y < HEIGHT - 1 && x > 0 && x < WIDTH - 1 && data->num_icon == -1)
+		&& y > 223 && y < HEIGHT - 1 && x > 0 && x < WIDTH - 1
+		&& data->num_icon == -1 && data->show_text != 1)
+	{
+		data->picture_menu = 0;
 		return_imitation(data);
+	}
 }
 
 void	numer_helper(SDL_Event	event, int *num, t_data *data)

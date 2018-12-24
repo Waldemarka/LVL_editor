@@ -81,7 +81,7 @@ void	set_icon(t_data *data, int x, int y)
 	{
 		coord_canvas(data, x, y);
 		if (data->num_icon == 0 || data->num_icon == 1
-			|| data->num_icon == 8)
+			|| data->num_icon == 6 || data->num_icon == 4 || data->num_icon == 2)
 			special_icons(data);
 		else
 		{
@@ -137,7 +137,7 @@ void	icons(t_data *data)
 	q = -1;
 	data->pixel_pict = 32;
 	draw_icons(data);
-	while (++q <= 9)
+	while (++q <= 7)
 	{
 		picture_icon(data, 250 + (32 * (q % 2)),  32 + (32 * (q / 2)),
 			data->icon[q]);
@@ -157,7 +157,7 @@ void	menu(t_data *data, int i)
 	color.b = 255;
 
 	picture(data);
-	if (i == 0)
+	if (i == 0 && data->show_text != 1)
 		event_menu(data);
 	if (data->picture_menu % 3 != 2)
 	{
@@ -173,9 +173,11 @@ void	menu(t_data *data, int i)
 		color.b = 84;
 		//draw_text(data, ">", 7, 53 + (data->flo_or_cei * 97), color, F_ARIAL, 27);
 		icons(data);
+		textures_menu(data);
 	}
 }
 
+/* how to lift up */
 
 
 

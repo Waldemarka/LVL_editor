@@ -20,7 +20,7 @@ SRC_LVL_EDITOR = ./files/doom_nukem.c\
 				./files/writting_helper.c ./files/mouse_eve.c\
 				./files/other.c ./files/menu.c ./files/object.c\
 				./files/menu_icons.c ./files/menu_helper.c\
-				./files/sort_sector.c
+				./files/sort_sector.c ./files/texture_menu.c
 
 OBJECT_LVL_EDITOR = $(SRC_LVL_EDITOR:.c=.o)
 

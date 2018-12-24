@@ -185,7 +185,7 @@ void	sorting_list(t_data *data, FILE *fp)
  	write_sector(data, fp);
  	fwrite("\n\n", 2, 1, fp);
 	free_vertex(data);
- 	fwrite_icons(data, fp);
+ 	//fwrite_icons(data, fp);
 }
 
 void	writting(t_data *data)
@@ -199,6 +199,5 @@ void	writting(t_data *data)
     sorting_list(data, fp);
     if (fclose(fp) != 0)
     	ft_error("bad writting");
- 	//system("leaks lvl_editor");
     fclose(fp);
 }

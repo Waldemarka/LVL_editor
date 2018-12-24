@@ -57,11 +57,7 @@ void	backspace_imitation(t_data *data)
 {
 		data->check_click = 0;
 		if (data->sectors[data->current_sector].next == NULL)
-		{
-
 			data->current_sector--;
-			//del_list(data, data->current_sector, 0);
-		}
 		del_list(data, data->current_sector, 0);
 		modif_obj(data, 3);
 

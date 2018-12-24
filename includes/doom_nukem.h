@@ -61,6 +61,7 @@ typedef struct s_icons
 	int		obj;
 	int		sector;
 	int		flag;
+	int		up_lift;
 }			t_icons;
 
 typedef struct  s_sector
@@ -69,6 +70,7 @@ typedef struct  s_sector
 	int y0;
 	int floor;
 	int ceil;
+	int	texture;
 	struct s_sector *next;
 }               t_sector;
 
@@ -77,9 +79,14 @@ typedef struct  s_data
 	SDL_Window      *win;
 	SDL_Renderer    *ren;
 	SDL_Texture     *screen;
+	SDL_Surface		*cube[2];
+	SDL_Surface		*navig[3];
+	SDL_Surface		*pict[3];
+	SDL_Surface		*set;
 	SDL_Surface     *dot[3];
-	SDL_Surface		*icon[10];
-	SDL_Surface		*icon64[10];
+	SDL_Surface		*icon[8];
+	SDL_Surface		*icon64[8];
+	SDL_Surface		*lift_info;
 	char            *name;
 	int             buf[HEIGHT][WIDTH];
 	int             for_exit;
@@ -121,9 +128,14 @@ typedef struct  s_data
 	int				num_sector;
 	int				object;
 	int				min_coord_icon;
+	int				show_text;
+	int				num_text;
+	int 			q_texture;
+	int				time;
+
 
 	t_sector        sectors[100];
-	t_icons			icons[150];			
+	t_icons			icons[150];		
 	t_sector        *tmp;
 	t_font_data 	fonts;
 	vertex          vertex;
@@ -186,7 +198,12 @@ void				writte_icons_to_struct(t_data *data, int q);
 void				event_menu(t_data *data);
 void				help_mouse_icons(t_data *data);
 void				sort_dots(t_data *data);
-int					clockwise(t_data *data, int q);
 void				backspace_imitation(t_data *data);
+
+int					clockwise(t_data *data, int q);
+int					clockwise1(t_data *data);
+void				textures_menu(t_data *data);
+void				picture_icon(t_data *data, int st_x, int st_y, SDL_Surface *icon);
+int		draw_switch_sector(t_data *data, int q);
 
 #endif

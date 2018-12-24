@@ -113,6 +113,20 @@ int		clockwise(t_data *data, int q)
 	return (0);
 }
 
+int		clockwise1(t_data *data)
+{
+	double a;
+
+	a = 0.0;
+	t_sector *tmp_sect;
+	tmp_sect = &data->sectors[data->current_sector];
+	if (len_list(tmp_sect) == 3 && clockwise_3(tmp_sect, a) == 1)
+		return (1);
+	if (len_list(tmp_sect) == 4 && clockwise_4(tmp_sect, a) == 1)
+		return (1);
+	return (0);
+}
+
 void	change_dots(t_data *data, int q)
 {
 	vector vect1;
