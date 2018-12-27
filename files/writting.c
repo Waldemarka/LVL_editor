@@ -122,23 +122,19 @@ char	*name_icons(int x)
 	if (x == 0)
 		return ("player");
 	if (x == 1)
-		return ("End");
+		return ("end");
 	if (x == 2)
-		return ("Automaton");
+		return ("door_sector");
 	if (x == 3)
-		return ("Health");
+		return ("health");
 	if (x == 4)
-		return ("Pistol");
+		return ("lift");
 	if (x == 5)
 		return ("Ammunition");
 	if (x == 6)
-		return ("Bottle");
+		return ("light");
 	if (x == 7)
 		return ("Armour");
-	if (x == 8)
-		return ("Light");
-	if (x == 9)
-		return ("Shotgun");
 	return(NULL);
 }
 
@@ -167,10 +163,16 @@ void	fwrite_icons(t_data *data, FILE *fp)
 		fwri(fp, str);
 		free(str);
 		if (data->icons[q].obj == 0)
-			fwrite("2  ", 3, 1, fp);		
+			fwrite("2  ", 3, 1, fp);
 		str = ft_itoa(data->icons[q].sector);
 		fwri(fp, str);
 		free(str);
+		if (data->icons[q].obj == 4)
+		{
+			str = ft_itoa(data->icons[q].up_lift);
+			fwri(fp, str);
+			free(str);
+		}
 		fwrite("\n", 1, 1, fp);
 	}
 }
