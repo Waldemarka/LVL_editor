@@ -133,6 +133,8 @@ typedef struct  s_data
 	int 			q_texture;
 	int				time;
 
+	int				lift;
+	int				tmp_obj;
 
 	t_sector        sectors[100];
 	t_icons			icons[150];		
@@ -144,15 +146,19 @@ typedef struct  s_data
 	vector          p3;
 	vector          p4;
 	vector			vect[4];
+	SDL_Color		rgb;
 }                   t_data;
 
 void                ft_error(char *str);
+void    			init_all(t_data *data);
+int                 len_list(t_sector *sectors);
+int                 near_round(int q);
+void                near_lines(t_data *data);
+
 void                key_event(t_data *data);
 void                key_helper(t_data *data, SDL_Event  event);
 void                bresenham_line(t_data *data);
 void                mouse_line(t_data *data);
-void                list_realloc(t_data *data);
-void                list_malloc(t_sector **list, int size);
 void                fill_next(t_data *data, int x, int y);
 void                draw_lines(t_data *data);
 void                draw_grid(t_data *data);
@@ -160,50 +166,52 @@ void                dots_to_bres(t_data *data);
 void                coord_canvas(t_data *data, int x, int y);
 void                coord_displ(t_data *data, int x, int y);
 void                limit_coord(t_data *data, int x, int y);
-void                writting(t_data *data);
-int                 near_round(int q);
-void                near_lines(t_data *data);
+
 int                 bef_crossing(t_data *data, int check);
-int                 len_list(t_sector *sectors);
-int                 normal_vec(t_data *data);
 int					IntersectionOfTwoLine(t_data *data);
 int                 first_vert(t_data *data);
 int                 second_vert(t_data *data);
+int                 normal_vec(t_data *data);
+int					both_not_vert(t_data *data);
+
 void                space_imitation(t_data *data);
-int                 touch_dots(t_data *data);
-SDL_Surface         *load_image(char *path);
-unsigned int        get_pixel_int(SDL_Surface *surface, int x, int y);
 int                 find_wall(t_data *data, vector dot_1, vector dot_2, int check);
 void                mouse_help(t_data *data, int x, int y);
-void                change_position(t_data *data);
-int                 is_in_sectror(t_data *data, int x1, int y1);
-int                 check_first_cross(t_data *data, int x1, int y1);
 double              min(double x, double y);
 double              max(double x, double y);
 int                 init_vector(t_data *data);
 void                ft_swap(int *a, int *b);
-int    				draw_text(t_data *data, char *text, int x, int y, SDL_Color color, char *font_path, int font_size);
 
+void                writting(t_data *data);
 void				writte_walls(t_data *data, FILE *fp, int q);
 int					find_wall(t_data *data, vector dot_1, vector dot_2, int check);
 void				make_vertex_list(t_data *data);
 int 				num_ele(t_data *data, int x, int y);
-void				menu(t_data *data, int i);
 
 void				del_list(t_data *data, int q, int i);
+void				backspace_imitation(t_data *data);
+
+void				sort_dots(t_data *data);
+int					clockwise(t_data *data, int q);
+int					clockwise1(t_data *data);
+
+void				help_mouse_icons(t_data *data);
+void				event_menu(t_data *data);
+void				menu(t_data *data, int i);
 int					modif_obj(t_data *data, int x);
 int					check_in_sector(t_data *data, int x, int y);
 void				special_icons(t_data *data);
 void				writte_icons_to_struct(t_data *data, int q);
-void				event_menu(t_data *data);
-void				help_mouse_icons(t_data *data);
-void				sort_dots(t_data *data);
-void				backspace_imitation(t_data *data);
-
-int					clockwise(t_data *data, int q);
-int					clockwise1(t_data *data);
 void				textures_menu(t_data *data);
 void				picture_icon(t_data *data, int st_x, int st_y, SDL_Surface *icon);
-int		draw_switch_sector(t_data *data, int q);
+int					draw_switch_sector(t_data *data, int q);
+void				numer(SDL_Event	event, int *num);
+void				numer_helper(SDL_Event	event, int *num, t_data *data, int q);
+void				lift(t_data *data);
+void				icons(t_data *data);
+
+int    				draw_text(t_data *data, char *text, int x, int y, SDL_Color color, char *font_path, int font_size);
+unsigned int        get_pixel_int(SDL_Surface *surface, int x, int y);
+SDL_Surface         *load_image(char *path);
 
 #endif

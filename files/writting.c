@@ -185,8 +185,9 @@ void	sorting_list(t_data *data, FILE *fp)
  	write_sector(data, fp);
  	fwrite("\n\n", 2, 1, fp);
 	free_vertex(data);
- 	//fwrite_icons(data, fp);
+ 	fwrite_icons(data, fp);
 }
+
 
 void	writting(t_data *data)
 {

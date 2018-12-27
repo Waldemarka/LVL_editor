@@ -26,6 +26,8 @@ int 	num_ele(t_data *data, int x, int y)
 		q++;
 		vert = vert->next;
 	}
+	if (vert->x_vert == x && vert->y_vert == y)
+			return (q);
 	return (0); // may wil be problem
 }
 
@@ -49,7 +51,7 @@ int		find_wall(t_data *data, vector dot_1, vector dot_2, int check)
 	int q;
 
 	q = -1;
-	while (++q != data->current_sector)
+	while (++q <= data->current_sector)
 	{
 		sector = &data->sectors[q];
 		while (sector->next != NULL && q != check)
@@ -115,8 +117,11 @@ void	make_vertex_list(t_data *data)
 	q = -1;
 	vert = &data->vertex;
 	vert->next = NULL;
-	if (data->sectors[data->current_sector].next == NULL)
+/*	if (data->sectors[data->current_sector].next == NULL)
+	{
+		printf("%d\n", data->current_sector);
 		data->current_sector -= 1;
+	}*/
  	while (++q <= data->current_sector)
  	{
  		sector = &data->sectors[q];

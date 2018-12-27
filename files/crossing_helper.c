@@ -91,3 +91,27 @@ int		second_vert(t_data *data)
 	}
 	return (2);
 }
+
+int		both_not_vert(t_data *data)
+{
+	double A1;
+	double A2;
+	double b1;
+	double b2;
+	double Xa;
+
+	A1 = (data->p1.y - data->p2.y) / (data->p1.x - data->p2.x);
+	A2 = (data->p3.y - data->p4.y) / (data->p3.x - data->p4.x);
+	b1 = data->p1.y - A1 * data->p1.x;
+	b2 = data->p3.y - A2 * data->p3.x;
+	if (A1 == A2)
+		return (0);
+	Xa = (b2 - b1) / (A1 - A2);
+	if ((Xa < max(data->p1.x, data->p3.x)) || (Xa > min( data->p2.x, data->p4.x)))
+		return (0);
+	else {
+		data->color = 0xff0000;
+		return (1);
+	}
+}
+

@@ -12,7 +12,7 @@
 
 NAME = lvl_editor
 
-SRC_LVL_EDITOR = ./files/doom_nukem.c\
+SRC_LVL_EDITOR = ./files/main.c\
 				./files/key.c ./files/bresenham.c ./files/for_list.c\
 				./files/draw.c ./files/canvas.c ./files/writting.c\
 				./files/crossing.c ./files/crossing_helper.c\
@@ -20,7 +20,8 @@ SRC_LVL_EDITOR = ./files/doom_nukem.c\
 				./files/writting_helper.c ./files/mouse_eve.c\
 				./files/other.c ./files/menu.c ./files/object.c\
 				./files/menu_icons.c ./files/menu_helper.c\
-				./files/sort_sector.c ./files/texture_menu.c
+				./files/sort_sector.c ./files/texture_menu.c\
+				./files/move_set_icons.c ./files/loader.c
 
 OBJECT_LVL_EDITOR = $(SRC_LVL_EDITOR:.c=.o)
 
@@ -52,7 +53,7 @@ all: $(NAME)
 $(NAME) : $(OBJECT_LVL_EDITOR)
 	make -C ./source/libft
 	@echo "file: */lvl_editor"
-	@gcc -g -fsanitize=address -o $(NAME) $(FLAGS) $(LIBFT) $(INCLUDES_SDL2) $(INCLUDES_SDL2_IMAGE) -rpath @loader_path/source/sdl $(FRAMEWORK_SDL2) $(OBJECT_LVL_EDITOR) $(INCLUDES_SDL2_TTF) $(INCLUDES_SDL2_MIXER)
+	@gcc -o $(NAME) $(FLAGS) $(LIBFT) $(INCLUDES_SDL2) $(INCLUDES_SDL2_IMAGE) -rpath @loader_path/source/sdl $(FRAMEWORK_SDL2) $(OBJECT_LVL_EDITOR) $(INCLUDES_SDL2_TTF) $(INCLUDES_SDL2_MIXER)
 
 %.o: %.c includes/*.h
 	gcc -g $(FLAGS) -o $@ -c $< $(INCLUDES_LVL_EDITOR) $(INCLUDES_SDL2) $(INCLUDES_LIBFT) \
