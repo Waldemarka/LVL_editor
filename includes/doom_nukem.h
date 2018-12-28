@@ -29,9 +29,11 @@
 #define HEIGHT 870
 #define EXIT (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
 #define F_ARIAL 	"fonts/ARIAL.TTF"
-#define F_MORPHEUS 	"fonts/MORPHEUS.TTF"
+#define F_MOR 	"fonts/MORPHEUS.TTF"
 # define MF 	data->fonts
+#define F_ICE  "fonts/LadyIceRevisited.ttf"
 
+#define F_AG  "fonts/OpenSans-Semibold.ttf"
 
 typedef struct 	s_font_data
 {
@@ -61,7 +63,6 @@ typedef struct s_icons
 	int		obj;
 	int		sector;
 	int		flag;
-	int		up_lift;
 }			t_icons;
 
 typedef struct  s_sector
@@ -82,11 +83,12 @@ typedef struct  s_data
 	SDL_Surface		*cube[2];
 	SDL_Surface		*navig[3];
 	SDL_Surface		*pict[3];
-	SDL_Surface		*set;
 	SDL_Surface     *dot[3];
 	SDL_Surface		*icon[8];
 	SDL_Surface		*icon64[8];
 	SDL_Surface		*lift_info;
+	SDL_Surface		*back;
+	SDL_Surface		*text_menu;
 	char            *name;
 	int             buf[HEIGHT][WIDTH];
 	int             for_exit;
@@ -191,8 +193,6 @@ int 				num_ele(t_data *data, int x, int y);
 void				del_list(t_data *data, int q, int i);
 void				backspace_imitation(t_data *data);
 
-void				sort_dots(t_data *data);
-int					clockwise(t_data *data, int q);
 int					clockwise1(t_data *data);
 
 void				help_mouse_icons(t_data *data);

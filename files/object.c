@@ -64,6 +64,19 @@ int		end_start_marker(t_data *data)
 	return (0);
 }
 
+int		check_flag(t_data *data)
+{
+	int i;
+
+	i = -1;
+	while (++i <= data->object)
+	{
+		if (data->icons[i].flag == 0)
+			return (i);
+	}
+	return (-1);
+}
+
 void	special_icons(t_data *data)
 {
 	int q;
@@ -73,8 +86,13 @@ void	special_icons(t_data *data)
 		q = modif_obj(data, data->num_icon);
 		if (q == data->object)
 		{
-			writte_icons_to_struct(data, data->object);
-			data->object++;
+			if (check_flag(data) >= 0)
+				writte_icons_to_struct(data, check_flag(data));
+			else
+			{
+				writte_icons_to_struct(data, data->object);
+				data->object++;
+			}
 		}
 		else
 			writte_icons_to_struct(data, q);

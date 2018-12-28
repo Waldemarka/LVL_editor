@@ -35,13 +35,13 @@ void	help_mouse_icons(t_data *data)
 
 	SDL_PumpEvents();
 	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-			&& y > 128 && y < 160 && x > 250 && x < 282 && data->num_icon == -1)
+			&& y > 185 && y < 219 && x > 370 && x < 402 && data->num_icon == -1)
 		data->num_icon = 6;
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-			&& y > 128 && y < 160 && x > 282 && x < 314 && data->num_icon == -1)
+			&& y > 185 && y < 219 && x > 415 && x < 447 && data->num_icon == -1)
 		data->num_icon = 7;
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-			&& y > 155 && y < 219 && x > 515 && x < 579 && data->num_icon == -1
+			&& y > 175 && y < 210 && x > 550 && x < 595 && data->num_icon == -1
 			&& data->show_text == 0)
 		data->show_text = 1;
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
@@ -122,7 +122,7 @@ void	event_menu(t_data *data)
 			numer(event, num);
 			numer_helper(event, num, data, 0);
 		}
-		if (*num > 999)
-			*num = 999;
+		if (*num > 99)
+			*num = 99;
 	}
 }

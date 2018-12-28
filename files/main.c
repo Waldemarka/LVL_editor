@@ -99,7 +99,6 @@ int     main(int argc, char **argv)
 		draw_grid(data);
 		game(data);
 		int q = -1;
-		//writting(data);
 		while(++q != 3)
 			SDL_FreeSurface(data->dot[q]);
 	}

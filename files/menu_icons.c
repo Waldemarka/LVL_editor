@@ -22,7 +22,7 @@ int		init_obj(t_data *data, int x, int y)
 	coord_canvas(data, 50000, 50000);
 	data->p4.x = (double)near_round(data->x_canv);
 	data->p4.y = (double)near_round(data->y_canv);
-	return (0);	
+	return (0);
 }
 
 int		no_more_5(t_data *data)
@@ -34,6 +34,8 @@ int		no_more_5(t_data *data)
 	count = 0; 
 	while (++q != data->object)
 	{
+		if (data->icons[q].flag == 0)
+			continue;
 		if (data->icons[q].sector == data->num_sector)
 			count++;
 		if (count > 4)
@@ -69,7 +71,6 @@ int 	help_check(t_data *data, t_sector *sector, int obj)
 	return (1);
 }
 
-
 int		check_in_sector(t_data *data, int x, int y)
 {
 	int obj;
@@ -102,20 +103,20 @@ void	lift(t_data *data)
 		if (event.key.keysym.sym == SDLK_RETURN)
 		{
 			data->lift = 0;
-			data->icons[data->tmp_obj].up_lift = lift_up;
+			data->sectors[data->icons[data->tmp_obj].sector].ceil += lift_up;
 			lift_up = 0;
 		}
 		if (event.type == SDL_KEYDOWN)
 		{
 			numer(event, &lift_up);
 			numer_helper(event, &lift_up, data, 1);
-			if (lift_up > 999)
-				lift_up = 999;
+			if (lift_up > 100)
+				lift_up = 100;
 		}
 	}
 	draw_text(data, "How to lift up ?", 215, 300, data->rgb, F_ARIAL, 40);
 	str = ft_itoa(lift_up);
-	draw_text(data, str, 345 - (ft_strlen(str) * 20), 500, data->rgb, F_ARIAL, 80);
+	draw_text(data, str, 345 - (ft_strlen(str) * 20), 520, data->rgb, F_ARIAL, 80);
 	free(str);
 }
 

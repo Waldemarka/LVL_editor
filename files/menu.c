@@ -46,6 +46,11 @@ void	picture(t_data *data)
 			data->buf[q][i] =
 		get_pixel_int(data->dot[data->picture_menu % 3], i, q);
 	}
+	q = -1;
+	data->pixel_pict = 45;
+	if (data->picture_menu % 3 != 2)
+		while (++q < 8)
+			picture_icon(data, 93 + (q * 45) ,  178, data->back);
 }
 
 void	menu(t_data *data, int i)
@@ -62,13 +67,13 @@ void	menu(t_data *data, int i)
 		if (i == 0 && data->flo_or_cei == 1 && data->ceil < data->floor + 5)
 			data->ceil = data->floor + 5;
 		str = ft_itoa(data->floor);
-		draw_text(data, str, 175, 53, data->rgb, F_ARIAL, 27);
+		draw_text(data, str, 175, 50, data->rgb, F_AG, 27);
 		free(str);
 		str = ft_itoa(data->ceil);
-		draw_text(data, str, 175, 150, data->rgb, F_ARIAL, 27);
+		draw_text(data, str, 175, 147, data->rgb, F_AG, 27);
 		free(str);
 		draw_text(data, ">", 7, 53 + (data->flo_or_cei * 97),
-			data->rgb, F_ARIAL, 27);
+			data->rgb, F_ICE, 27);
 		icons(data);
 		textures_menu(data);
 		//system("leaks lvl_editor");

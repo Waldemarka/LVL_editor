@@ -152,7 +152,7 @@ void	fwrite_icons(t_data *data, FILE *fp)
 	q = -1;
 	while (++q < data->object)
 	{
-		if (data->icons[q].flag == -1)
+		if (data->icons[q].flag == 0)
 			continue;
 		str = name_icons(data->icons[q].obj);
 		fwri(fp, str);
@@ -167,19 +167,15 @@ void	fwrite_icons(t_data *data, FILE *fp)
 		str = ft_itoa(data->icons[q].sector);
 		fwri(fp, str);
 		free(str);
-		if (data->icons[q].obj == 4)
-		{
-			str = ft_itoa(data->icons[q].up_lift);
-			fwri(fp, str);
-			free(str);
-		}
 		fwrite("\n", 1, 1, fp);
 	}
 }
 
 void	sorting_list(t_data *data, FILE *fp)
 {
-	sort_dots(data);
+	//sort_dots(data);
+		if (data->sectors[data->current_sector].next == NULL)
+		data->current_sector -= 1;
 	make_vertex_list(data);
  	sort_list(data);
  	write_vertex(data, fp);

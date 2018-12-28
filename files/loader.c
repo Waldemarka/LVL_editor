@@ -81,11 +81,12 @@ void	load_surf_1(t_data *data)
 	data->navig[0] = load_image("./media/for_menu/navigat.png");
 	data->navig[1] = load_image("./media/for_menu/left.png");
 	data->navig[2] = load_image("./media/for_menu/right.png");
-	data->set = load_image("./media/for_menu/set.png");
 	data->pict[0] = load_image("./media/for_menu/brick_1.png");
 	data->pict[1] = load_image("./media/for_menu/Brick_Big_White.png");
 	data->pict[2] = load_image("./media/for_menu/iron_diffuse.png");
 	data->lift_info = load_image("./media/for_menu/lift_info.png");
+	data->back = load_image("./media/for_menu/back.png");
+	data->text_menu = load_image("./media/for_menu/text_menu.png");
 }
 
 void    init_all(t_data *data)

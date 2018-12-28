@@ -18,23 +18,23 @@ void	mouse_icons(t_data *data)
 	int y;
 
 	SDL_PumpEvents();
-	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT) && y > 32
-		&& y < 64 && x > 250 && x < 282)
+	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
+		&& y > 185 && y < 219 && x > 100 && x < 132)
 		data->num_icon = 0;
 	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-		&& y > 32 && y < 64 && x > 282 && x < 314 && data->num_icon == -1)
+		&& y > 185 && y < 219 && x > 145 && x < 177 && data->num_icon == -1)
 		data->num_icon = 1;
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-		&& y > 64 && y < 96 && x > 250 && x < 282 && data->num_icon == -1)
+		&& y > 185 && y < 219 && x > 190 && x < 222 && data->num_icon == -1)
 		data->num_icon = 2;
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-		&& y > 64 && y < 96 && x > 282 && x < 314 && data->num_icon == -1)
+		&& y > 185 && y < 219 && x > 235 && x < 277 && data->num_icon == -1)
 		data->num_icon = 3;
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-		&& y > 96 && y < 128 && x > 250 && x < 282 && data->num_icon == -1)
+		&& y > 185 && y < 219 && x > 280 && x < 312 && data->num_icon == -1)
 		data->num_icon = 4;
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-		&& y > 96 && y < 128 && x > 282 && x < 314 && data->num_icon == -1)
+		&& y > 185 && y < 219 && x > 325 && x < 357 && data->num_icon == -1)
 		data->num_icon = 5;
 	else
 		help_mouse_icons(data);
@@ -104,7 +104,7 @@ void	icons(t_data *data)
 	draw_icons(data);
 	while (++q <= 7)
 	{
-		picture_icon(data, 250 + (32 * (q % 2)),  32 + (32 * (q / 2)),
+		picture_icon(data, 100 + (q * 45),  185,
 			data->icon[q]);
 	}
 	if (data->check_menu == 1 && data->lift != 1)

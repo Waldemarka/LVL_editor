@@ -57,9 +57,9 @@ void	key_event(t_data *data)
 			data->for_exit = 1;
 		if (EXIT)
 			data->for_exit = 1;
-		if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_SPACE)
+		/*if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_SPACE)
 			&& len_list(&data->sectors[data->current_sector]) <= 4)
-			space_imitation(data);
+			space_imitation(data);*/
 		key_helper(data, event);
 	}
 }

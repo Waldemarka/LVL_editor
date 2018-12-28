@@ -92,8 +92,6 @@ int		bef_crossing(t_data *data, int check)
 	while (++data->iter != data->current_sector + 1)
 	{
 		sector = &data->sectors[data->iter];
-		if (data->sectors[data->current_sector].floor != sector->floor)
-			continue;
 		while (sector->next != NULL && sector->next->next != NULL)
 		{
 			if (data->current_sector == data->iter && sector->next->next->next == NULL)
