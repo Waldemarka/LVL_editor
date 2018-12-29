@@ -97,35 +97,30 @@ void	info_about_texture(t_data *data)
 {
 	char *str;
 
-	draw_text(data, "FLOOR : ", 500, 420, data->rgb, F_AG, 27);
-	draw_text(data, "CEIL : ", 500, 450, data->rgb, F_AG, 27);
-	draw_text(data, "SECTOR : ", 500, 480, data->rgb, F_AG, 27);
+	draw_text(data, "FLOOR : ", 520, 525, data->rgb, F_AG, 27);
+	draw_text(data, "CEIL : ", 520, 555, data->rgb, F_AG, 27);
+	draw_text(data, "SECTOR : ", 520, 585, data->rgb, F_AG, 27);
 	str = ft_itoa(data->sectors[data->q_texture].floor);
-	draw_text(data, str, 650, 420, data->rgb, F_AG, 27);
+	draw_text(data, str, 650, 525, data->rgb, F_AG, 27);
 	str = ft_itoa(data->sectors[data->q_texture].ceil);
-	draw_text(data, str, 650, 450, data->rgb, F_AG, 27);
+	draw_text(data, str, 650, 555, data->rgb, F_AG, 27);
 	str = ft_itoa(data->q_texture);
-	draw_text(data, str, 650, 480, data->rgb, F_AG, 27);
+	draw_text(data, str, 650, 585, data->rgb, F_AG, 27);
 	free(str);
 }
 
 void	textures_menu(t_data *data)
 {
-
-	data->pixel_pict = 45;
-	if (data->show_text == 0)
-		picture_icon(data, 550,  175, data->cube[0]);
 	if (data->show_text == 1)
 	{
 		solid_rect(data);
-		picture_icon(data, 550,  175, data->cube[1]);
 		data->pixel_pict = 200;
 		picture_icon(data, 505,  670, data->navig[0]);
 		data->pixel_pict = 64;
-		picture_icon(data, 485,  300, data->navig[1]);
-		picture_icon(data, 665,  300, data->navig[2]);
+		picture_icon(data, 492,  335, data->navig[1]);
+		picture_icon(data, 660,  335, data->navig[2]);
 		data->pixel_pict = 140;
-		picture_icon(data, 538,  265, data->pict[data->num_text]);
+		picture_icon(data, 538,  290, data->pict[data->num_text]);
 		if (data->q_texture != -1)
 			info_about_texture(data);
 		if (data->lift != 1)

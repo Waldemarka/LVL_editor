@@ -80,14 +80,12 @@ typedef struct  s_data
 	SDL_Window      *win;
 	SDL_Renderer    *ren;
 	SDL_Texture     *screen;
-	SDL_Surface		*cube[2];
 	SDL_Surface		*navig[3];
 	SDL_Surface		*pict[3];
-	SDL_Surface     *dot[3];
+	SDL_Surface     *dot[4];
 	SDL_Surface		*icon[8];
 	SDL_Surface		*icon64[8];
 	SDL_Surface		*lift_info;
-	SDL_Surface		*back;
 	SDL_Surface		*text_menu;
 	char            *name;
 	int             buf[HEIGHT][WIDTH];

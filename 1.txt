@@ -1,12 +1,11 @@
-vertex 100    150 
-vertex 130    150 150 
-vertex 140    110 110 110 
-vertex 150    160 160 160 
-vertex 190    200 120 120 120 
+vertex 130    200 
+vertex 140    170 170 170 170 
+vertex 190    80 
+vertex 210    180 200 180 
 
-sector  0  20    6 9 10 6     -1 -1 -1 1 
-sector  0  100    10 3 1 6 10     -1 -1 2 -1 0 
-sector  0  20    3 0 1 3     -1 -1 -1 1 
+sector  0  120    1 6 5 1     1 1 -1 -1 
+sector  0  20    1 0 7 6 1     0 -1 -1 -1 0 
 
 
-player  160  175  2  0  
+health  152  172  0  
+player  145  189  2  0  

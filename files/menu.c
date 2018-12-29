@@ -44,13 +44,8 @@ void	picture(t_data *data)
 		i = -1;
 		while (++i < 720)
 			data->buf[q][i] =
-		get_pixel_int(data->dot[data->picture_menu % 3], i, q);
+		get_pixel_int(data->dot[data->picture_menu % 4], i, q);
 	}
-	q = -1;
-	data->pixel_pict = 45;
-	if (data->picture_menu % 3 != 2)
-		while (++q < 8)
-			picture_icon(data, 93 + (q * 45) ,  178, data->back);
 }
 
 void	menu(t_data *data, int i)
@@ -60,24 +55,19 @@ void	menu(t_data *data, int i)
 	picture(data);
 	if (i == 0 && data->show_text != 1 && data->lift != 1)
 		event_menu(data);
-	if (data->picture_menu % 3 != 2)
-	{
-		if (i == 0 && data->flo_or_cei == 0 && data->floor > data->ceil - 5)
-			data->floor = data->ceil - 5;
-		if (i == 0 && data->flo_or_cei == 1 && data->ceil < data->floor + 5)
-			data->ceil = data->floor + 5;
-		str = ft_itoa(data->floor);
-		draw_text(data, str, 175, 50, data->rgb, F_AG, 27);
-		free(str);
-		str = ft_itoa(data->ceil);
-		draw_text(data, str, 175, 147, data->rgb, F_AG, 27);
-		free(str);
-		draw_text(data, ">", 7, 53 + (data->flo_or_cei * 97),
-			data->rgb, F_ICE, 27);
-		icons(data);
-		textures_menu(data);
-		//system("leaks lvl_editor");
-	}
+	if (i == 0 && data->flo_or_cei == 0 && data->floor > data->ceil - 5)
+		data->floor = data->ceil - 5;
+	if (i == 0 && data->flo_or_cei == 1 && data->ceil < data->floor + 5)
+		data->ceil = data->floor + 5;
+	str = ft_itoa(data->floor);
+	draw_text(data, str, 130, 75, data->rgb, F_AG, 38);
+	free(str);
+	str = ft_itoa(data->ceil);
+	draw_text(data, str, 555, 75, data->rgb, F_AG, 38);
+	free(str);
+	icons(data);
+	textures_menu(data);
+//	printf("%d\n", data->object);
 }
 
 

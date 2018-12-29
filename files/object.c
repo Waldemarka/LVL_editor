@@ -19,6 +19,7 @@ void	writte_icons_to_struct(t_data *data, int q)
 	data->icons[q].obj = data->num_icon;
 	data->icons[q].sector = data->num_sector;
 	data->icons[q].flag = 1;
+	//printf(" q : %d\n flag : %d\n x :%d\n y : %d\n obj : %d\n-----------------\n", q, data->icons[q].flag, data->icons[q].x, data->icons[q].y, data->icons[q].obj);
 }
 
 int		modif_obj(t_data *data, int x)
@@ -69,7 +70,7 @@ int		check_flag(t_data *data)
 	int i;
 
 	i = -1;
-	while (++i <= data->object)
+	while (++i < data->object)
 	{
 		if (data->icons[i].flag == 0)
 			return (i);
@@ -86,7 +87,7 @@ void	special_icons(t_data *data)
 		q = modif_obj(data, data->num_icon);
 		if (q == data->object)
 		{
-			if (check_flag(data) >= 0)
+			if (check_flag(data) > 0)
 				writte_icons_to_struct(data, check_flag(data));
 			else
 			{

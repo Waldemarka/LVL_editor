@@ -53,9 +53,10 @@ void	init_variable(t_data *data)
 
 void	load_surf(t_data *data)
 {
-	data->dot[0] = load_image("./media/for_menu/menu_0.jpg");
-	data->dot[1] = load_image("./media/for_menu/menu_1.jpg");
-	data->dot[2] = load_image("./media/for_menu/menu_2.jpeg");
+	data->dot[0] = load_image("./media/for_menu/menu_0.png");
+	data->dot[1] = load_image("./media/for_menu/menu_1.png");
+	data->dot[2] = load_image("./media/for_menu/menu_2.png");
+	data->dot[3] = load_image("./media/for_menu/menu_3.png");
 	data->icon[0] = load_image("./media/32/3.png");
 	data->icon[1] = load_image("./media/32/3_bl.png");
 	data->icon[2] = load_image("./media/32/door.png");
@@ -72,12 +73,10 @@ void	load_surf(t_data *data)
 	data->icon64[5] = load_image("./media/64/5.png");
 	data->icon64[6] = load_image("./media/64/8.png");
 	data->icon64[7] = load_image("./media/64/7.png");
-	data->cube[0] = load_image("./media/for_menu/cube.png");
 }
 
 void	load_surf_1(t_data *data)
 {
-	data->cube[1] = load_image("./media/for_menu/cube1.png");
 	data->navig[0] = load_image("./media/for_menu/navigat.png");
 	data->navig[1] = load_image("./media/for_menu/left.png");
 	data->navig[2] = load_image("./media/for_menu/right.png");
@@ -85,7 +84,6 @@ void	load_surf_1(t_data *data)
 	data->pict[1] = load_image("./media/for_menu/Brick_Big_White.png");
 	data->pict[2] = load_image("./media/for_menu/iron_diffuse.png");
 	data->lift_info = load_image("./media/for_menu/lift_info.png");
-	data->back = load_image("./media/for_menu/back.png");
 	data->text_menu = load_image("./media/for_menu/text_menu.png");
 }
 
