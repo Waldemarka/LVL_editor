@@ -53,7 +53,7 @@ void	menu(t_data *data, int i)
 	char *str;
 
 	picture(data);
-	if (i == 0 && data->show_text != 1 && data->lift != 1)
+	if (i == 0 && data->show_text != 1 && data->lift != 1 && data->key != 1)
 		event_menu(data);
 	if (i == 0 && data->flo_or_cei == 0 && data->floor > data->ceil - 5)
 		data->floor = data->ceil - 5;

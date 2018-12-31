@@ -83,8 +83,8 @@ typedef struct  s_data
 	SDL_Surface		*navig[3];
 	SDL_Surface		*pict[3];
 	SDL_Surface     *dot[4];
-	SDL_Surface		*icon[8];
-	SDL_Surface		*icon64[8];
+	SDL_Surface		*icon[12];
+	SDL_Surface		*icon64[12];
 	SDL_Surface		*lift_info;
 	SDL_Surface		*text_menu;
 	char            *name;
@@ -122,6 +122,8 @@ typedef struct  s_data
 	int				floor;
 	int				ceil;
 	int				flo_or_cei;
+	int				tmp_x;
+	int				tmp_y;
 
 	int				pixel_pict;
 	int 			num_icon;
@@ -132,6 +134,7 @@ typedef struct  s_data
 	int				num_text;
 	int 			q_texture;
 	int				time;
+	int				key;
 
 	int				lift;
 	int				tmp_obj;
@@ -211,5 +214,7 @@ void				icons(t_data *data);
 int    				draw_text(t_data *data, char *text, int x, int y, SDL_Color color, char *font_path, int font_size);
 unsigned int        get_pixel_int(SDL_Surface *surface, int x, int y);
 SDL_Surface         *load_image(char *path);
+int					check_flag(t_data *data);
+void	multi_key(t_data *data);
 
 #endif

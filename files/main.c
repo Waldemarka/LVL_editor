@@ -79,6 +79,7 @@ void    game(t_data *data)
 			menu(data, 1);
 		}
 		SDL_RenderPresent(data->ren);
+		//printf("%d\n", data->object);
 	}
 }
 

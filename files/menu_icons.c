@@ -89,6 +89,30 @@ int		check_in_sector(t_data *data, int x, int y)
 	return (1);
 }
 
+
+void	multi_key(t_data *data)
+{
+	SDL_Event	event;
+	static int tmp;
+
+	data->pixel_pict = 64;
+	picture_icon(data, data->tmp_x, data->tmp_y, data->icon64[9 + tmp]);
+	while (SDL_PollEvent(&event))
+	{
+		if (event.key.keysym.sym == SDLK_RETURN)
+		{
+			data->icons[data->object - 1].obj = 9 + tmp;
+			data->key = 0;
+		}
+		if (event.key.keysym.sym == SDLK_1)
+			tmp = 0;
+		if (event.key.keysym.sym == SDLK_2)
+			tmp = 1;
+		if (event.key.keysym.sym == SDLK_3)
+			tmp = 2;
+	}
+}
+
 void	lift(t_data *data)
 {
 	static int lift_up;
@@ -96,7 +120,7 @@ void	lift(t_data *data)
 	char *str;
 
 	data->pixel_pict = 300;
-	picture_icon(data, 194,  300, data->lift_info);
+	picture_icon(data, 194 - (100 * data->show_text),  300, data->lift_info);
 	SDL_PumpEvents();
 	while (SDL_PollEvent(&event))
 	{
@@ -114,9 +138,9 @@ void	lift(t_data *data)
 				lift_up = 100;
 		}
 	}
-	draw_text(data, "How to lift up ?", 215, 300, data->rgb, F_ARIAL, 40);
+	draw_text(data, "How to lift up ?", 215 - (100 * data->show_text), 300, data->rgb, F_ARIAL, 40);
 	str = ft_itoa(lift_up);
-	draw_text(data, str, 345 - (ft_strlen(str) * 20), 520, data->rgb, F_ARIAL, 80);
+	draw_text(data, str, 345 - (ft_strlen(str) * 20) - (100 * data->show_text), 520, data->rgb, F_ARIAL, 80);
 	free(str);
 }
 

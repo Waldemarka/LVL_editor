@@ -63,16 +63,26 @@ void	load_surf(t_data *data)
 	data->icon[3] = load_image("./media/32/2.png");
 	data->icon[4] = load_image("./media/32/lift.png");
 	data->icon[5] = load_image("./media/32/5.png");
-	data->icon[6] = load_image("./media/32/8.png");
+	data->icon[6] = load_image("./media/32/enemy.png");
 	data->icon[7] = load_image("./media/32/7.png");
+	data->icon[8] = load_image("./media/32/key.png");
+	data->icon[9] = load_image("./media/32/green.png");
+	data->icon[10] = load_image("./media/32/red.png");
+	data->icon[11] = load_image("./media/32/yellow.png");
+
+
 	data->icon64[0] = load_image("./media/64/3.png");
 	data->icon64[1] = load_image("./media/64/3_bl.png");
 	data->icon64[2] = load_image("./media/64/door.png");
 	data->icon64[3] = load_image("./media/64/2.png");
 	data->icon64[4] = load_image("./media/64/lift.png");
 	data->icon64[5] = load_image("./media/64/5.png");
-	data->icon64[6] = load_image("./media/64/8.png");
+	data->icon64[6] = load_image("./media/64/enemy.png");
 	data->icon64[7] = load_image("./media/64/7.png");
+	data->icon64[8] = load_image("./media/64/key.png");
+	data->icon64[9] = load_image("./media/64/green.png");
+	data->icon64[10] = load_image("./media/64/red.png");
+	data->icon64[11] = load_image("./media/64/yellow.png");
 }
 
 void	load_surf_1(t_data *data)

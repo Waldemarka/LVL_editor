@@ -1,11 +1,31 @@
-vertex 130    200 
-vertex 140    170 170 170 170 
-vertex 190    80 
-vertex 210    180 200 180 
+vertex 140    170 170 
+vertex 150    230 230 
+vertex 170    190 190 190 190 190 190 190 190 190 
+vertex 200    230 230 
+vertex 220    200 200 
+vertex 230    120 120 120 
 
-sector  0  120    1 6 5 1     1 1 -1 -1 
-sector  0  20    1 0 7 6 1     0 -1 -1 -1 0 
+sector  0  41    4 15 17 4     1 1 -1 4 
+sector  0  21    4 13 15 4     0 2 -1 0 
+sector  0  20    4 2 13 4     0 3 -1 1 
+sector  0  20    4 0 2 4     0 4 -1 2 
+sector  0  20    17 0 4 17     -1 -1 3 0 
 
 
-health  152  172  0  
-player  145  189  2  0  
+player  196  153  2  3  
+end  215  172  2  
+door_sector  1
+health  168  211  0  
+green key  168  168  4  
+red key  209  156  2  
+yellow key  222  181  2  
+lift 1  
+ammunition  196  158  3 
+enemy  150  190  4  
+armour  170  178  4  
+armour  200  183  1  
+enemy  196  158  3  
+lift 0  
+red key  177  202  0  
+health  185  149  3  
+door_sector  4  

@@ -32,10 +32,10 @@ void	mouse_icons(t_data *data)
 		data->num_icon = 3;
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
 		&& y > 133 && y < 180 && x > 325 && x < 390 && data->num_icon == -1)
-		data->num_icon = 4;
+		data->num_icon = 8;
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
 		&& y > 133 && y < 180 && x > 395 && x < 460 && data->num_icon == -1)
-		data->num_icon = 5;
+		data->num_icon = 4;
 	else
 		help_mouse_icons(data);
 }
@@ -46,11 +46,20 @@ void	set_icon(t_data *data, int x, int y)
 	{
 		coord_canvas(data, x, y);
 		if (data->num_icon == 0 || data->num_icon == 1
-			|| data->num_icon == 6 || data->num_icon == 4 || data->num_icon == 2)
+			|| data->num_icon == 4 || data->num_icon == 2)
 			special_icons(data);
 		else
 		{
-			writte_icons_to_struct(data, data->object);
+			//if (check_flag(data) > -1)
+				writte_icons_to_struct(data, data->object);
+			//else
+			//	writte_icons_to_struct(data, check_flag(data));
+			if (data->num_icon == 8)
+			{
+				data->key = 1;
+				data->tmp_x = x;
+				data->tmp_y = y;
+			}
 			data->object++;
 		}
 	}
@@ -83,7 +92,6 @@ void	draw_icons(t_data *data)
 		data->pixel_pict = 32;
 		while (++q <= data->object - 1)
 		{
-			//printf("***%d\n", data->icons[q].flag);
 			if (data->icons[q].flag == 0)
 				continue;
 			coord_displ(data, data->icons[q].x, data->icons[q].y);
@@ -103,16 +111,25 @@ void	icons(t_data *data)
 	q = -1;
 	data->pixel_pict = 32;
 	draw_icons(data);
-	while (++q <= 7)
+	while (++q <= 8)
 	{
-		picture_icon(data, 60 + (q * 71),  145,
-			data->icon[q]);
+		if (q == 4)
+			picture_icon(data, 60 + (q * 71),  145,
+				data->icon[8]);
+		else if (q < 4)
+			picture_icon(data, 60 + (q * 71),  145,
+				data->icon[q]);
+		else
+			picture_icon(data, 60 + (q * 71),  145,
+				data->icon[q - 1]);
 	}
-	if (data->check_menu == 1 && data->lift != 1)
+	if (data->check_menu == 1 && data->lift != 1 && data->lift != 1 && data->key != 1)
 	{
 		mouse_icons(data);
 		move_icons(data);
 	}
 	if (data->lift == 1)
 		lift(data);
+	if (data->key == 1)
+		multi_key(data);
 }

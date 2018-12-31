@@ -34,9 +34,12 @@ void	help_mouse_icons(t_data *data)
 	SDL_PumpEvents();
 	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
 			&& y > 133 && y < 180 && x > 465 && x < 530 && data->num_icon == -1)
-		data->num_icon = 6;
+		data->num_icon = 5;
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
 			&& y > 133 && y < 180 && x > 535 && x < 600 && data->num_icon == -1)
+		data->num_icon = 6;
+	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
+			&& y > 133 && y < 180 && x > 605 && x < 670 && data->num_icon == -1)
 		data->num_icon = 7;
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
 			&& y > 190 && y < 220 && x > 550 && x < 670 && data->num_icon == -1

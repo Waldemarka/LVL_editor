@@ -130,11 +130,17 @@ char	*name_icons(int x)
 	if (x == 4)
 		return ("lift");
 	if (x == 5)
-		return ("Ammunition");
+		return ("ammunition");
 	if (x == 6)
-		return ("light");
+		return ("enemy");
 	if (x == 7)
-		return ("Armour");
+		return ("armour");
+	if (x == 9)
+		return ("green key");
+	if (x == 10)
+		return ("red key");
+	if (x == 11)
+		return ("yellow key");
 	return(NULL);
 }
 
@@ -155,7 +161,17 @@ void	fwrite_icons(t_data *data, FILE *fp)
 		if (data->icons[q].flag == 0)
 			continue;
 		str = name_icons(data->icons[q].obj);
+		//printf("%d %s\n", data->icons[q].obj,str);
 		fwri(fp, str);
+		//free(str);
+		if (data->icons[q].obj == 2 || data->icons[q].obj == 4)
+		{
+			str = ft_itoa(data->icons[q].sector);	
+			fwri(fp, str);
+			free(str);
+			fwrite("\n", 1, 1, fp);
+			continue;
+		}
 		str = ft_itoa(data->icons[q].x);
 		fwri(fp, str);
 		free(str);
@@ -173,8 +189,7 @@ void	fwrite_icons(t_data *data, FILE *fp)
 
 void	sorting_list(t_data *data, FILE *fp)
 {
-	//sort_dots(data);
-		if (data->sectors[data->current_sector].next == NULL)
+	if (data->sectors[data->current_sector].next == NULL)
 		data->current_sector -= 1;
 	make_vertex_list(data);
  	sort_list(data);
