@@ -6,7 +6,7 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 14:13:01 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/11/26 18:02:27 by vomelchu         ###   ########.fr       */
+/*   Updated: 2019/01/02 13:22:36 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,23 @@
 
 void	draw_back(t_data *data)
 {
-	int i = -1;
-		while (++i != HEIGHT)
-		{
-			int x = -1;
-			while(++x != WIDTH)
-			{
-				data->buf[i][x] = 0;
-			}
-		}
+	int x;
+	int i;
 
+	i = -1;
+	while (++i != HEIGHT)
+	{
+		x = -1;
+		while (++x != WIDTH)
+		{
+			data->buf[i][x] = 0;
+		}
+	}
 	i = 223;
 	while (++i != HEIGHT)
 	{
-		int x = -1;
-		while(++x != WIDTH)
+		x = -1;
+		while (++x != WIDTH)
 		{
 			if (data->buf[i][x] == 0)
 				data->buf[i][x] = 0x3c3c3c;
@@ -38,29 +40,32 @@ void	draw_back(t_data *data)
 
 void	game_render(t_data *data)
 {
-		int i = -1;
-		while (++i != HEIGHT)
+	int x;
+	int i;
+
+	i = -1;
+	while (++i != HEIGHT)
+	{
+		x = -1;
+		while (++x != WIDTH)
 		{
-			int x = -1;
-			while(++x != WIDTH)
-			{
-				data->buf[i][x] = 0;
-			}
+			data->buf[i][x] = 0;
 		}
-		key_event(data);
-		draw_grid(data);
-		data->color = 0x15eb43;
-		mouse_line(data);
-		if (data->check_click != 0)
-		{
-			bresenham_line(data);
-			draw_lines(data);
-		}
-		else
-			draw_lines(data);
+	}
+	key_event(data);
+	draw_grid(data);
+	data->color = 0x15eb43;
+	mouse_line(data);
+	if (data->check_click != 0)
+	{
+		bresenham_line(data);
+		draw_lines(data);
+	}
+	else
+		draw_lines(data);
 }
 
-void    game(t_data *data)
+void	game(t_data *data)
 {
 	while (data->for_exit != 1)
 	{
@@ -79,13 +84,13 @@ void    game(t_data *data)
 			menu(data, 1);
 		}
 		SDL_RenderPresent(data->ren);
-		//printf("%d\n", data->object);
 	}
 }
 
-int     main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
-	t_data *data;
+	t_data	*data;
+	int		q;
 
 	if (argc == 2)
 	{
@@ -99,11 +104,12 @@ int     main(int argc, char **argv)
 		init_all(data);
 		draw_grid(data);
 		game(data);
-		int q = -1;
-		while(++q != 3)
+		q = -1;
+		while (++q != 3)
 			SDL_FreeSurface(data->dot[q]);
 	}
 	else
 		ft_error("BAD NUM ARGC\n");
+	system("leaks lvl_editor");
 	return (0);
 }

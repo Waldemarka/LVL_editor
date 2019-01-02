@@ -53,7 +53,7 @@ all: $(NAME)
 $(NAME) : $(OBJECT_LVL_EDITOR)
 	make -C ./source/libft
 	@echo "file: */lvl_editor"
-	@gcc -g -fsanitize=address -o $(NAME) $(FLAGS) $(LIBFT) $(INCLUDES_SDL2) $(INCLUDES_SDL2_IMAGE) -rpath @loader_path/source/sdl $(FRAMEWORK_SDL2) $(OBJECT_LVL_EDITOR) $(INCLUDES_SDL2_TTF) $(INCLUDES_SDL2_MIXER)
+	@gcc -o $(NAME) $(FLAGS) $(LIBFT) $(INCLUDES_SDL2) $(INCLUDES_SDL2_IMAGE) -rpath @loader_path/source/sdl $(FRAMEWORK_SDL2) $(OBJECT_LVL_EDITOR) $(INCLUDES_SDL2_TTF) $(INCLUDES_SDL2_MIXER)
 
 %.o: %.c includes/*.h
 	gcc -g $(FLAGS) -o $@ -c $< $(INCLUDES_LVL_EDITOR) $(INCLUDES_SDL2) $(INCLUDES_LIBFT) \

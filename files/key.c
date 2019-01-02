@@ -6,7 +6,7 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2218/11/07 16:44:45 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/12/03 19:04:58 by vomelchu         ###   ########.fr       */
+/*   Updated: 2019/01/02 13:22:09 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ int		is_crossing_last_line(t_data *data)
 	data->p3.x = (double)data->sectors[data->current_sector].x0;
 	data->p3.y = (double)data->sectors[data->current_sector].y0;
 	sector = &data->sectors[data->current_sector];
-	while (sector->next->next != NULL)	
+	while (sector->next->next != NULL)
 		sector = sector->next;
 	data->p4.x = (double)sector->x0;
 	data->p4.y = (double)sector->y0;
-
 	if (bef_crossing(data, 1) == 1)
 		return (1);
 	return (0);
@@ -31,7 +30,6 @@ int		is_crossing_last_line(t_data *data)
 
 void	space_imitation(t_data *data)
 {
-
 	if (len_list(&data->sectors[data->current_sector]) >= 3
 			&& is_crossing_last_line(data) == 0)
 	{
@@ -57,21 +55,18 @@ void	key_event(t_data *data)
 			data->for_exit = 1;
 		if (EXIT)
 			data->for_exit = 1;
-		/*if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_SPACE)
-			&& len_list(&data->sectors[data->current_sector]) <= 4)
-			space_imitation(data);*/
 		key_helper(data, event);
 	}
 }
 
 void	mouse_line(t_data *data)
 {
-	int 		x;
-	int			y;
+	int	x;
+	int	y;
 
 	SDL_PumpEvents();
 	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT) && y < 223
-		&& data->check_click == 0)
+			&& data->check_click == 0)
 		data->check_menu = 1;
 	if (data->current_sector < 100)
 	{

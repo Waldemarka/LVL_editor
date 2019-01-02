@@ -6,7 +6,7 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 19:32:18 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/12/15 19:32:20 by vomelchu         ###   ########.fr       */
+/*   Updated: 2019/01/02 13:23:43 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	writte_icons_to_struct(t_data *data, int q)
 	data->icons[q].obj = data->num_icon;
 	data->icons[q].sector = data->num_sector;
 	data->icons[q].flag = 1;
-	//printf(" q : %d\n flag : %d\n x :%d\n y : %d\n obj : %d\n-----------------\n", q, data->icons[q].flag, data->icons[q].x, data->icons[q].y, data->icons[q].obj);
 }
 
 int		modif_obj(t_data *data, int x)
@@ -34,11 +33,12 @@ int		modif_obj(t_data *data, int x)
 		if (x == 3 && data->icons[q].sector == data->current_sector)
 			data->icons[q].flag = 0;
 		if (x != 3 && (data->num_icon != 6 && data->num_icon != 4
-			&& data->num_icon != 2) && data->icons[q].obj == data->num_icon)
+					&& data->num_icon != 2) && data->icons[q].obj
+			== data->num_icon)
 			return (q);
 		if ((data->num_icon == 6 || data->num_icon == 4 ||
-			data->num_icon == 2) && data->icons[q].obj == data->num_icon
-			&& data->icons[q].sector == data->num_sector)
+					data->num_icon == 2) && data->icons[q].obj == data->num_icon
+				&& data->icons[q].sector == data->num_sector)
 			return (q);
 	}
 	if (x == 3)
@@ -56,10 +56,10 @@ int		end_start_marker(t_data *data)
 	while (++q != data->object)
 	{
 		if (data->num_icon == 0 && data->icons[q].obj == 1
-			&& data->icons[q].sector == data->num_sector)
+				&& data->icons[q].sector == data->num_sector)
 			return (1);
 		if (data->num_icon == 1 && data->icons[q].obj == 0
-			&& data->icons[q].sector == data->num_sector)
+				&& data->icons[q].sector == data->num_sector)
 			return (1);
 	}
 	return (0);
@@ -104,9 +104,3 @@ void	special_icons(t_data *data)
 		}
 	}
 }
-
-
-
-
-
-

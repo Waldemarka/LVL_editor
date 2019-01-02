@@ -6,12 +6,11 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 14:54:54 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/12/27 12:41:03 by vomelchu         ###   ########.fr       */
+/*   Updated: 2019/01/02 13:22:54 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
-
 
 void	return_imitation(t_data *data)
 {
@@ -24,6 +23,13 @@ void	return_imitation(t_data *data)
 	{
 		data->show_text = 1;
 	}
+}
+
+void	next_sect(t_data *data)
+{
+	data->check_menu = 0;
+	data->sectors[data->current_sector].floor = data->floor;
+	data->sectors[data->current_sector].ceil = data->ceil;
 }
 
 void	help_mouse_icons(t_data *data)
@@ -51,14 +57,10 @@ void	help_mouse_icons(t_data *data)
 	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
 			&& y > 223 && y < HEIGHT - 1 && x > 0 && x < WIDTH - 1
 			&& data->num_icon == -1 && data->show_text != 1)
-	{
-		data->check_menu = 0;
-		data->sectors[data->current_sector].floor = data->floor;
-		data->sectors[data->current_sector].ceil = data->ceil;
-	}
+		next_sect(data);
 }
 
-void	numer_helper(SDL_Event	event, int *num, t_data *data, int q)
+void	numer_helper(SDL_Event event, int *num, t_data *data, int q)
 {
 	if (event.key.keysym.sym == SDLK_BACKSPACE)
 		*num = *num / 10;
@@ -83,9 +85,8 @@ void	numer_helper(SDL_Event	event, int *num, t_data *data, int q)
 	}
 }
 
-void	numer(SDL_Event	event, int *num)
+void	numer(SDL_Event event, int *num)
 {
-
 	if (event.key.keysym.sym == SDLK_1)
 		*num = *num * 10 + 1;
 	if (event.key.keysym.sym == SDLK_2)
@@ -111,7 +112,8 @@ void	numer(SDL_Event	event, int *num)
 void	event_menu(t_data *data)
 {
 	SDL_Event	event;
-	int 		*num;
+	int			*num;
+
 	if (data->flo_or_cei == 0)
 		num = &data->floor;
 	else

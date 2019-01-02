@@ -6,7 +6,7 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 18:18:35 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/12/09 19:17:32 by vomelchu         ###   ########.fr       */
+/*   Updated: 2019/01/02 13:22:46 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	picture(t_data *data)
 		i = -1;
 		while (++i < 720)
 			data->buf[q][i] =
-		get_pixel_int(data->dot[data->picture_menu % 4], i, q);
+				get_pixel_int(data->dot[data->picture_menu % 4], i, q);
 	}
 }
 
@@ -60,22 +60,12 @@ void	menu(t_data *data, int i)
 	if (i == 0 && data->flo_or_cei == 1 && data->ceil < data->floor + 5)
 		data->ceil = data->floor + 5;
 	str = ft_itoa(data->floor);
-	draw_text(data, str, 130, 75, data->rgb, F_AG, 38);
+	data->font_size = 38;
+	draw_text(data, str, 130, 75);
 	free(str);
 	str = ft_itoa(data->ceil);
-	draw_text(data, str, 555, 75, data->rgb, F_AG, 38);
+	draw_text(data, str, 555, 75);
 	free(str);
 	icons(data);
 	textures_menu(data);
-//	printf("%d\n", data->object);
 }
-
-
-
-
-
-
-
-
-
-

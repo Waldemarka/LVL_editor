@@ -6,7 +6,7 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 14:53:19 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/12/17 14:53:20 by vomelchu         ###   ########.fr       */
+/*   Updated: 2019/01/02 14:42:48 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		init_obj(t_data *data, int x, int y)
 {
 	if (data->sectors[0].next == NULL)
-		return(1);
+		return (1);
 	coord_canvas(data, x, y);
 	data->p3.x = (double)near_round(data->x_canv);
 	data->p3.y = (double)near_round(data->y_canv);
@@ -31,7 +31,7 @@ int		no_more_5(t_data *data)
 	int count;
 
 	q = -1;
-	count = 0; 
+	count = 0;
 	while (++q != data->object)
 	{
 		if (data->icons[q].flag == 0)
@@ -44,7 +44,7 @@ int		no_more_5(t_data *data)
 	return (0);
 }
 
-int 	help_check(t_data *data, t_sector *sector, int obj)
+int		help_check(t_data *data, t_sector *sector, int obj)
 {
 	while (sector->next != NULL && sector->next->next != NULL)
 	{
@@ -52,7 +52,7 @@ int 	help_check(t_data *data, t_sector *sector, int obj)
 		data->p1.y = (double)sector->y0;
 		data->p2.x = (double)sector->next->x0;
 		data->p2.y = (double)sector->next->y0;
-		if (IntersectionOfTwoLine(data) == 1)
+		if (intersection_of_two_line(data) == 1)
 			obj++;
 		sector = sector->next;
 	}
@@ -60,7 +60,7 @@ int 	help_check(t_data *data, t_sector *sector, int obj)
 	data->p1.y = (double)sector->y0;
 	data->p2.x = (double)data->sectors[data->iter].x0;
 	data->p2.y = (double)data->sectors[data->iter].y0;
-	if (IntersectionOfTwoLine(data) == 1)
+	if (intersection_of_two_line(data) == 1)
 		obj++;
 	if (obj == 1)
 	{
@@ -73,8 +73,8 @@ int 	help_check(t_data *data, t_sector *sector, int obj)
 
 int		check_in_sector(t_data *data, int x, int y)
 {
-	int obj;
-	t_sector *sector;
+	int			obj;
+	t_sector	*sector;
 
 	if (init_obj(data, x, y) == 1)
 		return (1);
@@ -89,11 +89,10 @@ int		check_in_sector(t_data *data, int x, int y)
 	return (1);
 }
 
-
 void	multi_key(t_data *data)
 {
 	SDL_Event	event;
-	static int tmp;
+	static int	tmp;
 
 	data->pixel_pict = 64;
 	picture_icon(data, data->tmp_x, data->tmp_y, data->icon64[9 + tmp]);
@@ -113,14 +112,11 @@ void	multi_key(t_data *data)
 	}
 }
 
-void	lift(t_data *data)
+int		lift_event(t_data *data)
 {
-	static int lift_up;
+	static int	lift_up;
 	SDL_Event	event;
-	char *str;
 
-	data->pixel_pict = 300;
-	picture_icon(data, 194 - (100 * data->show_text),  300, data->lift_info);
 	SDL_PumpEvents();
 	while (SDL_PollEvent(&event))
 	{
@@ -138,9 +134,20 @@ void	lift(t_data *data)
 				lift_up = 100;
 		}
 	}
-	draw_text(data, "How to lift up ?", 215 - (100 * data->show_text), 300, data->rgb, F_ARIAL, 40);
-	str = ft_itoa(lift_up);
-	draw_text(data, str, 345 - (ft_strlen(str) * 20) - (100 * data->show_text), 520, data->rgb, F_ARIAL, 80);
-	free(str);
+	return (lift_up);
 }
 
+void	lift(t_data *data)
+{
+	char		*str;
+
+	data->pixel_pict = 300;
+	picture_icon(data, 194 - (100 * data->show_text), 300, data->lift_info);
+	data->font_size = 40;
+	draw_text(data, "How to lift up ?", 215 - (100 * data->show_text), 300);
+	str = ft_itoa(lift_event(data));
+	data->font_size = 80;
+	draw_text(data, str, 345 - (ft_strlen(str) * 20) -
+			(100 * data->show_text), 520);
+	free(str);
+}

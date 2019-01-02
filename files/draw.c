@@ -6,7 +6,7 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 16:06:36 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/11/08 16:06:39 by vomelchu         ###   ########.fr       */
+/*   Updated: 2019/01/02 13:21:03 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	fill_next(t_data *data, int x, int y)
 	tmp_sect->y0 = near_round(data->y_canv);
 	tmp_sect->texture = 0;
 	if (tmp_sect->x0 == data->sectors[data->current_sector].x0
-		&& tmp_sect->y0 == data->sectors[data->current_sector].y0)
+			&& tmp_sect->y0 == data->sectors[data->current_sector].y0)
 		space_imitation(data);
 	if (!(tmp_sect->next = (t_sector *)malloc(sizeof(t_sector))))
 		ft_error("Bad malloc in fill_next");
@@ -36,24 +36,24 @@ int		draw_switch_sector(t_data *data, int i)
 {
 	t_sector *tmp_sect;
 
-	tmp_sect = &data->sectors[i];	
-		while (tmp_sect->next != NULL)
+	tmp_sect = &data->sectors[i];
+	while (tmp_sect->next != NULL)
+	{
+		if (tmp_sect->next->next != NULL && tmp_sect->next != NULL)
 		{
-			if (tmp_sect->next->next != NULL && tmp_sect->next != NULL)
-			{
-				coord_displ(data, tmp_sect->next->x0, tmp_sect->next->y0);
-				data->x1 = data->x0;
-				data->y1 = data->y0;
-				coord_displ(data, tmp_sect->x0, tmp_sect->y0);
-				bresenham_line(data);
-			}
-			tmp_sect = tmp_sect->next;
-		}
-		if (i != data->current_sector)
-		{
-			coord_displ(data, data->sectors[i].x0, data->sectors[i].y0);
+			coord_displ(data, tmp_sect->next->x0, tmp_sect->next->y0);
+			data->x1 = data->x0;
+			data->y1 = data->y0;
+			coord_displ(data, tmp_sect->x0, tmp_sect->y0);
 			bresenham_line(data);
 		}
+		tmp_sect = tmp_sect->next;
+	}
+	if (i != data->current_sector)
+	{
+		coord_displ(data, data->sectors[i].x0, data->sectors[i].y0);
+		bresenham_line(data);
+	}
 	return (1);
 }
 
@@ -79,6 +79,27 @@ int		normalize_line(int q)
 	return (q);
 }
 
+void	draw_grid_help(t_data *data)
+{
+	int q;
+
+	q = normalize_line(data->start_coord_y);
+	while (q <= data->max_canv_y)
+	{
+		data->color = 0x001b3d;
+		if (q % 50 == 0)
+			data->color = 0x122b68;
+		if (q % 250 == 0)
+			data->color = 0xc1a3c93;
+		coord_displ(data, data->max_canv_x, q);
+		data->x1 = data->x0;
+		data->y1 = data->y0;
+		coord_displ(data, data->start_coord_x, q);
+		q += 10;
+		bresenham_line(data);
+	}
+}
+
 void	draw_grid(t_data *data)
 {
 	int q;
@@ -98,21 +119,7 @@ void	draw_grid(t_data *data)
 		q += 10;
 		bresenham_line(data);
 	}
-	q = normalize_line(data->start_coord_y);
-	while (q <= data->max_canv_y)
-	{
-		data->color = 0x001b3d;
-		if (q % 50 == 0)
-			data->color = 0x122b68;
-		if (q % 250 == 0)
-			data->color = 0xc1a3c93;
-		coord_displ(data, data->max_canv_x, q);
-		data->x1 = data->x0;
-		data->y1 = data->y0;
-		coord_displ(data, data->start_coord_x, q);
-		q += 10;
-		bresenham_line(data);
-	}
+	draw_grid_help(data);
 }
 
 void	near_lines(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 19:23:22 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/12/09 17:45:12 by vomelchu         ###   ########.fr       */
+/*   Updated: 2019/01/02 13:23:15 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int		check_first_cross(t_data *data, int x1, int y1)
 {
-	t_sector *tmp_sec;
-	int i;
-	int x;
-	int y;
+	t_sector	*tmp_sec;
+	int			i;
+	int			x;
+	int			y;
 
 	if (data->current_sector == 0)
 		return (1);
@@ -45,7 +45,7 @@ void	mouse_help(t_data *data, int x, int y)
 	if (data->tmp_count == 0)
 	{
 		if (data->check_click == 0 &&
-			check_first_cross(data, x, y) == 1)
+				check_first_cross(data, x, y) == 1)
 		{
 			data->check_click = 1;
 			data->x1_line = x;
@@ -53,8 +53,8 @@ void	mouse_help(t_data *data, int x, int y)
 			fill_next(data, x, y);
 		}
 		else if (bef_crossing(data, 0) == 0 &&
-			check_first_cross(data, x, y) == 1
-			&& len_list(&data->sectors[data->current_sector]) <= 4)
+				check_first_cross(data, x, y) == 1
+				&& len_list(&data->sectors[data->current_sector]) <= 4)
 		{
 			data->x1_line = x;
 			data->y1_line = y;

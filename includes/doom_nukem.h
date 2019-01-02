@@ -47,14 +47,14 @@ typedef struct  s_vector
 {
 	double x;
 	double y;
-}               vector;
+}               t_vector;
 
 typedef struct s_vertex
 {
 	int     x_vert;
     int     y_vert;
 	struct  s_vertex *next;
-}               vertex;
+}               t_vertex;
 
 typedef struct s_icons
 {
@@ -137,18 +137,20 @@ typedef struct  s_data
 	int				key;
 
 	int				lift;
+	int				lift_up;
 	int				tmp_obj;
+	int				font_size;
 
 	t_sector        sectors[100];
 	t_icons			icons[150];		
 	t_sector        *tmp;
 	t_font_data 	fonts;
-	vertex          vertex;
-	vector          p1;
-	vector          p2;
-	vector          p3;
-	vector          p4;
-	vector			vect[4];
+	t_vertex          vertex;
+	t_vector          p1;
+	t_vector          p2;
+	t_vector          p3;
+	t_vector          p4;
+	t_vector			vect[4];
 	SDL_Color		rgb;
 }                   t_data;
 
@@ -171,14 +173,14 @@ void                coord_displ(t_data *data, int x, int y);
 void                limit_coord(t_data *data, int x, int y);
 
 int                 bef_crossing(t_data *data, int check);
-int					IntersectionOfTwoLine(t_data *data);
+int					intersection_of_two_line(t_data *data);
 int                 first_vert(t_data *data);
 int                 second_vert(t_data *data);
 int                 normal_vec(t_data *data);
 int					both_not_vert(t_data *data);
 
 void                space_imitation(t_data *data);
-int                 find_wall(t_data *data, vector dot_1, vector dot_2, int check);
+int                 find_wall(t_data *data, t_vector dot_1, t_vector dot_2, int check);
 void                mouse_help(t_data *data, int x, int y);
 double              min(double x, double y);
 double              max(double x, double y);
@@ -187,7 +189,7 @@ void                ft_swap(int *a, int *b);
 
 void                writting(t_data *data);
 void				writte_walls(t_data *data, FILE *fp, int q);
-int					find_wall(t_data *data, vector dot_1, vector dot_2, int check);
+int					find_wall(t_data *data, t_vector dot_1, t_vector dot_2, int check);
 void				make_vertex_list(t_data *data);
 int 				num_ele(t_data *data, int x, int y);
 
@@ -211,7 +213,7 @@ void				numer_helper(SDL_Event	event, int *num, t_data *data, int q);
 void				lift(t_data *data);
 void				icons(t_data *data);
 
-int    				draw_text(t_data *data, char *text, int x, int y, SDL_Color color, char *font_path, int font_size);
+int    				draw_text(t_data *data, char *text, int x, int y);
 unsigned int        get_pixel_int(SDL_Surface *surface, int x, int y);
 SDL_Surface         *load_image(char *path);
 int					check_flag(t_data *data);

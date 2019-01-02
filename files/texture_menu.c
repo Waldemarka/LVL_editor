@@ -6,7 +6,7 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/24 12:03:17 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/12/27 12:47:48 by vomelchu         ###   ########.fr       */
+/*   Updated: 2019/01/02 13:24:36 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	solid_rect(t_data *data)
 	int y;
 
 	x = 494;
-	while (++x != WIDTH -1)
+	while (++x != WIDTH - 1)
 	{
 		y = 223;
 		while (++y != HEIGHT - 1)
@@ -72,9 +72,9 @@ void	hepl_for_events_text(t_data *data, SDL_Event event, int tmp_time)
 
 void	event_for_texture(t_data *data)
 {
-	int tmp_time;
-
+	int			tmp_time;
 	SDL_Event	event;
+
 	SDL_PumpEvents();
 	tmp_time = SDL_GetTicks();
 	while (SDL_PollEvent(&event))
@@ -97,15 +97,18 @@ void	info_about_texture(t_data *data)
 {
 	char *str;
 
-	draw_text(data, "FLOOR : ", 520, 525, data->rgb, F_AG, 27);
-	draw_text(data, "CEIL : ", 520, 555, data->rgb, F_AG, 27);
-	draw_text(data, "SECTOR : ", 520, 585, data->rgb, F_AG, 27);
+	data->font_size = 27;
+	draw_text(data, "FLOOR : ", 520, 525);
+	draw_text(data, "CEIL : ", 520, 555);
+	draw_text(data, "SECTOR : ", 520, 585);
 	str = ft_itoa(data->sectors[data->q_texture].floor);
-	draw_text(data, str, 650, 525, data->rgb, F_AG, 27);
+	draw_text(data, str, 650, 525);
+	free(str);
 	str = ft_itoa(data->sectors[data->q_texture].ceil);
-	draw_text(data, str, 650, 555, data->rgb, F_AG, 27);
+	draw_text(data, str, 650, 555);
+	free(str);
 	str = ft_itoa(data->q_texture);
-	draw_text(data, str, 650, 585, data->rgb, F_AG, 27);
+	draw_text(data, str, 650, 585);
 	free(str);
 }
 
@@ -115,16 +118,15 @@ void	textures_menu(t_data *data)
 	{
 		solid_rect(data);
 		data->pixel_pict = 200;
-		picture_icon(data, 505,  670, data->navig[0]);
+		picture_icon(data, 505, 670, data->navig[0]);
 		data->pixel_pict = 64;
-		picture_icon(data, 492,  335, data->navig[1]);
-		picture_icon(data, 660,  335, data->navig[2]);
+		picture_icon(data, 492, 335, data->navig[1]);
+		picture_icon(data, 660, 335, data->navig[2]);
 		data->pixel_pict = 140;
-		picture_icon(data, 538,  290, data->pict[data->num_text]);
+		picture_icon(data, 538, 290, data->pict[data->num_text]);
 		if (data->q_texture != -1)
 			info_about_texture(data);
 		if (data->lift != 1)
 			event_for_texture(data);
 	}
-
 }

@@ -6,7 +6,7 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 12:59:43 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/12/27 12:59:44 by vomelchu         ###   ########.fr       */
+/*   Updated: 2019/01/02 13:22:28 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	init_sdl(t_data *data)
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		ft_error("BAD INIT SDL2\n");
 	if (!(data->win = SDL_CreateWindow("Doom_nukem", 400, 400, WIDTH,
-		HEIGHT, SDL_WINDOW_SHOWN)))
+					HEIGHT, SDL_WINDOW_SHOWN)))
 		ft_error("BAD INIT SDL2\n");
 	if (!(data->ren = SDL_CreateRenderer(data->win, -1,
-		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)))
+					SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)))
 		ft_error("BAD INIT SDL2\n");
 	if (!(data->screen = SDL_CreateTexture(data->ren,
 		SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, WIDTH, HEIGHT)))
@@ -53,10 +53,6 @@ void	init_variable(t_data *data)
 
 void	load_surf(t_data *data)
 {
-	data->dot[0] = load_image("./media/for_menu/menu_0.png");
-	data->dot[1] = load_image("./media/for_menu/menu_1.png");
-	data->dot[2] = load_image("./media/for_menu/menu_2.png");
-	data->dot[3] = load_image("./media/for_menu/menu_3.png");
 	data->icon[0] = load_image("./media/32/3.png");
 	data->icon[1] = load_image("./media/32/3_bl.png");
 	data->icon[2] = load_image("./media/32/door.png");
@@ -69,8 +65,6 @@ void	load_surf(t_data *data)
 	data->icon[9] = load_image("./media/32/green.png");
 	data->icon[10] = load_image("./media/32/red.png");
 	data->icon[11] = load_image("./media/32/yellow.png");
-
-
 	data->icon64[0] = load_image("./media/64/3.png");
 	data->icon64[1] = load_image("./media/64/3_bl.png");
 	data->icon64[2] = load_image("./media/64/door.png");
@@ -87,6 +81,10 @@ void	load_surf(t_data *data)
 
 void	load_surf_1(t_data *data)
 {
+	data->dot[0] = load_image("./media/for_menu/menu_0.png");
+	data->dot[1] = load_image("./media/for_menu/menu_1.png");
+	data->dot[2] = load_image("./media/for_menu/menu_2.png");
+	data->dot[3] = load_image("./media/for_menu/menu_3.png");
 	data->navig[0] = load_image("./media/for_menu/navigat.png");
 	data->navig[1] = load_image("./media/for_menu/left.png");
 	data->navig[2] = load_image("./media/for_menu/right.png");
@@ -97,7 +95,7 @@ void	load_surf_1(t_data *data)
 	data->text_menu = load_image("./media/for_menu/text_menu.png");
 }
 
-void    init_all(t_data *data)
+void	init_all(t_data *data)
 {
 	init_sdl(data);
 	init_variable(data);

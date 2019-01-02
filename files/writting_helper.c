@@ -6,16 +6,16 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 17:46:35 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/12/03 17:46:37 by vomelchu         ###   ########.fr       */
+/*   Updated: 2019/01/02 13:25:09 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom_nukem.h"
 
-int 	num_ele(t_data *data, int x, int y)
+int			num_ele(t_data *data, int x, int y)
 {
-	vertex *vert;
-	int q;
+	t_vertex	*vert;
+	int			q;
 
 	q = 0;
 	vert = &data->vertex;
@@ -27,14 +27,14 @@ int 	num_ele(t_data *data, int x, int y)
 		vert = vert->next;
 	}
 	if (vert->x_vert == x && vert->y_vert == y)
-			return (q);
-	return (0); // may wil be problem
+		return (q);
+	return (0);
 }
 
-vector	last_vect(t_data *data, int q)
+t_vector	last_vect(t_data *data, int q)
 {
 	t_sector *sect;
-	vector dot_1;
+	t_vector dot_1;
 
 	sect = &data->sectors[q];
 	while (sect->next->next != NULL)
@@ -44,11 +44,10 @@ vector	last_vect(t_data *data, int q)
 	return (dot_1);
 }
 
-
-int		find_wall(t_data *data, vector dot_1, vector dot_2, int check)
+int			find_wall(t_data *data, t_vector dot_1, t_vector dot_2, int check)
 {
-	t_sector *sector;
-	int q;
+	t_sector	*sector;
+	int			q;
 
 	q = -1;
 	while (++q <= data->current_sector)
@@ -57,9 +56,9 @@ int		find_wall(t_data *data, vector dot_1, vector dot_2, int check)
 		while (sector->next != NULL && q != check)
 		{
 			if (((int)dot_1.x == sector->x0 && (int)dot_1.y == sector->y0 &&
-				(int)dot_2.x == sector->next->x0 && (int)dot_2.y == sector->next->y0)
-				|| ((int)dot_2.x == sector->x0 && (int)dot_2.y == sector->y0 &&
-				(int)dot_1.x == sector->next->x0 && (int)dot_1.y == sector->next->y0))
+			(int)dot_2.x == sector->next->x0 && (int)dot_2.y == sector->next->y0)
+			|| ((int)dot_2.x == sector->x0 && (int)dot_2.y == sector->y0 &&
+			(int)dot_1.x == sector->next->x0 && (int)dot_1.y == sector->next->y0))
 				return (q);
 			if (sector->next->next == NULL)
 				if (((int)dot_1.x == sector->x0 && (int)dot_1.y == sector->y0 &&
@@ -73,12 +72,12 @@ int		find_wall(t_data *data, vector dot_1, vector dot_2, int check)
 	return (-1);
 }
 
-void	writte_walls(t_data *data, FILE *fp, int q)
+void		writte_walls(t_data *data, FILE *fp, int q)
 {
-	t_sector *sector;
-	vector dot_1;
-	vector dot_2;
-	char *wall;
+	t_sector	*sector;
+	t_vector	dot_1;
+	t_vector	dot_2;
+	char		*wall;
 
 	sector = &data->sectors[q];
 	dot_1 = last_vect(data, q);
@@ -102,41 +101,36 @@ void	writte_walls(t_data *data, FILE *fp, int q)
 	}
 }
 
-void	malloc_vertex(vertex *new_vertex)
+void		malloc_vertex(t_vertex *new_vertex)
 {
-	if (!(new_vertex = (vertex *)malloc(sizeof(vertex) * 1)))
- 		ft_error("Bad realloc in vertex");
+	if (!(new_vertex = (t_vertex *)malloc(sizeof(t_vertex) * 1)))
+		ft_error("Bad realloc in vertex");
 }
 
-void	make_vertex_list(t_data *data)
+void		make_vertex_list(t_data *data)
 {
-	int q;
-	t_sector *sector;
-	vertex *vert;
+	int			q;
+	t_sector	*sector;
+	t_vertex	*vert;
 
 	q = -1;
 	vert = &data->vertex;
 	vert->next = NULL;
-/*	if (data->sectors[data->current_sector].next == NULL)
+	while (++q <= data->current_sector)
 	{
-		printf("%d\n", data->current_sector);
-		data->current_sector -= 1;
-	}*/
- 	while (++q <= data->current_sector)
- 	{
- 		sector = &data->sectors[q];
- 		while (sector->next != NULL)
- 		{
- 			vert->x_vert = sector->x0;
- 			vert->y_vert = sector->y0;
- 			if (sector->next != NULL)
- 			{
- 				if (!(vert->next = (vertex *)malloc(sizeof(vertex))))
+		sector = &data->sectors[q];
+		while (sector->next != NULL)
+		{
+			vert->x_vert = sector->x0;
+			vert->y_vert = sector->y0;
+			if (sector->next != NULL)
+			{
+				if (!(vert->next = (t_vertex *)malloc(sizeof(t_vertex))))
 					ft_error("Bad malloc in vertex");
- 				vert = vert->next;
- 			}
- 			sector = sector->next;
- 		}
- 	}
- 	vert->next = NULL;
+				vert = vert->next;
+			}
+			sector = sector->next;
+		}
+	}
+	vert->next = NULL;
 }

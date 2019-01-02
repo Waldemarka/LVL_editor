@@ -6,7 +6,7 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 13:30:22 by vomelchu          #+#    #+#             */
-/*   Updated: 2018/11/25 16:27:16 by vomelchu         ###   ########.fr       */
+/*   Updated: 2019/01/02 13:20:56 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,48 +17,53 @@ int		init_vector(t_data *data)
 	if (data->sectors[0].next == NULL ||
 			data->sectors[0].next->next == NULL
 			|| data->sectors[0].next->next->next == NULL)
-		return(1);
+		return (1);
 	coord_canvas(data, data->x0_line, data->y0_line);
 	data->p3.x = (double)near_round(data->x_canv);
 	data->p3.y = (double)near_round(data->y_canv);
 	coord_canvas(data, data->x1_line, data->y1_line);
 	data->p4.x = (double)near_round(data->x_canv);
 	data->p4.y = (double)near_round(data->y_canv);
-	return (0);	
+	return (0);
 }
 
 int		normal_vec(t_data *data)
 {
-	if (data->p2.x < data->p1.x) {
-		vector tmp = data->p1;
+	t_vector tmp;
+
+	if (data->p2.x < data->p1.x)
+	{
+		tmp = data->p1;
 		data->p1 = data->p2;
 		data->p2 = tmp;
 	}
-	if (data->p4.x < data->p3.x) {
-		vector tmp = data->p3;
+	if (data->p4.x < data->p3.x)
+	{
+		tmp = data->p3;
 		data->p3 = data->p4;
 		data->p4 = tmp;
 	}
-	if (data->p2.x < data->p3.x) {
+	if (data->p2.x < data->p3.x)
 		return (0);
-	}
 	return (1);
 }
 
 int		first_vert(t_data *data)
 {
-	double Xa;
-	double A2;
+	double x_a;
+	double a_2;
 	double b2;
-	double Ya;
+	double y_a;
 
-	if (data->p1.x - data->p2.x == 0) {
-		Xa = data->p1.x;
-		A2 = (data->p3.y - data->p4.y) / (data->p3.x - data->p4.x);
-		b2 = data->p3.y - A2 * data->p3.x;
-		Ya = A2 * Xa + b2;
-		if (data->p3.x <= Xa && data->p4.x >= Xa && min(data->p1.y, data->p2.y) <= Ya &&
-				max(data->p1.y, data->p2.y) >= Ya)
+	if (data->p1.x - data->p2.x == 0)
+	{
+		x_a = data->p1.x;
+		a_2 = (data->p3.y - data->p4.y) / (data->p3.x - data->p4.x);
+		b2 = data->p3.y - a_2 * data->p3.x;
+		y_a = a_2 * x_a + b2;
+		if (data->p3.x <= x_a && data->p4.x >= x_a &&
+			min(data->p1.y, data->p2.y) <= y_a &&
+				max(data->p1.y, data->p2.y) >= y_a)
 		{
 			data->color = 0xff0000;
 			return (1);
@@ -70,19 +75,20 @@ int		first_vert(t_data *data)
 
 int		second_vert(t_data *data)
 {
-	double Xa;
-	double A1;
+	double x_a;
+	double a_1;
 	double b1;
-	double Ya;
+	double y_a;
 
 	if (data->p3.x - data->p4.x == 0)
 	{
-		Xa = data->p3.x;
-		A1 = (data->p1.y - data->p2.y) / (data->p1.x - data->p2.x);
-		b1 = data->p1.y - A1 * data->p1.x;
-		Ya = A1 * Xa + b1;
-		if (data->p1.x <= Xa && data->p2.x >= Xa &&
-				min(data->p3.y, data->p4.y) <= Ya && max(data->p3.y, data->p4.y) >= Ya)
+		x_a = data->p3.x;
+		a_1 = (data->p1.y - data->p2.y) / (data->p1.x - data->p2.x);
+		b1 = data->p1.y - a_1 * data->p1.x;
+		y_a = a_1 * x_a + b1;
+		if (data->p1.x <= x_a && data->p2.x >= x_a &&
+				min(data->p3.y, data->p4.y) <= y_a &&
+				max(data->p3.y, data->p4.y) >= y_a)
 		{
 			data->color = 0xff0000;
 			return (1);
@@ -94,24 +100,25 @@ int		second_vert(t_data *data)
 
 int		both_not_vert(t_data *data)
 {
-	double A1;
-	double A2;
+	double a_1;
+	double a_2;
 	double b1;
 	double b2;
-	double Xa;
+	double x_a;
 
-	A1 = (data->p1.y - data->p2.y) / (data->p1.x - data->p2.x);
-	A2 = (data->p3.y - data->p4.y) / (data->p3.x - data->p4.x);
-	b1 = data->p1.y - A1 * data->p1.x;
-	b2 = data->p3.y - A2 * data->p3.x;
-	if (A1 == A2)
+	a_1 = (data->p1.y - data->p2.y) / (data->p1.x - data->p2.x);
+	a_2 = (data->p3.y - data->p4.y) / (data->p3.x - data->p4.x);
+	b1 = data->p1.y - a_1 * data->p1.x;
+	b2 = data->p3.y - a_2 * data->p3.x;
+	if (a_1 == a_2)
 		return (0);
-	Xa = (b2 - b1) / (A1 - A2);
-	if ((Xa < max(data->p1.x, data->p3.x)) || (Xa > min( data->p2.x, data->p4.x)))
+	x_a = (b2 - b1) / (a_1 - a_2);
+	if ((x_a < max(data->p1.x, data->p3.x)) ||
+		(x_a > min(data->p2.x, data->p4.x)))
 		return (0);
-	else {
+	else
+	{
 		data->color = 0xff0000;
 		return (1);
 	}
 }
-
