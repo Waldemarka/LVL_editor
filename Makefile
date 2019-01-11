@@ -21,7 +21,9 @@ SRC_LVL_EDITOR = ./files/main.c\
 				./files/other.c ./files/menu.c ./files/object.c\
 				./files/menu_icons.c ./files/menu_helper.c\
 				./files/sort_sector.c ./files/texture_menu.c\
-				./files/move_set_icons.c ./files/loader.c
+				./files/move_set_icons.c ./files/loader.c\
+				./files/draw_helper.c \
+				./files/writte_obj.c ./files/writte_other.c
 
 OBJECT_LVL_EDITOR = $(SRC_LVL_EDITOR:.c=.o)
 

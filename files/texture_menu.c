@@ -12,26 +12,10 @@
 
 #include "doom_nukem.h"
 
-void	solid_rect(t_data *data)
-{
-	int x;
-	int y;
-
-	x = 494;
-	while (++x != WIDTH - 1)
-	{
-		y = 223;
-		while (++y != HEIGHT - 1)
-		{
-			data->buf[y][x] = get_pixel_int(data->text_menu, x - 494, y - 223);
-		}
-	}
-}
-
 void	other_help(t_data *data, SDL_Event event, int tmp_time)
 {
 	if (event.key.keysym.sym == SDLK_UP && (tmp_time - 100) > data->time
-			&& data->num_text < 2)
+			&& data->num_text < 6)
 	{
 		data->time = tmp_time;
 		data->num_text++;
@@ -126,7 +110,6 @@ void	textures_menu(t_data *data)
 		picture_icon(data, 538, 290, data->pict[data->num_text]);
 		if (data->q_texture != -1)
 			info_about_texture(data);
-		if (data->lift != 1)
-			event_for_texture(data);
+		event_for_texture(data);
 	}
 }

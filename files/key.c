@@ -33,15 +33,10 @@ void	space_imitation(t_data *data)
 	if (len_list(&data->sectors[data->current_sector]) >= 3
 			&& is_crossing_last_line(data) == 0)
 	{
-		if (clockwise1(data) == 0)
-		{
-			data->current_sector++;
-			data->check_click = 0;
-			data->sectors[data->current_sector].next = NULL;
-			data->check_menu = 1;
-		}
-		else
-			backspace_imitation(data);
+		data->current_sector++;
+		data->check_click = 0;
+		data->sectors[data->current_sector].next = NULL;
+		data->check_menu = 1;
 	}
 }
 
@@ -68,7 +63,7 @@ void	mouse_line(t_data *data)
 	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT) && y < 223
 			&& data->check_click == 0)
 		data->check_menu = 1;
-	if (data->current_sector < 100)
+	if (data->current_sector < 32)
 	{
 		if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT) && y > 223)
 			mouse_help(data, x, y);

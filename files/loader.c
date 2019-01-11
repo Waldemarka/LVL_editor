@@ -88,10 +88,13 @@ void	load_surf_1(t_data *data)
 	data->navig[0] = load_image("./media/for_menu/navigat.png");
 	data->navig[1] = load_image("./media/for_menu/left.png");
 	data->navig[2] = load_image("./media/for_menu/right.png");
-	data->pict[0] = load_image("./media/for_menu/brick_1.png");
-	data->pict[1] = load_image("./media/for_menu/Brick_Big_White.png");
-	data->pict[2] = load_image("./media/for_menu/iron_diffuse.png");
-	data->lift_info = load_image("./media/for_menu/lift_info.png");
+	data->pict[0] = load_image("./media/for_menu/Brick_Big_White.png");
+	data->pict[1] = load_image("./media/for_menu/iron_diffuse.png");
+	data->pict[2] = load_image("./media/for_menu/brick_1.png");
+	data->pict[3] = load_image("./media/for_menu/Door_1.png");
+	data->pict[4] = load_image("./media/for_menu/Window_compressed.png");
+	data->pict[5] = load_image("./media/for_menu/red_hex.png");
+	data->pict[6] = load_image("./media/for_menu/gren_hex.png");
 	data->text_menu = load_image("./media/for_menu/text_menu.png");
 }
 

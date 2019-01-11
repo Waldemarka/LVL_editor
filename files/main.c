@@ -90,7 +90,6 @@ void	game(t_data *data)
 int		main(int argc, char **argv)
 {
 	t_data	*data;
-	int		q;
 
 	if (argc == 2)
 	{
@@ -104,9 +103,6 @@ int		main(int argc, char **argv)
 		init_all(data);
 		draw_grid(data);
 		game(data);
-		q = -1;
-		while (++q != 3)
-			SDL_FreeSurface(data->dot[q]);
 	}
 	else
 		ft_error("BAD NUM ARGC\n");

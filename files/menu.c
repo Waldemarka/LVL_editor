@@ -12,6 +12,22 @@
 
 #include "doom_nukem.h"
 
+void	solid_rect(t_data *data)
+{
+	int x;
+	int y;
+
+	x = 494;
+	while (++x != WIDTH - 1)
+	{
+		y = 223;
+		while (++y != HEIGHT - 1)
+		{
+			data->buf[y][x] = get_pixel_int(data->text_menu, x - 494, y - 223);
+		}
+	}
+}
+
 void	picture_icon(t_data *data, int st_x, int st_y, SDL_Surface *icon)
 {
 	int q;
@@ -53,7 +69,7 @@ void	menu(t_data *data, int i)
 	char *str;
 
 	picture(data);
-	if (i == 0 && data->show_text != 1 && data->lift != 1 && data->key != 1)
+	if (i == 0 && data->show_text != 1&& data->key != 1)
 		event_menu(data);
 	if (i == 0 && data->flo_or_cei == 0 && data->floor > data->ceil - 5)
 		data->floor = data->ceil - 5;

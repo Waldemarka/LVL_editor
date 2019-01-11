@@ -97,10 +97,5 @@ void	special_icons(t_data *data)
 		}
 		else
 			writte_icons_to_struct(data, q);
-		if (data->num_icon == 4)
-		{
-			data->tmp_obj = q;
-			data->lift = 1;
-		}
 	}
 }

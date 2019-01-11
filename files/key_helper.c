@@ -55,16 +55,6 @@ void	zoom(t_data *data, char c)
 	}
 }
 
-void	backspace_imitation(t_data *data)
-{
-	data->check_click = 0;
-	if (data->sectors[data->current_sector].next == NULL)
-		data->current_sector--;
-	printf("-%d----\n", data->current_sector);
-	del_list(data, data->current_sector, 0);
-	modif_obj(data, 3);
-}
-
 void	left_right(t_data *data, SDL_Event event, int tmp[2])
 {
 	if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_RIGHT)

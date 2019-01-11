@@ -12,30 +12,22 @@
 
 #include "doom_nukem.h"
 
-void	ft_swap(int *a, int *b)
+void	backspace_imitation(t_data *data)
 {
-	int tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
+	data->check_click = 0;
+	if (data->sectors[data->current_sector].next == NULL)
+		data->current_sector--;
+	del_list(data, data->current_sector);
+	modif_obj(data, 3);
 }
 
-void	del_list(t_data *data, int q, int i)
+void	del_list(t_data *data, int q)
 {
 	t_sector *sector;
 	t_sector *tmp;
 
-	if (i == 0)
-	{
-		sector = &data->sectors[q];
-		tmp = &data->sectors[q];
-	}
-	else
-	{
-		sector = &data->tmp[q];
-		tmp = &data->tmp[q];
-	}
+	sector = &data->sectors[q];
+	tmp = &data->sectors[q];
 	while (sector->next != NULL)
 	{
 		if (sector->next->next == NULL)

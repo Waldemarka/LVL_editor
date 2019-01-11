@@ -6,7 +6,7 @@
 /*   By: vomelchu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 14:54:54 by vomelchu          #+#    #+#             */
-/*   Updated: 2019/01/02 13:22:54 by vomelchu         ###   ########.fr       */
+/*   Updated: 2019/01/06 11:37:02 by vomelchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,34 +30,6 @@ void	next_sect(t_data *data)
 	data->check_menu = 0;
 	data->sectors[data->current_sector].floor = data->floor;
 	data->sectors[data->current_sector].ceil = data->ceil;
-}
-
-void	help_mouse_icons(t_data *data)
-{
-	int x;
-	int y;
-
-	SDL_PumpEvents();
-	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-			&& y > 133 && y < 180 && x > 465 && x < 530 && data->num_icon == -1)
-		data->num_icon = 5;
-	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-			&& y > 133 && y < 180 && x > 535 && x < 600 && data->num_icon == -1)
-		data->num_icon = 6;
-	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-			&& y > 133 && y < 180 && x > 605 && x < 670 && data->num_icon == -1)
-		data->num_icon = 7;
-	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-			&& y > 190 && y < 220 && x > 550 && x < 670 && data->num_icon == -1
-			&& data->show_text == 0)
-	{
-		data->show_text = 1;
-		data->picture_menu = 3;
-	}
-	else if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)
-			&& y > 223 && y < HEIGHT - 1 && x > 0 && x < WIDTH - 1
-			&& data->num_icon == -1 && data->show_text != 1)
-		next_sect(data);
 }
 
 void	numer_helper(SDL_Event event, int *num, t_data *data, int q)

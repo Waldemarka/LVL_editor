@@ -118,14 +118,11 @@ void	icons(t_data *data)
 		else
 			picture_icon(data, 60 + (q * 71), 145, data->icon[q - 1]);
 	}
-	if (data->check_menu == 1 && data->lift != 1 && data->lift != 1
-		&& data->key != 1)
+	if (data->check_menu == 1 && data->key != 1)
 	{
 		mouse_icons(data);
 		move_icons(data);
 	}
-	if (data->lift == 1)
-		lift(data);
 	if (data->key == 1)
 		multi_key(data);
 }

@@ -1,23 +1,28 @@
-vertex 150  160  160  180  180  200  200  
-vertex 170  180  180  180  140  180  180  140  180  180  180  180  180  180  200  180  180  200  180  180  180  
-vertex 190  180  140  140  200  200  180  
+vertex 100  240  240  
+vertex 120  130  130  130  
+vertex 130  170  170  170  170  170  170  170  170  
+vertex 140  260  260  
+vertex 210  200  110  110  110  200  
 
-sector  0  20      6  26  27  6      1 7 -1 1 
-sector  0  20      6  27  9  6      0 0 -1 2 
-sector  0  20      6  9  0  6      0 1 -1 3 
-sector  0  20      6  0  2  6      0 2 -1 4 
-sector  0  20      6  2  4  6      0 3 -1 5 
-sector  0  20      6  4  19  6      0 4 -1 6 
-sector  0  20      6  19  29  6      0 5 -1 7 
-sector  0  20      6  29  26  6      0 6 -1 0 
+sector  0  20      5  15  16  5      2 2 -1 1 
+sector  0  20      16  2  5  16      -1 -1 4 0 
+sector  0  20      5  13  15  5      0 3 -1 0 
+sector  0  20      5  0  13  5      0 4 -1 2 
+sector  0  20      2  0  5  2      -1 -1 3 1 
 
 
-player 159  163  2  2  
+player 163  199  2  0  
+end 1  
+key 2 159  170  0  
+lift 0  
+enemy 164  172  0  
+ammunition 3 137  157  1  
+lift 2  
+ammunition 1 223  124  3  
+ammunition 3 180  124  4  
+enemy 171  118  4  
 texture_sector 0  0  
-texture_sector 1  0  
+texture_sector 1  3  
 texture_sector 2  0  
-texture_sector 3  0  
+texture_sector 3  1  
 texture_sector 4  0  
-texture_sector 5  0  
-texture_sector 6  0  
-texture_sector 7  0  

@@ -56,15 +56,15 @@ int			find_wall(t_data *data, t_vector dot_1, t_vector dot_2, int check)
 		while (sector->next != NULL && q != check)
 		{
 			if (((int)dot_1.x == sector->x0 && (int)dot_1.y == sector->y0 &&
-			(int)dot_2.x == sector->next->x0 && (int)dot_2.y == sector->next->y0)
-			|| ((int)dot_2.x == sector->x0 && (int)dot_2.y == sector->y0 &&
-			(int)dot_1.x == sector->next->x0 && (int)dot_1.y == sector->next->y0))
+			DT2X && (int)dot_2.y == sector->next->y0)
+			|| ((int)dot_2.x == sector->x0 && DT2Y &&
+			DT1X && (int)dot_1.y == sector->next->y0))
 				return (q);
 			if (sector->next->next == NULL)
-				if (((int)dot_1.x == sector->x0 && (int)dot_1.y == sector->y0 &&
-				(int)dot_2.x == data->sectors[q].x0 && (int)dot_2.y == data->sectors[q].y0)
+				if ((DTX && (int)dot_1.y == sector->y0 &&
+				DTY && (int)dot_2.y == data->sectors[q].y0)
 				|| ((int)dot_2.x == sector->x0 && (int)dot_2.y == sector->y0 &&
-				(int)dot_1.x == data->sectors[q].x0 && (int)dot_1.y == data->sectors[q].y0))
+				DT && (int)dot_1.y == data->sectors[q].y0))
 					return (q);
 			sector = sector->next;
 		}
@@ -99,12 +99,6 @@ void		writte_walls(t_data *data, FILE *fp, int q)
 		free(wall);
 		sector = sector->next;
 	}
-}
-
-void		malloc_vertex(t_vertex *new_vertex)
-{
-	if (!(new_vertex = (t_vertex *)malloc(sizeof(t_vertex) * 1)))
-		ft_error("Bad realloc in vertex");
 }
 
 void		make_vertex_list(t_data *data)

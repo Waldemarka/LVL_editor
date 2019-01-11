@@ -80,16 +80,31 @@ int		clockwise_4(t_sector *tmp_sect)
 	return (0);
 }
 
-int		clockwise1(t_data *data)
+void	sort_sector(t_data *data)
 {
-	double		a;
-	t_sector	*tmp_sect;
+	int			q;
+	t_sector	*sector;
+	t_vector	tmp;
 
-	a = 0.0;
-	tmp_sect = &data->sectors[data->current_sector];
-	if (len_list(tmp_sect) == 3 && clockwise_3(tmp_sect) == 1)
-		return (1);
-	if (len_list(tmp_sect) == 4 && clockwise_4(tmp_sect) == 1)
-		return (1);
-	return (0);
+	q = -1;
+	while (++q <= data->current_sector)
+	{
+		sector = &data->sectors[q];
+		tmp.x = (double)sector->next->x0;
+		tmp.y = (double)sector->next->y0;
+		if (len_list(sector) == 4 && clockwise_3(sector) == 1)
+		{
+			sector->next->x0 = sector->next->next->x0;
+			sector->next->y0 = sector->next->next->y0;
+			sector->next->next->x0 = (int)tmp.x;
+			sector->next->next->y0 = (int)tmp.y;
+		}
+		if (len_list(sector) == 5 && clockwise_4(sector) == 1)
+		{
+			sector->next->x0 = sector->next->next->next->x0;
+			sector->next->y0 = sector->next->next->next->y0;
+			sector->next->next->next->x0 = (int)tmp.x;
+			sector->next->next->next->y0 = (int)tmp.y;
+		}
+	}
 }
